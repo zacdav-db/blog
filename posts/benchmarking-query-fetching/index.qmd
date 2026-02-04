@@ -1,0 +1,16 @@
+---
+title: "Benchmarking SQL Query Result Fetching (Brickster, API, ADBC, ODBC, JDBC)"
+date: 2026-02-04
+description: "Planned benchmarks for query-result fetching across Brickster, API, ADBC, ODBC, and JDBC."
+categories: [Benchmarks, Data Engineering, SQL]
+---
+
+This is a placeholder post for upcoming benchmarks comparing SQL query result fetching via Brickster, API, ADBC, ODBC, and JDBC.
+
+Planned sections:
+- Scope and datasets
+- Methodology and environment
+- Connector configurations
+- Performance results (latency, throughput, memory)
+- Practical recommendations
+
