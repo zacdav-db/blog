@@ -3,7 +3,7 @@ project:
 
 website:
   title: "Zac Davies Blog"
-  site-url: "https://example.com"
+  site-url: "https://zacdav-db.github.io/blog/"
   description: "Posts on R, Arrow, Databricks, data engineering, and AI."
   navbar:
     right:
