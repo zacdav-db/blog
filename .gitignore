@@ -1,0 +1,11 @@
+/.quarto/
+/_site/
+/_freeze/
+/_cache/
+/.Rproj.user/
+/.Rhistory
+/.RData
+/.Ruserdata
+/renv/library/
+/renv/staging/
+.DS_Store
