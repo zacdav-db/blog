@@ -10,6 +10,28 @@
 <atom:link href="https://zacdav-db.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Posts on R, Arrow, Databricks, data engineering, and AI.</description>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Wed, 04 Feb 2026 06:18:59 GMT</lastBuildDate>
+<lastBuildDate>Wed, 04 Feb 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Benchmarking SQL Query Result Fetching (Brickster, API, ADBC, ODBC, JDBC)</title>
+  <link>https://zacdav-db.github.io/blog/posts/benchmarking-query-fetching/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>This is a placeholder post for upcoming benchmarks comparing SQL query result fetching via Brickster, API, ADBC, ODBC, and JDBC.</p>
+<p>Planned sections: - Scope and datasets - Methodology and environment - Connector configurations - Performance results (latency, throughput, memory) - Practical recommendations</p>
+
+
+
+ ]]></description>
+  <category>Benchmarks</category>
+  <category>Data Engineering</category>
+  <category>SQL</category>
+  <guid>https://zacdav-db.github.io/blog/posts/benchmarking-query-fetching/</guid>
+  <pubDate>Wed, 04 Feb 2026 00:00:00 GMT</pubDate>
+</item>
 </channel>
 </rss>

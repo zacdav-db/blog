@@ -1,6 +1,8 @@
 [
   {
     "listing": "/index.html",
-    "items": []
+    "items": [
+      "/posts/benchmarking-query-fetching/index.html"
+    ]
   }
 ]

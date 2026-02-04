@@ -2,10 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://zacdav-db.github.io/blog/about.html</loc>
-    <lastmod>2026-02-04T06:17:56.557Z</lastmod>
+    <lastmod>2026-02-04T06:19:10.510Z</lastmod>
   </url>
   <url>
     <loc>https://zacdav-db.github.io/blog/index.html</loc>
-    <lastmod>2026-02-04T06:17:56.557Z</lastmod>
+    <lastmod>2026-02-04T06:19:10.510Z</lastmod>
+  </url>
+  <url>
+    <loc>https://zacdav-db.github.io/blog/posts/benchmarking-query-fetching/index.html</loc>
+    <lastmod>2026-02-04T06:19:10.510Z</lastmod>
   </url>
 </urlset>
