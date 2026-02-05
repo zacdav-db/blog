@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "posts/benchmarking-query-fetching/index.html",
+    "href": "posts/benchmarking-query-fetching/index.html",
+    "title": "Benchmarking SQL Query Result Fetching (Brickster, API, ADBC, ODBC, JDBC)",
     "section": "",
-    "text": "About this blog"
+    "text": "This is a placeholder post for upcoming benchmarks comparing SQL query result fetching via Brickster, API, ADBC, ODBC, and JDBC.\nPlanned sections: - Scope and datasets - Methodology and environment - Connector configurations - Performance results (latency, throughput, memory) - Practical recommendations"
   },
   {
     "objectID": "index.html",
@@ -12,12 +12,5 @@
     "title": "Zac Davies Blog",
     "section": "",
     "text": "Benchmarking SQL Query Result Fetching (Brickster, API, ADBC, ODBC, JDBC)\n\n\n\nBenchmarks\n\nData Engineering\n\nSQL\n\n\n\nPlanned benchmarks for query-result fetching across Brickster, API, ADBC, ODBC, and JDBC.\n\n\n\n\n\nFeb 4, 2026\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/benchmarking-query-fetching/index.html",
-    "href": "posts/benchmarking-query-fetching/index.html",
-    "title": "Benchmarking SQL Query Result Fetching (Brickster, API, ADBC, ODBC, JDBC)",
-    "section": "",
-    "text": "This is a placeholder post for upcoming benchmarks comparing SQL query result fetching via Brickster, API, ADBC, ODBC, and JDBC.\nPlanned sections: - Scope and datasets - Methodology and environment - Connector configurations - Performance results (latency, throughput, memory) - Practical recommendations"
   }
 ]
