@@ -6,8 +6,13 @@ website:
   site-url: "https://zacdav-db.github.io/blog/"
   description: "Posts on R, Arrow, Databricks, data engineering, and AI."
   navbar:
+    title: "zac davies"
+    left:
+      - text: Blog
+        href: index.qmd
+      - text: Talks
+        href: https://github.com/zacdav-db/presentations
     right:
-      - about.qmd
       - icon: github
         href: https://github.com/zacdav-db
       - icon: linkedin
