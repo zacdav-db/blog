@@ -104,9 +104,11 @@ If we start looking under the covers of `{sparklyr}` we learn a few things:
 
 The callback is particularly interesting, it's exactly what we're going to use to collect our large dataset. For those unfamiliar with callbacks, it's essentially code that is invoked by other code - typically code that's supplied as an argument to a function.
 
+::: {.book-quote}
 > A callback is just an R function that will be called over each Spark partition
->
-> - [Chapter 8.4, *Mastering Spark with R*](https://therinspark.com/data.html#copy)
+
+[Chapter 8.4, *Mastering Spark with R*](https://therinspark.com/data.html#copy){.book-quote-attribution}
+:::
 
 The [conditional block that is evaluated](https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L136-L153) when specifying a callback invokes code that allows the Arrow batches to be pulled back iteratively rather than all at once (which is where we hit the error).
 

@@ -46,8 +46,8 @@ df = delta_sharing.load_as_pandas(table_url)       # <2>
 
 There are a few pain points here:
 
-- even after creating a `SharingClient`, you still build the `"<profile>#<share>.<schema>.<table>"` string yourself
-- the public read path lands directly in Pandas
+- Even after creating a `SharingClient`, you still build the `"<profile>#<share>.<schema>.<table>"` string yourself
+- The public read path lands directly in Pandas
 - It's difficult to handle tables that are larger than memory
 
 Together, they made the interface feel more manual than it needed to be (especially if working with large datasets).
@@ -121,8 +121,8 @@ finally:
 
 This shows that, without much effort, we should be able to:
 
-- expose Arrow directly
-- stop requiring manual construction of the table URL
+- Expose Arrow directly
+- Stop requiring manual construction of the table URL
 
 ## A better public interface
 
@@ -522,9 +522,9 @@ The shared measurement helper and run instructions are in the [appendix](#append
 
 These runs used a fixture based on NYC taxi data:
 
-- dataset: `nyctaxi_2019` (scaled to 100M rows)
-- rows per run: `100,000,000`
-- repetitions: `10`
+- Dataset: `nyctaxi_2019` (scaled to 100M rows)
+- Rows per run: `100,000,000`
+- Repetitions: `10`
 
 ## Easier to use, easier to integrate
 
