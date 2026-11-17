@@ -172,8 +172,8 @@ flowchart TD
     C --> T
     C --> U
     S --> I
-    T --> V["PyArrow Table (e.g. Polars)"]
-    U --> W["Arrow consumer (e.g. DuckDB)"]
+    T --> V["PyArrow Table<br/>(e.g. Polars)"]
+    U --> W["Arrow consumer<br/>(e.g. DuckDB)"]
 
     classDef old fill:#f6e7e7,stroke:#8b5e5e,color:#3b2a2a;
     classDef new fill:#e8f1fb,stroke:#5b7ea4,color:#1f2f44;
