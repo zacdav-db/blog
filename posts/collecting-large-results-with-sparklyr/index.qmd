@@ -1,0 +1,258 @@
+---
+title: "Collecting large results with {sparklyr}"
+date: 2023-06-24
+date-modified: 2026-11-17
+description: "Using Arrow callbacks to collect large Spark results into R with sparklyr."
+categories: [R, Spark, sparklyr, Arrow, Databricks]
+toc: true
+title-block-banner: true
+include-in-header:
+  text: |
+    <style>
+    #quarto-document-content :not(pre) > code {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    </style>
+---
+
+::: {.callout-note title="Notice"}
+Originally published on [Medium](https://medium.com/@NotZacDavies/collecting-large-results-with-sparklyr-8256a0370ec6) on June 24, 2023. The examples and benchmarks below are from the original post.
+:::
+
+If you've ever wanted to take a large set of data from Spark back into the R session (or even Python) you'll likely have experienced issues with performance, or been blocked completely by errors.
+
+Example error:
+
+```text
+Error : java.lang.OutOfMemoryError
+... // and then the remainder of a large error
+```
+
+This error is the one I typically see people struggle with, sometimes trying inventive solutions that are tedious and/or error-prone.
+
+The error happens when you're hitting the 2GB limit that Spark sets. Without getting into the specifics of what can't be changed on Spark side, I'll show you how to `collect()` as much data as your R session will allow.
+
+## How to re-create the error reliably
+
+I've got easy access to a Databricks environment, so I'll be using that to create the dataset and run code.
+
+We need a large enough dataset to play around with. The Spark SQL snippet below was run on Databricks and persisted to my schema within the metastore.
+
+```sql
+-- this looks a bit weird but it avoids exploding just once which is slower for a large array
+create or replace table zacdav.collect_sample_data as
+with tenmillion as (
+  select
+    round(rand() * 10000) as a,
+    round(rand() * 10000) as b,
+    round(rand() * 10000) as c,
+    round(rand() * 10000) as d,
+    round(rand() * 10000) as e,
+    round(rand() * 10000) as f,
+    round(rand() * 10000) as g,
+    round(rand() * 10000) as h,
+    round(rand() * 10000) as i,
+    round(rand() * 10000) as j,
+    round(rand() * 10000) as k
+  from (explode(sequence(1, 10000000, 1)))
+)
+select * from tenmillion
+union
+select * from tenmillion
+union
+select * from tenmillion
+```
+
+A table of 30M rows x 11 columns of random numeric values should be enough.
+
+Let's try to collect this into the R session with [`{sparklyr}`](https://spark.rstudio.com/). We're going to make sure that [`{arrow}`](https://arrow.apache.org/docs/r/) is installed as it dramatically [improves performance](https://arrow.apache.org/blog/2019/01/25/r-spark-improvements/).
+
+```r
+library(arrow)
+library(dplyr)
+library(sparklyr)
+
+sc <- spark_connect(method = "databricks")
+
+# oh what a surprise, this errors - we've got a reproducible example
+results <- tbl(sc, "zacdav.collect_sample_data") %>%
+  collect()
+```
+
+Success, the sample dataset reproduces the error.
+
+Turns out if you were to spend time, like I did, collecting slightly less until the `collect()` executes successfully you'll find that approximately 24 million rows is the maximum allowed (for this particular dataset, mileage will vary).
+
+```r
+# turns out we hit the limit of `collect` at roughly 24 million rows
+# this is a function of dataset number of columns, types of columns, etc
+results <- tbl(sc, "zacdav.collect_sample_data") %>%
+  head(24000000) %>%
+  collect()
+```
+
+I don't really want to have to slice my dataset into fractions manually and collect each part separately. So what now?
+
+## Understand how to circumvent the error
+
+If we start looking under the covers of `{sparklyr}` we learn a few things:
+
+- When `{arrow}` is enabled, [`sdf_collect()`](https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/sdf_wrapper.R#L168-L180) calls [`arrow_collect()`](https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L116-L159), a non-exported function.
+- [`arrow_collect()`](https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L116-L159) will accept a callback, and if specified will pull each batch incrementally ([code](https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L136-L153)).
+- If a callback isn't specified then batch conversion happens all in one go ([code](https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L155-L157)).
+
+The callback is particularly interesting, it's exactly what we're going to use to collect our large dataset. For those unfamiliar with callbacks, it's essentially code that is invoked by other code - typically code that's supplied as an argument to a function.
+
+> A callback is just an R function that will be called over each Spark partition
+>
+> - [Chapter 8.4, *Mastering Spark with R*](https://therinspark.com/data.html#copy)
+
+The [conditional block that is evaluated](https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L136-L153) when specifying a callback invokes code that allows the Arrow batches to be pulled back iteratively rather than all at once (which is where we hit the error).
+
+This solution isn't completely new. [*Mastering Spark with R*](https://therinspark.com/data.html#copy) also describes using a callback to write each partition to disk or send it over the network, rather than collecting everything into memory.
+
+## Write a function to collect the whole dataset
+
+Okay let's write a function `collect_larger()` that directly calls `arrow_collect()` and specifies a callback that appends each batch to a list and combines it.
+
+```r
+collect_larger <- function(tbl, ...) {
+  collected <- list()
+  sparklyr:::arrow_collect(tbl, ..., callback = function(batch_df) {
+    collected <<- c(collected, list(batch_df))
+  })
+  data.table::rbindlist(collected)
+}
+```
+
+It's not the most elegant solution - ideally we wouldn't need this at all. Nor is this the only solution: the callback's behaviour could change depending on what you're doing (e.g. you may want to persist each batch as a file to disk immediately).
+
+If we try `collect_larger()` we can now collect the whole dataset!
+
+```r
+# with new function we can collect whole dataset without issue
+results <- tbl(sc, "zacdav.collect_sample_data") %>%
+  collect_larger()
+```
+
+## Benchmarking the solution
+
+Problem solved! However, is performance comparable to using `collect()`?
+
+I ran `collect_larger()` on the whole dataset prior to ensure caching. This ensures that I'm not measuring time spent scanning data.
+
+```r
+# microbenchmark is great for this
+library(microbenchmark)
+
+dataset <- tbl(sc, "zacdav.collect_sample_data")
+
+benchmark_results <- microbenchmark(
+  collect_1m = head(dataset, 1000000) %>% collect(),
+  collect_larger_1m = head(dataset, 1000000) %>% collect_larger(),
+  collect_5m = head(dataset, 5000000) %>% collect(),
+  collect_larger_5m = head(dataset, 5000000) %>% collect_larger(),
+  collect_20m = head(dataset, 20000000) %>% collect(),
+  collect_larger_20m = head(dataset, 20000000) %>% collect_larger(),
+  times = 5
+)
+```
+
+```{ojs}
+//| echo: false
+//| output: false
+sparklyrBenchmark = await FileAttachment("benchmark-summary.json").json()
+```
+
+::: {.benchmark-plot}
+```{ojs}
+//| echo: false
+viewof sparklyrScale = Inputs.select(new Map([
+  ["Logarithmic", "log"],
+  ["Linear", "linear"]
+]), {label: "Scale", value: "log"})
+```
+
+```{ojs}
+//| label: fig-original-benchmark
+//| echo: false
+//| fig-cap: "Benchmark results comparing collect() and collect_larger() for 1M, 5M, and 20M rows, with five repetitions per method."
+{
+  const data = sparklyrBenchmark.results;
+  const chartWidth = Math.min(width, 760);
+  const format = value => value.toFixed(6);
+  const position = {y: "case"};
+  const chart = Plot.plot({
+    width: chartWidth,
+    height: 360,
+    marginLeft: chartWidth < 480 ? 134 : 152,
+    marginRight: 20,
+    marginTop: 20,
+    marginBottom: 44,
+    ariaLabel: "Original benchmark runtime summaries: minimum, quartiles, median, maximum, and mean, in seconds.",
+    style: {background: "transparent", color: "inherit", fontFamily: "inherit", fontSize: "12px", overflow: "visible"},
+    x: {
+      type: sparklyrScale,
+      domain: [sparklyrScale === "log" ? Math.min(...data.map(d => d.min)) * 0.9 : 0,
+        Math.max(...data.map(d => d.max)) * 1.1],
+      ticks: sparklyrScale === "log" ? [3, 10, 30] : [0, 20, 40, 60],
+      label: "Time [seconds]",
+      grid: true
+    },
+    y: {label: null, domain: data.map(d => d.case).reverse(), tickSize: 0, padding: 0.3},
+    color: {domain: ["collect()", "collect_larger()"],
+      range: ["var(--benchmark-new)", "var(--benchmark-old)"], legend: true},
+    marks: [
+      Plot.ruleY(data, {...position, x1: "min", x2: "max", stroke: "method", strokeWidth: 1.5}),
+      Plot.barX(data, {...position, x1: "q1", x2: "q3", fill: "method", fillOpacity: 0.22,
+        insetTop: 10, insetBottom: 10}),
+      Plot.tickX(data, {...position, x: "median", stroke: "method", strokeWidth: 1.8,
+        insetTop: 10, insetBottom: 10}),
+      Plot.dot(data, {...position, x: "mean", fill: "method", r: 3.5}),
+      Plot.tip(data, Plot.pointerY({
+        ...position, x: "mean",
+        title: d => `${d.case}\nRows: ${d.rows.toLocaleString("en-US")}\nRepetitions: ${sparklyrBenchmark.repetitions}\nMean: ${format(d.mean)} s\nMedian: ${format(d.median)} s\nMin: ${format(d.min)} s\nQ1: ${format(d.q1)} s\nQ3: ${format(d.q3)} s\nMax: ${format(d.max)} s`,
+        fill: "var(--reading-surface-raised)", stroke: "var(--reading-border)",
+        fontSize: 11, lineWidth: 24
+      }))
+    ]
+  });
+
+  const labels = chart.querySelectorAll('[aria-label="y-axis tick label"] text');
+  labels.forEach(label => label.classList.add("benchmark-code-label"));
+  requestAnimationFrame(() => {
+    if (!chart.isConnected) return;
+    labels.forEach(label => {
+      const bounds = label.getBBox();
+      const background = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      background.setAttribute("class", "benchmark-code-background");
+      background.setAttribute("transform", label.getAttribute("transform"));
+      background.setAttribute("x", bounds.x - 3);
+      background.setAttribute("y", bounds.y - 2);
+      background.setAttribute("width", bounds.width + 6);
+      background.setAttribute("height", bounds.height + 4);
+      background.setAttribute("rx", 3);
+      label.before(background);
+    });
+  });
+  return chart;
+}
+```
+:::
+
+There is significant overhead for collecting data with `collect_larger()`, approximately ~35% for the 20 million row dataset - hardly surprising. This overhead is less (~25%) on the smaller dataset of 1 million rows.
+
+I believe this overhead is worth it in order to be able to retrieve the entire dataset in one call - something that isn't simple for larger datasets. It's an easy solution that will let you focus on other things.
+
+You can find the notebook to reproduce my results [here](https://github.com/zacdav-db/examples/tree/main/sparklyr-collect-large-data).
+
+Happy `collect()`-ing.
+
+## Noteworthy points
+
+- If you modify the callback to print out the size of each batch returned you'll find almost always they are 10,000 rows. This is due to [`spark.sql.execution.arrow.maxRecordsPerBatch`](https://spark.apache.org/docs/3.0.0/sql-pyspark-pandas-with-arrow.html#setting-arrow-batch-size), which defaults to 10,000.
+- There is certainly overhead for pulling back many small batches of 10,000 and combining those into a singular `data.frame` / `data.table`. You can test setting [`spark.sql.execution.arrow.maxRecordsPerBatch`](https://spark.apache.org/docs/3.0.0/sql-pyspark-pandas-with-arrow.html#setting-arrow-batch-size) to higher values to eke out extra performance if you're inclined.
+- Consider if you could use a Spark UDF to run your analysis (or even convert code to `{sparklyr}`) as an alternative to collecting large data back to the driver node's R session.
+- In `collect_larger()` I used `{data.table}`'s `rbindlist()` since I've found it to be faster in the past - unsure if that's changed since I last benchmarked!
+- You'll need to have sufficient memory available for the R session to `collect()` large data. My Databricks cluster had 128 GB of memory on the driver node, which is well above what is required to collect this amount of data.

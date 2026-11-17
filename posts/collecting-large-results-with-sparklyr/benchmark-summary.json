@@ -1,0 +1,13 @@
+{
+  "source": "https://github.com/zacdav-db/examples/blob/main/sparklyr-collect-large-data/collecting-large-results-in-sparklyr.html",
+  "unit": "seconds",
+  "repetitions": 5,
+  "results": [
+    {"case": "collect_1m", "method": "collect()", "rows": 1000000, "min": 2.697316, "q1": 2.759989, "mean": 2.853332, "median": 2.920815, "q3": 2.930747, "max": 2.957795},
+    {"case": "collect_larger_1m", "method": "collect_larger()", "rows": 1000000, "min": 3.388573, "q1": 3.493706, "mean": 3.514895, "median": 3.543476, "q3": 3.567330, "max": 3.581389},
+    {"case": "collect_5m", "method": "collect()", "rows": 5000000, "min": 10.239230, "q1": 10.597312, "mean": 10.744282, "median": 10.605403, "q3": 10.957090, "max": 11.322377},
+    {"case": "collect_larger_5m", "method": "collect_larger()", "rows": 5000000, "min": 13.978493, "q1": 13.999484, "mean": 14.194374, "median": 14.106280, "q3": 14.175750, "max": 14.711866},
+    {"case": "collect_20m", "method": "collect()", "rows": 20000000, "min": 40.250081, "q1": 40.527818, "mean": 40.592493, "median": 40.598675, "q3": 40.761276, "max": 40.824613},
+    {"case": "collect_larger_20m", "method": "collect_larger()", "rows": 20000000, "min": 53.374857, "q1": 53.711834, "mean": 54.278518, "median": 54.505799, "q3": 54.567218, "max": 55.232885}
+  ]
+}

@@ -22,6 +22,7 @@ website:
         href: https://www.linkedin.com/in/zacdav/
 format:
   html:
+    code-line-numbers: true
     respect-user-color-scheme: false
     theme:
       dark: darkly
