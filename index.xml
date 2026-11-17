@@ -392,8 +392,8 @@ font-style: inherit;">=</span> snapshot.to_record_batch_reader()</span><div clas
     C --&gt; T
     C --&gt; U
     S --&gt; I
-    T --&gt; V["PyArrow Table (e.g. Polars)"]
-    U --&gt; W["Arrow consumer (e.g. DuckDB)"]
+    T --&gt; V["PyArrow Table&lt;br/&gt;(e.g. Polars)"]
+    U --&gt; W["Arrow consumer&lt;br/&gt;(e.g. DuckDB)"]
 
     classDef old fill:#f6e7e7,stroke:#8b5e5e,color:#3b2a2a;
     classDef new fill:#e8f1fb,stroke:#5b7ea4,color:#1f2f44;
