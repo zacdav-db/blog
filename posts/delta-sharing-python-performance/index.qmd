@@ -1,0 +1,669 @@
+---
+title: "Opening Up Delta Sharing with Arrow"
+date: 2026-11-17
+date-modified: 2026-11-17
+ai-models: ["GPT 6.1 Sol (High)"]
+description: "How the Python Delta Sharing connector opens up cleaner Arrow-native interoperability."
+categories: [Delta Sharing, Python, Arrow, DuckDB]
+title-block-banner: true
+code-annotations: hover
+toc: true
+format:
+  html:
+    template-partials:
+      - ../../includes/title-metadata.html
+include-in-header:
+  text: |
+    <style>
+    #quarto-document-content table caption {
+      text-align: left;
+    }
+    </style>
+---
+
+The Python Delta Sharing connector has long had powerful internals powered by Delta Kernel and Arrow, but the core user-facing experience typically ended up with a Pandas DataFrame.
+
+That's no longer the case.
+
+## The earlier Python interface
+
+If you've used the connector before, this is the API you may remember:
+
+```python {filename="read_with_pandas.py"}
+import delta_sharing
+
+profile_file = "/path/to/recipient.share"
+client = delta_sharing.SharingClient(profile_file)
+
+client.list_all_tables()
+
+table_url = profile_file + "#share.schema.table"  # <1>
+df = delta_sharing.load_as_pandas(table_url)       # <2>
+```
+
+1. Even after creating a `SharingClient`, the read API still wants a manually assembled table URL.
+2. The public Python read path lands directly in Pandas.
+
+There are a few pain points here:
+
+- even after creating a `SharingClient`, you still build the `"<profile>#<share>.<schema>.<table>"` string yourself
+- the public read path lands directly in Pandas
+- It's difficult to handle tables that are larger than memory
+
+Together, they made the interface feel more manual than it needed to be (especially if working with large datasets).
+
+## Escaping Pandas
+
+The connector is powered by [Delta Kernel](https://docs.delta.io/latest/delta-kernel.html) behind the scenes, which is using efficient methods ([Arrow](https://arrow.apache.org/)) to fetch the data. But those efficient paths were not exposed publicly, which meant you still ended up back in Pandas.
+
+Arrow is a [language-independent columnar format](https://arrow.apache.org/docs/format/Columnar.html), which makes it a good way to hand data from one engine to another, and tools like [DuckDB](https://duckdb.org/docs/stable/guides/python/sql_on_arrow) and [Polars](https://docs.pola.rs/api/python/stable/reference/api/polars.from_arrow.html) can consume it directly. Having direct access to Arrow unlocks a lot of interoperability.
+
+The connector already had most of the ingredients needed to expose Arrow. They just were not presented as a clean public API.
+
+So if you really wanted to, you could reach into internal classes and wire it up yourself.
+
+<details>
+<summary>Expand the internal workaround example</summary>
+
+```python {filename="internal_arrow_workaround.py"}
+import os
+import tempfile
+from json import dump, loads
+
+import pyarrow as pa
+
+import delta_kernel_rust_sharing_wrapper as dks
+from delta_sharing.protocol import DeltaSharingProfile, Table
+from delta_sharing.rest_client import DataSharingRestClient
+
+
+def _write_snapshot(temp_dir, lines):  # <1>
+    log_dir = os.path.join(temp_dir, "_delta_log")  # <1>
+    os.makedirs(log_dir, exist_ok=True)  # <1>
+
+    with open(os.path.join(log_dir, "00000000000000000000.json"), "w") as f:  # <1>
+        dump({"protocol": loads(lines[0])["protocol"]["deltaProtocol"]}, f)  # <1>
+        f.write("\n")  # <1>
+        dump({"metaData": loads(lines[1])["metaData"]["deltaMetadata"]}, f)  # <1>
+        f.write("\n")  # <1>
+        for line in lines[2:]:  # <1>
+            dump(loads(line)["file"]["deltaSingleAction"], f)  # <1>
+            f.write("\n")  # <1>
+
+    return f"file:///{temp_dir}"  # <1>
+
+
+profile = DeltaSharingProfile.read_from_file("/path/to/recipient.share")
+rest_client = DataSharingRestClient(profile)
+rest_client.set_delta_format_header()  # <2>
+
+try:
+    response = rest_client.list_files_in_table(
+        Table(name="table", share="share", schema="schema"),
+    )
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        table_uri = _write_snapshot(temp_dir, response.lines)  # <3>
+        interface = dks.PythonInterface(table_uri)
+        snapshot = dks.Table(table_uri).snapshot(interface)
+        scan = dks.ScanBuilder(snapshot).build()
+        arrow_table = pa.Table.from_batches(scan.execute(interface))  # <4>
+finally:
+    rest_client.remove_delta_format_header()
+```
+
+1. Reconstruct just enough Delta log state locally for Delta Kernel to treat the shared snapshot like a Delta table.
+2. Force the connector onto the Delta-format path.
+3. Reconstruct a temporary Delta log snapshot locally.
+4. Materialize the scan result as an Arrow table yourself.
+
+</details>
+
+This shows that, without much effort, we should be able to:
+
+- expose Arrow directly
+- stop requiring manual construction of the table URL
+
+## A better public interface
+
+With the newer table and Arrow APIs in place, you no longer need to reach into internal classes just to get Arrow out of a shared table.
+
+That is what the newer interface gives us:
+
+```python {filename="table_handle_and_outputs.py"}
+import delta_sharing
+
+client = delta_sharing.SharingClient("/path/to/recipient.share")
+table = client.table("share.schema.table")  # <1>
+snapshot = table.snapshot(limit=10000)    # <2>
+
+# Materialize the same snapshot in different formats.
+pdf = snapshot.to_pandas()            # <3>
+arrow_table = snapshot.to_arrow()     # <4>
+reader = snapshot.to_record_batch_reader()  # <5>
+```
+
+1. The read target is now a first-class table object rather than a string you build yourself.
+2. Move from the table handle to an explicit snapshot.
+3. Keep the old Pandas landing zone when Pandas is what you want.
+4. Get an eager `pyarrow.Table` for flexible handoff.
+5. Get a streaming Arrow reader for batch-native consumers.
+
+You can now work with shared data through a table and snapshot object, and choose the output format that best matches what you want to do next.
+
+In the diagram below, the red path is the earlier public interface and the blue path is the newer table interface, with snapshot and change data feed reads.
+
+```{mermaid}
+%%| label: fig-read-paths
+%%| fig-cap: "The red path shows the earlier public interface. The blue path shows snapshot and change data feed reads sharing the same Pandas and Arrow outputs."
+flowchart TD
+    A["Delta Sharing profile"] --> B["SharingClient"]
+    B --> D["build table URL string"]
+    D --> E["load_as_pandas()"]
+    E --> I["Pandas DataFrame"]
+
+    B --> N[".table()"]
+    N --> O[".snapshot()"]
+    O --> S[".to_pandas()"]
+    O --> T[".to_arrow()"]
+    O --> U[".to_record_batch_reader()"]
+    N --> C[".changes()"]
+    C --> S
+    C --> T
+    C --> U
+    S --> I
+    T --> V["PyArrow Table (e.g. Polars)"]
+    U --> W["Arrow consumer (e.g. DuckDB)"]
+
+    classDef old fill:#f6e7e7,stroke:#8b5e5e,color:#3b2a2a;
+    classDef new fill:#e8f1fb,stroke:#5b7ea4,color:#1f2f44;
+    class A,B,D,E,I old;
+    class N,O,C,S,T,U new;
+```
+
+## Start with the batch reader
+
+The most interesting part of the new interface is `to_record_batch_reader()`.
+
+That gives you an Arrow `RecordBatchReader`, which is a streaming interface rather than a fully materialized table. In practice, that means the connector can hand batches straight to another engine.
+
+That same shape is useful anywhere the next tool already understands Arrow streams or Arrow-native objects.
+
+::: {.panel-tabset}
+### DuckDB
+
+```python
+import duckdb
+
+reader = snapshot.to_record_batch_reader()
+result = duckdb.connect().from_arrow(reader).limit(10).df()
+```
+
+See DuckDB's [SQL on Arrow](https://duckdb.org/docs/stable/guides/python/sql_on_arrow) docs.
+
+### Polars
+
+```python
+import polars as pl
+
+reader = snapshot.to_record_batch_reader()
+polars_df = pl.from_arrow(reader)
+```
+
+See Polars [`from_arrow`](https://docs.pola.rs/py-polars/html/reference/api/polars.from_arrow.html).
+
+### DataFusion
+
+```python
+from datafusion import SessionContext
+
+ctx = SessionContext()
+reader = snapshot.to_record_batch_reader()
+df = ctx.from_arrow(reader)
+result = df.to_pydict()
+```
+
+See DataFusion's [Python Arrow IO](https://datafusion.apache.org/python/user-guide/io/arrow.html) docs.
+
+### PyArrow
+
+```python
+reader = snapshot.to_record_batch_reader()
+
+for batch in reader:
+    print(batch)
+```
+
+See PyArrow [`RecordBatchReader`](https://arrow.apache.org/docs/python/generated/pyarrow.RecordBatchReader.html).
+:::
+
+There is another nice side effect here as well: you can pull the data incrementally, and control how those batches are consumed. This is useful when the result is large and you want to process or write batches while maintaining a low memory footprint.
+
+For example, you can buffer ten record batches at a time, then flush each group to a separate Parquet file:
+
+```python {filename="snapshot_batches.py"}
+import pyarrow as pa
+import pyarrow.parquet as pq
+
+batches_per_file = 10  # <1>
+batch_buffer = []
+file_index = 0
+
+with table.snapshot().to_record_batch_reader() as reader:
+    for batch in reader:
+        batch_buffer.append(batch)
+
+        if len(batch_buffer) == batches_per_file:
+            pq.write_table(
+                pa.Table.from_batches(batch_buffer),
+                f"snapshot-{file_index}.parquet",
+            )
+            batch_buffer.clear()
+            file_index += 1
+
+    if batch_buffer:  # <2>
+        pq.write_table(
+            pa.Table.from_batches(batch_buffer),
+            f"snapshot-{file_index}.parquet",
+        )
+```
+
+1. Control how many batches are buffered per output file. Batch sizes can vary, so this is not a fixed row count or memory limit.
+2. Write any batches left after the loop, even if the buffer is not full. An empty snapshot produces no files.
+
+::: {.callout-note}
+Here, incremental means consuming a snapshot in batches, not reading changes over time. This reader does not watch for later commits.
+:::
+
+Use `table.changes(...)` for the [change data feed](https://github.com/delta-io/delta-sharing/blob/main/PROTOCOL.md#read-change-data-feed-from-a-table): insert, update, and delete events within a version or timestamp range. Both interfaces can return a batch reader; the difference is which rows they return.
+
+If you do want an eager object instead, `to_arrow()` is still there as the convenience method for materializing a full `pyarrow.Table`.
+
+A good mental model is:
+
+- `to_record_batch_reader()` is the most flexible primitive
+- `to_arrow()` is the eager, fully materialized variant
+
+## Less overhead means better performance
+
+These benchmarks compare the earlier Pandas API with the newer snapshot outputs, then compare the memory needed to write the result incrementally or all at once. Each method reads 100 million rows, repeated ten times.
+
+The percentage improvements can be smaller at lower data volumes and more pronounced at higher volumes, especially the memory savings from incremental reads.
+
+### Does it actually run faster?
+
+<details>
+<summary>Expand the runtime benchmark script</summary>
+
+```python {filename="runtime_benchmark.py"}
+"""Compare full materialization of shared data as Pandas and Arrow tables."""
+
+from pathlib import Path
+
+import delta_sharing
+
+from common import arguments, measure, run
+
+METHODS = ("legacy_pandas", "snapshot_pandas", "snapshot_arrow")
+
+
+def read(args):
+    if args.worker == "legacy_pandas":
+        result = delta_sharing.load_as_pandas(
+            f"{args.profile}#{args.table}", limit=args.rows, version=args.version
+        )
+        return len(result)
+    snapshot = delta_sharing.SharingClient(args.profile).table(args.table).snapshot(
+        limit=args.rows, version=args.version
+    )
+    if args.worker == "snapshot_pandas":
+        result = snapshot.to_pandas()
+        return len(result)
+    result = snapshot.to_arrow()
+    return result.num_rows
+
+
+if __name__ == "__main__":
+    args = arguments()
+    if args.worker:
+        measure(args, read)
+    else:
+        run(args, Path(__file__), METHODS)
+```
+
+</details>
+
+| Method | Mean runtime (s) | Min (s) | Max (s) |
+|---|---:|---:|---:|
+| `load_as_pandas(...)` | 115.48 | 107.47 | 134.39 |
+| `snapshot.to_pandas()` | 115.81 | 100.46 | 154.17 |
+| `snapshot.to_arrow()` | <span class="benchmark-best"><strong>60.87</strong></span> | <span class="benchmark-best"><strong>57.95</strong></span> | <span class="benchmark-best"><strong>66.59</strong></span> |
+: Runtime benchmark results for 100 million NYC taxi rows, across ten repetitions per method. Lower is better.
+
+```{ojs}
+//| echo: false
+//| output: false
+runtimeMeasurements = (await FileAttachment("benchmarks/results/scale-100m-20261117/runtime.jsonl").text())
+  .trim().split(/\r?\n/).map(line => JSON.parse(line))
+
+writeMeasurements = (await FileAttachment("benchmarks/results/scale-100m-20261117/memory.jsonl").text())
+  .trim().split(/\r?\n/).map(line => JSON.parse(line))
+
+benchmarkLabels = ({
+  legacy_pandas: "load_as_pandas(...)",
+  snapshot_pandas: "snapshot.to_pandas()",
+  snapshot_arrow: "snapshot.to_arrow()",
+  incremental_write: "Incremental batches",
+  eager_write: "Read all, then write"
+})
+
+benchmarkBoxplot = (samples, methods, metric, plotWidth) => {
+  const chartWidth = Math.min(plotWidth, 760);
+  const color = method => method === "legacy_pandas" ? "var(--benchmark-old)"
+    : method === "snapshot_arrow" || method === "incremental_write"
+    ? "var(--benchmark-good)" : "var(--benchmark-new)";
+  const positions = {x: metric, y: "method"};
+  const format = value => value.toLocaleString("en-US", {
+    minimumFractionDigits: 2, maximumFractionDigits: 2
+  });
+
+  const chart = Plot.plot({
+    width: chartWidth,
+    height: methods.length === 3 ? 260 : 220,
+    marginLeft: chartWidth < 480 ? 144 : 164,
+    marginRight: 20,
+    marginTop: 20,
+    marginBottom: 48,
+    ariaLabel: `${metric === "peak_mib" ? "Peak memory" : "Runtime"} distributions across ten benchmark repetitions`,
+    style: {background: "transparent", color: "inherit", fontFamily: "inherit", fontSize: "12px", overflow: "visible"},
+    x: {
+      label: metric === "peak_mib" ? "Peak process memory (MiB)" : "Runtime (seconds)",
+      grid: true,
+      nice: true,
+      zero: metric === "peak_mib",
+      ticks: Math.max(3, Math.floor((chartWidth - 164) / 70))
+    },
+    y: {label: null, domain: methods, tickFormat: method => benchmarkLabels[method], tickSize: 0, padding: 0.35},
+    color: {domain: methods, range: methods.map(color)},
+    marks: [
+      // Draw all measured runs separately, without duplicating the box mark's outlier dots.
+      Plot.boxX(samples, {...positions, fill: "method", stroke: "method", fillOpacity: 0.18,
+        strokeWidth: 1.7, insetTop: 12, insetBottom: 12, r: 0}),
+      ...Array.from({length: 10}, (_, i) => Plot.dot(
+        samples.filter(sample => sample.repetition === i + 1),
+        {...positions, fill: "method", stroke: "var(--bs-body-bg)", strokeWidth: 0.7,
+          r: 3.5, dy: (i - 4.5) * 2.6}
+      )),
+      Plot.tip(samples, Plot.pointer({
+        ...positions,
+        title: sample => `${benchmarkLabels[sample.method]}\nRun ${sample.repetition} of 10\nRuntime: ${format(sample.seconds)} s\nPeak memory: ${format(sample.peak_mib)} MiB`,
+        fill: "var(--reading-surface-raised)",
+        stroke: "var(--reading-border)",
+        fontSize: 12,
+        lineWidth: 28
+      }))
+    ]
+  });
+
+  const codeLabels = methods.every(method => benchmarkLabels[method].includes("("));
+  if (codeLabels) {
+    const labels = chart.querySelectorAll('[aria-label="y-axis tick label"] text');
+    labels.forEach(label => label.classList.add("benchmark-code-label"));
+    // Measure attached SVG text so the code backgrounds also fit after resizing.
+    requestAnimationFrame(() => {
+      if (!chart.isConnected) return;
+      labels.forEach(label => {
+        const bounds = label.getBBox();
+        const background = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        background.setAttribute("class", "benchmark-code-background");
+        background.setAttribute("transform", label.getAttribute("transform"));
+        background.setAttribute("x", bounds.x - 3);
+        background.setAttribute("y", bounds.y - 2);
+        background.setAttribute("width", bounds.width + 6);
+        background.setAttribute("height", bounds.height + 4);
+        background.setAttribute("rx", 3);
+        label.before(background);
+      });
+    });
+  }
+  return chart;
+}
+```
+
+::: {.benchmark-plot}
+```{ojs}
+//| label: fig-runtime-boxplot
+//| echo: false
+//| fig-cap: "Runtime across ten repetitions per method."
+benchmarkBoxplot(runtimeMeasurements,
+  ["legacy_pandas", "snapshot_pandas", "snapshot_arrow"], "seconds", width)
+```
+:::
+
+Direct Arrow materialization reduced mean runtime by ~47% relative to Pandas.
+
+### What happens when you stop reading results all at once?
+
+<details>
+<summary>Expand the peak memory benchmark script</summary>
+
+```python {filename="memory_benchmark.py"}
+"""Compare peak process memory and runtime for two Parquet write patterns."""
+
+import tempfile
+from pathlib import Path
+
+import delta_sharing
+import pyarrow.parquet as pq
+
+from common import arguments, measure, run
+
+METHODS = ("incremental_write", "eager_write")
+
+
+def write(args):
+    snapshot = delta_sharing.SharingClient(args.profile).table(args.table).snapshot(
+        limit=args.rows, version=args.version
+    )
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "result.parquet"
+        if args.worker == "incremental_write":
+            rows = 0
+            with snapshot.to_record_batch_reader() as reader:
+                with pq.ParquetWriter(path, reader.schema, compression="snappy") as writer:
+                    for batch in reader:
+                        writer.write_batch(batch)
+                        rows += batch.num_rows
+        else:
+            result = snapshot.to_arrow()
+            rows = result.num_rows
+            pq.write_table(result, path, compression="snappy")
+        assert pq.read_metadata(path).num_rows == rows
+        return rows
+
+
+if __name__ == "__main__":
+    args = arguments()
+    if args.worker:
+        measure(args, write)
+    else:
+        run(args, Path(__file__), METHODS)
+```
+
+</details>
+
+| Method | Runtime mean (s) | Peak mean (MiB) | Peak max (MiB) |
+|---|---:|---:|---:|
+| Incremental write from `snapshot.to_record_batch_reader()` | <span class="benchmark-best"><strong>100.31</strong></span> | <span class="benchmark-best"><strong>2,286.30</strong></span> | <span class="benchmark-best"><strong>2,360.44</strong></span> |
+| Read all via `snapshot.to_arrow()` then write | 100.97 | 14,529.71 | 14,604.52 |
+: Peak process memory and runtime for writing 100 million NYC taxi rows to Parquet, across ten repetitions per method. Lower is better; green marks the best values.
+
+::: {.benchmark-plot}
+```{ojs}
+//| echo: false
+viewof writeMetric = Inputs.select(new Map([
+  ["Peak memory (MiB)", "peak_mib"],
+  ["Runtime (seconds)", "seconds"]
+]), {label: "Measure", value: "peak_mib"})
+```
+
+```{ojs}
+//| label: fig-write-boxplot
+//| echo: false
+//| fig-cap: "Write benchmark across ten repetitions per method."
+benchmarkBoxplot(writeMeasurements,
+  ["incremental_write", "eager_write"], writeMetric, width)
+```
+:::
+
+Incremental writes reduced mean peak memory by ~84% relative to reading the full Arrow table and writing afterwards. Both patterns averaged about 100 seconds.
+
+The shared measurement helper and run instructions are in the [appendix](#appendix).
+
+These runs used a fixture based on NYC taxi data:
+
+- dataset: `nyctaxi_2019` (scaled to 100M rows)
+- rows per run: `100,000,000`
+- repetitions: `10`
+
+## Easier to use, easier to integrate
+
+Overall, the new developments with the Delta Sharing connector are a win for interoperability, performance, and user experience.
+
+You can start with a table, choose the representation that fits the next step, and hand data to Arrow-native tools and engines much more directly.
+
+## Sources
+
+- [Delta Sharing repository README](https://github.com/delta-io/delta-sharing)
+- [Issue #860: object-based Python API proposal](https://github.com/delta-io/delta-sharing/issues/860)
+- [PR #949: snapshot Arrow materializers](https://github.com/delta-io/delta-sharing/pull/949)
+- [PR #992: Arrow materializers for table changes](https://github.com/delta-io/delta-sharing/pull/992)
+
+## Appendix
+
+<details>
+<summary>Expand the shared measurement helper</summary>
+
+```python {filename="common.py"}
+"""Run each measurement in a fresh process, including native allocations."""
+
+import argparse
+import importlib.metadata
+import json
+import platform
+import random
+import resource
+import shutil
+import socket
+import statistics
+import subprocess
+import sys
+import time
+from pathlib import Path
+from urllib.parse import urlparse
+
+
+def arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--profile", required=True)
+    parser.add_argument("--table", default="delta_sharing.default.nyctaxi_2019")
+    parser.add_argument("--rows", type=int, default=10_000_000)
+    parser.add_argument("--repeat", type=int, default=10)
+    parser.add_argument("--version", type=int)
+    parser.add_argument("--worker")
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--checkpoint-dir", type=Path)
+    return parser.parse_args()
+
+
+def measure(args, operation):
+    started = time.perf_counter()
+    rows = operation(args)
+    elapsed = time.perf_counter() - started
+    assert rows == args.rows, (rows, args.rows)
+    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    peak_bytes = peak if sys.platform == "darwin" else peak * 1024
+    print(json.dumps({"method": args.worker, "rows": rows,
+                      "seconds": elapsed, "peak_mib": peak_bytes / 1024**2}))
+
+
+def run(args, script, methods):
+    import delta_sharing
+
+    profile = json.loads(Path(args.profile).read_text())
+    endpoint = urlparse(profile["endpoint"])
+    socket.getaddrinfo(endpoint.hostname, endpoint.port or 443)
+    if args.version is None:
+        args.version = delta_sharing.SharingClient(args.profile).table(args.table).version()
+    metadata = {
+        "table": args.table, "rows": args.rows, "repetitions": args.repeat,
+        "table_version": args.version, "python": platform.python_version(),
+        "platform": platform.platform(),
+        "packages": {name: importlib.metadata.version(name) for name in
+                     ("delta-sharing", "pyarrow", "pandas", "duckdb",
+                      "delta-kernel-rust-sharing-wrapper")},
+    }
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.with_suffix(".metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
+    existing = [json.loads(line) for line in args.output.read_text().splitlines()] if args.output.exists() else []
+    rng = random.Random(42)
+    for repetition in range(args.repeat):
+        order = list(methods)
+        rng.shuffle(order)
+        for method in order:
+            if any(r["method"] == method and r["repetition"] == repetition + 1 for r in existing):
+                continue
+            command = [sys.executable, str(script), "--worker", method,
+                       "--profile", args.profile, "--table", args.table,
+                       "--rows", str(args.rows), "--version", str(args.version),
+                       "--output", str(args.output)]
+            result = subprocess.run(command, capture_output=True, text=True, timeout=900)
+            if result.returncode:
+                raise RuntimeError(f"{method} failed: {result.stderr[-3000:]}")
+            row = json.loads(result.stdout.strip().splitlines()[-1])
+            row["repetition"] = repetition + 1
+            with args.output.open("a") as output:
+                output.write(json.dumps(row) + "\n")
+            existing.append(row)
+            if args.checkpoint_dir:
+                args.checkpoint_dir.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(args.output, args.checkpoint_dir / args.output.name)
+            print(json.dumps(row), flush=True)
+    summary = []
+    for method in methods:
+        samples = [r for r in existing if r["method"] == method]
+        seconds = [r["seconds"] for r in samples]
+        peaks = [r["peak_mib"] for r in samples]
+        summary.append({"method": method, "repetitions": len(samples),
+                        "mean_seconds": statistics.mean(seconds),
+                        "min_seconds": min(seconds), "max_seconds": max(seconds),
+                        "peak_mean_mib": statistics.mean(peaks), "peak_max_mib": max(peaks)})
+    args.output.with_suffix(".summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+```
+
+</details>
+
+The benchmark scripts use the shared helper above.
+
+1. Download [runtime_benchmark.py](benchmarks/runtime_benchmark.py), [memory_benchmark.py](benchmarks/memory_benchmark.py), and [common.py](benchmarks/common.py) into the same directory.
+2. Run each benchmark with your recipient profile and table name, using a separate output file:
+
+```bash
+python runtime_benchmark.py \
+  --profile /path/to/recipient.share \
+  --table share.schema.table \
+  --rows 100000000 \
+  --output runtime-results.jsonl
+
+python memory_benchmark.py \
+  --profile /path/to/recipient.share \
+  --table share.schema.table \
+  --rows 100000000 \
+  --output memory-results.jsonl
+```
+
+Each measurement runs in a fresh process and checks the row count. Method order is shuffled; the results also record the table version and package versions.
+
+---
+
+<small>This post was written with assistance from AI tooling.</small>

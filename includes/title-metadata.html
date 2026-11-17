@@ -1,0 +1,26 @@
+<div class="quarto-title-meta quarto-title-meta-with-ai">
+  $if(date)$
+  <div>
+    <div class="quarto-title-meta-heading">$labels.published$</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">$date$</p>
+    </div>
+  </div>
+  $endif$
+  $if(date-modified)$
+  <div>
+    <div class="quarto-title-meta-heading">$labels.modified$</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">$date-modified$</p>
+    </div>
+  </div>
+  $endif$
+  $if(ai-models)$
+  <div class="quarto-title-meta-ai">
+    <div class="quarto-title-meta-heading">AI models used</div>
+    <div class="quarto-title-meta-contents">
+      <p class="ai-models">$for(ai-models)$$ai-models$$sep$, $endfor$</p>
+    </div>
+  </div>
+  $endif$
+</div>

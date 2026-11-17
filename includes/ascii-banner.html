@@ -1,0 +1,152 @@
+<script>
+(() => {
+  const banners = document.querySelectorAll(".quarto-title-banner");
+  if (!banners.length) return;
+
+  const seed = 42;
+  const glyphScale = 0.9;
+  // Python's seed-42 phase and original-layout vortices from generate.py.
+  const phase = 4.017637065087458;
+  const vortices = [
+    [0.38753764327933427, 0.3200234546952954, -1.716093423477299, 0.47094136424920374],
+    [2.6684482059801895, 0.8137436541638764, -2.56097923769762, 0.37657654590558115],
+    [0.4042902680332462, 0.2749103798428827, 0.03320278624084683, 0.2579607909051591],
+    [0.9959317774032697, 0.6199075502236185, 0.2786371797399436, 0.316132186612209],
+    [2.3624298935656802, 0.7475443653422613, -3.0597076899960216, 0.4917457755498424],
+    [2.743487882458794, 0.37220041321439357, -2.1360271011669543, 0.5371639216620344],
+  ];
+
+  function noise(x, y, salt) {
+    const ix = Math.floor(x), iy = Math.floor(y);
+    let fx = x - ix, fy = y - iy;
+    fx = fx * fx * (3 - 2 * fx);
+    fy = fy * fy * (3 - 2 * fy);
+    function corner(a, b) {
+      let n = (Math.imul(a, 374761393) + Math.imul(b, 668265263) + Math.imul(salt, 1442695041)) >>> 0;
+      n = Math.imul(n ^ (n >>> 13), 1274126177) >>> 0;
+      return ((n ^ (n >>> 16)) >>> 0) / 4294967295 * 2 - 1;
+    }
+    const low = corner(ix, iy) * (1 - fx) + corner(ix + 1, iy) * fx;
+    const high = corner(ix, iy + 1) * (1 - fx) + corner(ix + 1, iy + 1) * fx;
+    return low * (1 - fy) + high * fy;
+  }
+
+  function fbm(x, y, salt) {
+    let value = 0;
+    for (let i = 0; i < 4; i++) {
+      value += noise(x * 2 ** i, y * 2 ** i, salt + i * 31) * 0.5 ** i;
+    }
+    return value / 1.875;
+  }
+
+  function seededRandom(initialState) {
+    let state = initialState;
+    return () => {
+      state = (state + 0x6d2b79f5) | 0;
+      let value = Math.imul(state ^ (state >>> 15), state | 1);
+      value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+      return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function createCell(row, column, random) {
+    const x = column * 9 + 4, y0 = row * 13 + 6;
+    const u = x / 396, v = y0 / 396;
+    const coarse = fbm(u * 1.4 + 3, v * 1.4, seed);
+    const fine = fbm(u * 3, v * 3 + 7, seed + 29);
+    const y = y0 + 28 * Math.sin(u * 2.9 + phase + v * 0.5)
+      + 21 * coarse + 11 * Math.sin(u * 5.5 + v * 1.4);
+    let wx = u, wy = v;
+    for (const [cx, cy, spin, radius] of vortices) {
+      const dx = wx - cx, dy = wy - cy;
+      const angle = spin * Math.exp(-(dx * dx + dy * dy) / (radius * radius));
+      wx = cx + dx * Math.cos(angle) - dy * Math.sin(angle);
+      wy = cy + dx * Math.sin(angle) + dy * Math.cos(angle);
+    }
+    const warp = fbm(wx * 2 + 1.8 * coarse, wy * 2 + fine, seed + 103);
+    const field = wy * 4.7 + 0.35 * Math.sin(wx * 3 + phase) + 0.42 * warp;
+    const band = 0.5 + 0.5 * Math.sin(field * Math.PI * 2);
+    const striation = 0.5 + 0.5 * Math.sin(field * Math.PI * 2 * 2.7 + coarse * 3);
+    const gap = fbm(u * 9 + 40, v * 10 + 20, seed + 52);
+    let opacity = (0.18 + 0.72 * band ** 1.1 + 0.08 * striation) * (gap < -0.32 ? 0.65 : 1);
+    const alphabet = band < 0.13 ? ". : . - : " : band < 0.37 ? "~-=+::/\\"
+      : band < 0.70 ? "{}()[]<>xv" : "abcxyz023578#%";
+    const index = Math.trunc(field * 9 + column * 0.22 + fine * 7);
+    let glyph = alphabet[((index % alphabet.length) + alphabet.length) % alphabet.length];
+    if (random() < 0.23) glyph = alphabet[Math.floor(random() * alphabet.length)];
+    if (random() < 0.025 + Math.max(0, -gap) * 0.16) glyph = " ";
+    opacity = Math.max(0, Math.min(1, opacity + (random() - 0.5) * 0.12));
+    return glyph === " " ? null : { x, y, glyph, opacity };
+  }
+
+  const cells = new Map();
+  const originalRandom = seededRandom(seed);
+  // Retain the original artwork; extend it with stable, coordinate-seeded cells.
+  for (let row = -8; row < 42; row++) {
+    for (let column = 0; column < 178; column++) {
+      cells.set(`${row}:${column}`, createCell(row, column, originalRandom));
+    }
+  }
+
+  function cellAt(row, column) {
+    const key = `${row}:${column}`;
+    if (!cells.has(key)) {
+      const random = seededRandom(seed ^ Math.imul(row, 19349663) ^ Math.imul(column, 73856093));
+      cells.set(key, createCell(row, column, random));
+    }
+    return cells.get(key);
+  }
+
+  banners.forEach((banner) => {
+    if (banner.querySelector(".title-banner-ascii")) return;
+    const art = document.createElement("canvas");
+    const context = art.getContext("2d");
+    if (!context) return;
+    art.className = "title-banner-ascii";
+    art.style.position = "absolute";
+    art.setAttribute("aria-hidden", "true");
+    art.dataset.artwork = "E-iris-apricot";
+    art.dataset.seed = String(seed);
+    banner.prepend(art);
+    let previousSize = "";
+
+    function draw() {
+      const width = banner.clientWidth, height = banner.clientHeight;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const ink = getComputedStyle(art).color;
+      const size = `${width}:${height}:${ratio}:${ink}`;
+      if (size === previousSize || !width || !height) return;
+      previousSize = size;
+      art.width = Math.round(width * ratio);
+      art.height = Math.round(height * ratio);
+      const offsetX = (width - 1584 * glyphScale) / 2;
+      const offsetY = (height - 396 * glyphScale) / 2;
+      context.setTransform(glyphScale * ratio, 0, 0, glyphScale * ratio,
+        offsetX * ratio, offsetY * ratio);
+      context.font = '12px "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace';
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.fillStyle = ink;
+      const left = -offsetX / glyphScale, right = (width - offsetX) / glyphScale;
+      const top = -offsetY / glyphScale, bottom = (height - offsetY) / glyphScale;
+      let glyphs = 0;
+      for (let row = Math.floor((top - 72) / 13); row <= Math.ceil((bottom + 72) / 13); row++) {
+        for (let column = Math.floor(left / 9) - 1; column <= Math.ceil(right / 9) + 1; column++) {
+          const cell = cellAt(row, column);
+          if (!cell || cell.y < top - 12 || cell.y > bottom + 12) continue;
+          context.globalAlpha = 0.5 + cell.opacity * 0.5;
+          context.fillText(cell.glyph, cell.x, cell.y);
+          glyphs++;
+        }
+      }
+      art.dataset.glyphs = String(glyphs);
+      context.globalAlpha = 1;
+    }
+
+    draw();
+    if (typeof ResizeObserver !== "undefined") new ResizeObserver(draw).observe(banner);
+    new MutationObserver(draw).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    window.addEventListener("resize", draw, { passive: true });
+  });
+})();
+</script>

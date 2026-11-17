@@ -1,12 +1,15 @@
 project:
   type: website
+  post-render:
+    - python3 scripts/version_stylesheet.py
 
 website:
-  title: "Zac Davies Blog"
+  title: "zacdav"
+  search: false
   site-url: "https://zacdav-db.github.io/blog/"
   description: "Posts on R, Arrow, Databricks, data engineering, and AI."
   navbar:
-    title: "zac davies"
+    title: "zacdav"
     left:
       - text: Blog
         href: index.qmd
@@ -19,7 +22,9 @@ website:
         href: https://www.linkedin.com/in/zacdav/
 format:
   html:
+    respect-user-color-scheme: false
     theme:
       dark: darkly
       light: cosmo
     css: styles.css
+    include-after-body: includes/ascii-banner.html
