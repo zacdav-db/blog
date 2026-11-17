@@ -30,7 +30,7 @@
 <div class="code-with-filename-file">
 <pre><strong>read_with_pandas.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-1" data-filename="read_with_pandas.py" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-1" data-filename="read_with_pandas.py" style="background: #f1f3f5;"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> delta_sharing</span>
 <span id="annotated-cell-1-2"></span>
@@ -88,7 +88,7 @@ Expand the internal workaround example
 <div class="code-with-filename-file">
 <pre><strong>internal_arrow_workaround.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2" data-filename="internal_arrow_workaround.py" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2" data-filename="internal_arrow_workaround.py" style="background: #f1f3f5;"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> os</span>
 <span id="annotated-cell-2-2"><span class="im" style="color: #00769E;
@@ -310,7 +310,7 @@ font-style: inherit;">finally</span>:</span>
 <div class="code-with-filename-file">
 <pre><strong>table_handle_and_outputs.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-3" data-filename="table_handle_and_outputs.py" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-3-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-3" data-filename="table_handle_and_outputs.py" style="background: #f1f3f5;"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> delta_sharing</span>
 <span id="annotated-cell-3-2"></span>
@@ -419,7 +419,7 @@ Figure&nbsp;1: The red path shows the earlier public interface. The blue path sh
 <ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true" href="">DuckDB</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false" href="">Polars</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" aria-controls="tabset-1-3" aria-selected="false" href="">DataFusion</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" aria-controls="tabset-1-4" aria-selected="false" href="">PyArrow</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> duckdb</span>
 <span id="cb1-2"></span>
@@ -436,7 +436,7 @@ font-style: inherit;">10</span>).df()</span></code></pre></div></div>
 <p>See DuckDB’s <a href="https://duckdb.org/docs/stable/guides/python/sql_on_arrow">SQL on Arrow</a> docs.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> polars <span class="im" style="color: #00769E;
 background-color: null;
@@ -451,7 +451,7 @@ font-style: inherit;">=</span> pl.from_arrow(reader)</span></code></pre></div></
 <p>See Polars <a href="https://docs.pola.rs/py-polars/html/reference/api/polars.from_arrow.html"><code>from_arrow</code></a>.</p>
 </div>
 <div id="tabset-1-3" class="tab-pane" aria-labelledby="tabset-1-3-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> datafusion <span class="im" style="color: #00769E;
 background-color: null;
@@ -472,7 +472,7 @@ font-style: inherit;">=</span> df.to_pydict()</span></code></pre></div></div>
 <p>See DataFusion’s <a href="https://datafusion.apache.org/python/user-guide/io/arrow.html">Python Arrow IO</a> docs.</p>
 </div>
 <div id="tabset-1-4" class="tab-pane" aria-labelledby="tabset-1-4-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">reader <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1">reader <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> snapshot.to_record_batch_reader()</span>
 <span id="cb4-2"></span>
@@ -496,7 +496,7 @@ font-style: inherit;">print</span>(batch)</span></code></pre></div></div>
 <div class="code-with-filename-file">
 <pre><strong>snapshot_batches.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4" data-filename="snapshot_batches.py" style="background: #f1f3f5;"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-4-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4" data-filename="snapshot_batches.py" style="background: #f1f3f5;"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-4-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> pyarrow <span class="im" style="color: #00769E;
 background-color: null;
@@ -625,7 +625,7 @@ Expand the runtime benchmark script
 <div class="code-with-filename-file">
 <pre><strong>runtime_benchmark.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="runtime_benchmark.py" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="runtime_benchmark.py" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"""Compare full materialization of shared data as Pandas and Arrow tables."""</span></span>
 <span id="cb5-2"></span>
@@ -801,7 +801,7 @@ font-style: inherit;">__file__</span>), METHODS)</span></code></pre></div></div>
 </tbody>
 </table>
 <div class="cell hidden">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="346" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 345;"><span id="cb6-346">runtimeMeasurements <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="346" data-source-offset="-0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 345;"><span id="cb6-346">runtimeMeasurements <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> (<span class="cf" style="color: #003B4F;
 background-color: null;
@@ -1962,7 +1962,7 @@ font-style: inherit;">;</span></span>
 </div>
 <div class="benchmark-plot">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="437" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 436;"><span id="cb7-437"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="437" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 436;"><span id="cb7-437"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">benchmarkBoxplot</span>(runtimeMeasurements<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2010,7 +2010,7 @@ Expand the peak memory benchmark script
 <div class="code-with-filename-file">
 <pre><strong>memory_benchmark.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-filename="memory_benchmark.py" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-filename="memory_benchmark.py" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"""Compare peak process memory and runtime for two Parquet write patterns."""</span></span>
 <span id="cb8-2"></span>
@@ -2200,7 +2200,7 @@ font-style: inherit;">__file__</span>), METHODS)</span></code></pre></div></div>
 </table>
 <div class="benchmark-plot">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="503" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb9-503">viewof writeMetric <span class="op" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="503" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb9-503">viewof writeMetric <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> Inputs<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2252,7 +2252,7 @@ font-style: inherit;">"peak_mib"</span>})</span></code></pre></div></div>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="513" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 512;"><span id="cb10-513"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="513" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 512;"><span id="cb10-513"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">benchmarkBoxplot</span>(writeMeasurements<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -2316,7 +2316,7 @@ Expand the shared measurement helper
 <div class="code-with-filename-file">
 <pre><strong>common.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="common.py" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="common.py" style="background: #f1f3f5;"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"""Run each measurement in a fresh process, including native allocations."""</span></span>
 <span id="cb11-2"></span>
@@ -2911,7 +2911,7 @@ font-style: inherit;">"</span>)</span></code></pre></div></div>
 <li>Download <a href="benchmarks/runtime_benchmark.py">runtime_benchmark.py</a>, <a href="benchmarks/memory_benchmark.py">memory_benchmark.py</a>, and <a href="benchmarks/common.py">common.py</a> into the same directory.</li>
 <li>Run each benchmark with your recipient profile and table name, using a separate output file:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">python</span> runtime_benchmark.py <span class="dt" style="color: #AD0000;
 background-color: null;
@@ -2972,6 +2972,1626 @@ font-style: inherit;">--output</span> memory-results.jsonl</span></code></pre></
   <category>DuckDB</category>
   <guid>https://zacdav-db.github.io/blog/posts/delta-sharing-python-performance/</guid>
   <pubDate>Tue, 17 Nov 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Collecting large results with {sparklyr}</title>
+  <link>https://zacdav-db.github.io/blog/posts/collecting-large-results-with-sparklyr/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Notice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Originally published on <a href="https://medium.com/@NotZacDavies/collecting-large-results-with-sparklyr-8256a0370ec6">Medium</a> on June 24, 2023. The examples and benchmarks below are from the original post.</p>
+</div>
+</div>
+<p>If you’ve ever wanted to take a large set of data from Spark back into the R session (or even Python) you’ll likely have experienced issues with performance, or been blocked completely by errors.</p>
+<p>Example error:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1">Error : java.lang.OutOfMemoryError</span>
+<span id="cb1-2">... // and then the remainder of a large error</span></code></pre></div></div>
+<p>This error is the one I typically see people struggle with, sometimes trying inventive solutions that are tedious and/or error-prone.</p>
+<p>The error happens when you’re hitting the 2GB limit that Spark sets. Without getting into the specifics of what can’t be changed on Spark side, I’ll show you how to <code>collect()</code> as much data as your R session will allow.</p>
+<section id="how-to-re-create-the-error-reliably" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-re-create-the-error-reliably">How to re-create the error reliably</h2>
+<p>I’ve got easy access to a Databricks environment, so I’ll be using that to create the dataset and run code.</p>
+<p>We need a large enough dataset to play around with. The Spark SQL snippet below was run on Databricks and persisted to my schema within the metastore.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-- this looks a bit weird but it avoids exploding just once which is slower for a large array</span></span>
+<span id="cb2-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">create</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">replace</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">table</span> zacdav.collect_sample_data <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span></span>
+<span id="cb2-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">with</span> tenmillion <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> (</span>
+<span id="cb2-4">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">select</span></span>
+<span id="cb2-5">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> a,</span>
+<span id="cb2-6">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> b,</span>
+<span id="cb2-7">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> c,</span>
+<span id="cb2-8">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> d,</span>
+<span id="cb2-9">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> e,</span>
+<span id="cb2-10">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> f,</span>
+<span id="cb2-11">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> g,</span>
+<span id="cb2-12">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> h,</span>
+<span id="cb2-13">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> i,</span>
+<span id="cb2-14">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> j,</span>
+<span id="cb2-15">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(rand() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">as</span> k</span>
+<span id="cb2-16">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">from</span> (explode(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">sequence</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)))</span>
+<span id="cb2-17">)</span>
+<span id="cb2-18"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">select</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">from</span> tenmillion</span>
+<span id="cb2-19"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">union</span></span>
+<span id="cb2-20"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">select</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">from</span> tenmillion</span>
+<span id="cb2-21"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">union</span></span>
+<span id="cb2-22"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">select</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">from</span> tenmillion</span></code></pre></div></div>
+<p>A table of 30M rows x 11 columns of random numeric values should be enough.</p>
+<p>Let’s try to collect this into the R session with <a href="https://spark.rstudio.com/"><code>{sparklyr}</code></a>. We’re going to make sure that <a href="https://arrow.apache.org/docs/r/"><code>{arrow}</code></a> is installed as it dramatically <a href="https://arrow.apache.org/blog/2019/01/25/r-spark-improvements/">improves performance</a>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(arrow)</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(sparklyr)</span>
+<span id="cb3-4"></span>
+<span id="cb3-5">sc <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">spark_connect</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">method =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"databricks"</span>)</span>
+<span id="cb3-6"></span>
+<span id="cb3-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># oh what a surprise, this errors - we've got a reproducible example</span></span>
+<span id="cb3-8">results <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tbl</span>(sc, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zacdav.collect_sample_data"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect</span>()</span></code></pre></div></div>
+<p>Success, the sample dataset reproduces the error.</p>
+<p>Turns out if you were to spend time, like I did, collecting slightly less until the <code>collect()</code> executes successfully you’ll find that approximately 24 million rows is the maximum allowed (for this particular dataset, mileage will vary).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># turns out we hit the limit of `collect` at roughly 24 million rows</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># this is a function of dataset number of columns, types of columns, etc</span></span>
+<span id="cb4-3">results <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tbl</span>(sc, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zacdav.collect_sample_data"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb4-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24000000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb4-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect</span>()</span></code></pre></div></div>
+<p>I don’t really want to have to slice my dataset into fractions manually and collect each part separately. So what now?</p>
+</section>
+<section id="understand-how-to-circumvent-the-error" class="level2">
+<h2 class="anchored" data-anchor-id="understand-how-to-circumvent-the-error">Understand how to circumvent the error</h2>
+<p>If we start looking under the covers of <code>{sparklyr}</code> we learn a few things:</p>
+<ul>
+<li>When <code>{arrow}</code> is enabled, <a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/sdf_wrapper.R#L168-L180"><code>sdf_collect()</code></a> calls <a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L116-L159"><code>arrow_collect()</code></a>, a non-exported function.</li>
+<li><a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L116-L159"><code>arrow_collect()</code></a> will accept a callback, and if specified will pull each batch incrementally (<a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L136-L153">code</a>).</li>
+<li>If a callback isn’t specified then batch conversion happens all in one go (<a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L155-L157">code</a>).</li>
+</ul>
+<p>The callback is particularly interesting, it’s exactly what we’re going to use to collect our large dataset. For those unfamiliar with callbacks, it’s essentially code that is invoked by other code - typically code that’s supplied as an argument to a function.</p>
+<blockquote class="blockquote">
+<p>A callback is just an R function that will be called over each Spark partition</p>
+<ul>
+<li><a href="https://therinspark.com/data.html#copy">Chapter 8.4, <em>Mastering Spark with R</em></a></li>
+</ul>
+</blockquote>
+<p>The <a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L136-L153">conditional block that is evaluated</a> when specifying a callback invokes code that allows the Arrow batches to be pulled back iteratively rather than all at once (which is where we hit the error).</p>
+<p>This solution isn’t completely new. <a href="https://therinspark.com/data.html#copy"><em>Mastering Spark with R</em></a> also describes using a callback to write each partition to disk or send it over the network, rather than collecting everything into memory.</p>
+</section>
+<section id="write-a-function-to-collect-the-whole-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="write-a-function-to-collect-the-whole-dataset">Write a function to collect the whole dataset</h2>
+<p>Okay let’s write a function <code>collect_larger()</code> that directly calls <code>arrow_collect()</code> and specifies a callback that appends each batch to a list and combines it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1">collect_larger <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(tbl, ...) {</span>
+<span id="cb5-2">  collected <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>()</span>
+<span id="cb5-3">  sparklyr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">arrow_collect</span>(tbl, ..., <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">callback =</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(batch_df) {</span>
+<span id="cb5-4">    collected <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(collected, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(batch_df))</span>
+<span id="cb5-5">  })</span>
+<span id="cb5-6">  data.table<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rbindlist</span>(collected)</span>
+<span id="cb5-7">}</span></code></pre></div></div>
+<p>It’s not the most elegant solution - ideally we wouldn’t need this at all. Nor is this the only solution: the callback’s behaviour could change depending on what you’re doing (e.g.&nbsp;you may want to persist each batch as a file to disk immediately).</p>
+<p>If we try <code>collect_larger()</code> we can now collect the whole dataset!</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># with new function we can collect whole dataset without issue</span></span>
+<span id="cb6-2">results <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tbl</span>(sc, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zacdav.collect_sample_data"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb6-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect_larger</span>()</span></code></pre></div></div>
+</section>
+<section id="benchmarking-the-solution" class="level2">
+<h2 class="anchored" data-anchor-id="benchmarking-the-solution">Benchmarking the solution</h2>
+<p>Problem solved! However, is performance comparable to using <code>collect()</code>?</p>
+<p>I ran <code>collect_larger()</code> on the whole dataset prior to ensure caching. This ensures that I’m not measuring time spent scanning data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># microbenchmark is great for this</span></span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(microbenchmark)</span>
+<span id="cb7-3"></span>
+<span id="cb7-4">dataset <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tbl</span>(sc, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"zacdav.collect_sample_data"</span>)</span>
+<span id="cb7-5"></span>
+<span id="cb7-6">benchmark_results <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">microbenchmark</span>(</span>
+<span id="cb7-7">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">collect_1m =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dataset, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect</span>(),</span>
+<span id="cb7-8">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">collect_larger_1m =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dataset, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect_larger</span>(),</span>
+<span id="cb7-9">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">collect_5m =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dataset, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5000000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect</span>(),</span>
+<span id="cb7-10">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">collect_larger_5m =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dataset, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5000000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect_larger</span>(),</span>
+<span id="cb7-11">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">collect_20m =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dataset, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20000000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect</span>(),</span>
+<span id="cb7-12">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">collect_larger_20m =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(dataset, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20000000</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">collect_larger</span>(),</span>
+<span id="cb7-13">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">times =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb7-14">)</span></code></pre></div></div>
+<div class="cell hidden">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="164" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 163;"><span id="cb8-164">sparklyrBenchmark <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">await</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">FileAttachment</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"benchmark-summary.json"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">json</span>()</span></code></pre></div></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="benchmark-plot">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="170" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 169;"><span id="cb9-170">viewof sparklyrScale <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Inputs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">new</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Map</span>([</span>
+<span id="cb9-171">  [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Logarithmic"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"log"</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb9-172">  [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Linear"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"linear"</span>]</span>
+<span id="cb9-173">])<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> {<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">label</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Scale"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">value</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"log"</span>})</span></code></pre></div></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="180" data-source-offset="0" style="background: #f1f3f5;"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 179;"><span id="cb10-180">{</span>
+<span id="cb10-181">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sparklyrBenchmark<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">results</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-182">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> chartWidth <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">min</span>(width<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">760</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-183">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> format <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> value <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toFixed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-184">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> position <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"case"</span>}<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-185">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> chart <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Plot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>({</span>
+<span id="cb10-186">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">width</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> chartWidth<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-187">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">height</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">360</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-188">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">marginLeft</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> chartWidth <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">480</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">134</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">152</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-189">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">marginRight</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-190">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">marginTop</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-191">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">marginBottom</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">44</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-192">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ariaLabel</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Original benchmark runtime summaries: minimum, quartiles, median, maximum, and mean, in seconds."</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-193">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">style</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> {<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">background</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"transparent"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">color</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"inherit"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fontFamily</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"inherit"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fontSize</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"12px"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">overflow</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"visible"</span>}<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-194">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> {</span>
+<span id="cb10-195">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">type</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> sparklyrScale<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-196">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">domain</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> [sparklyrScale <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">===</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"log"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">min</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">min</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-197">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">Math</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">max</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">max</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-198">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ticks</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> sparklyrScale <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">===</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"log"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">?</span> [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-199">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">label</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Time [seconds]"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-200">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">grid</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">true</span></span>
+<span id="cb10-201">    }<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-202">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> {<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">label</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">null</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">domain</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">map</span>(d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">case</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reverse</span>()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">tickSize</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">padding</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>}<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-203">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">color</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> {<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">domain</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"collect()"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"collect_larger()"</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-204">      <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">range</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"var(--benchmark-new)"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"var(--benchmark-old)"</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">legend</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">true</span>}<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-205">    <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">marks</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> [</span>
+<span id="cb10-206">      Plot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ruleY</span>(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> {<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>position<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"min"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"max"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"method"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">strokeWidth</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>})<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-207">      Plot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">barX</span>(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> {<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>position<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"q1"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"q3"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"method"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fillOpacity</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.22</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-208">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">insetTop</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">insetBottom</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>})<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-209">      Plot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tickX</span>(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> {<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>position<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"median"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"method"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">strokeWidth</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.8</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-210">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">insetTop</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">insetBottom</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>})<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-211">      Plot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dot</span>(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> {<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>position<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mean"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"method"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">r</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.5</span>})<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-212">      Plot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tip</span>(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> Plot<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pointerY</span>({</span>
+<span id="cb10-213">        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>position<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">x</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mean"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-214">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">title</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> d <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> <span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">`</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">case</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Rows: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">rows</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">toLocaleString</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"en-US"</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Repetitions: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span>sparklyrBenchmark<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">repetitions</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Mean: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mean</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> s</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Median: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">median</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> s</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Min: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">min</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> s</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Q1: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">q1</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> s</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Q3: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">q3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> s</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Max: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">${</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">format</span>(d<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">max</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="vs" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> s`</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-215">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fill</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"var(--reading-surface-raised)"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">stroke</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"var(--reading-border)"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span></span>
+<span id="cb10-216">        <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">fontSize</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">lineWidth</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span></span>
+<span id="cb10-217">      }))</span>
+<span id="cb10-218">    ]</span>
+<span id="cb10-219">  })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-220"></span>
+<span id="cb10-221">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> chart<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">querySelectorAll</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'[aria-label="y-axis tick label"] text'</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-222">  labels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">forEach</span>(label <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">classList</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">add</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"benchmark-code-label"</span>))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-223">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">requestAnimationFrame</span>(() <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb10-224">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span>chart<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">isConnected</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-225">    labels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">forEach</span>(label <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">=&gt;</span> {</span>
+<span id="cb10-226">      <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> bounds <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getBBox</span>()<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-227">      <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">const</span> background <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">document</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">createElementNS</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"http://www.w3.org/2000/svg"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-228">      background<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"class"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"benchmark-code-background"</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-229">      background<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"transform"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"transform"</span>))<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-230">      background<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> bounds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-231">      background<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> bounds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-232">      background<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"width"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> bounds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-233">      background<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"height"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> bounds<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-234">      background<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">setAttribute</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rx"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">,</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-235">      label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">before</span>(background)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-236">    })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-237">  })<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-238">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> chart<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">;</span></span>
+<span id="cb10-239">}</span></code></pre></div></div>
+<div id="fig-original-benchmark" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-original-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="ojs-cell-3" data-nodetype="expression">
+
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-original-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Benchmark results comparing collect() and collect_larger() for 1M, 5M, and 20M rows, with five repetitions per method.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>There is significant overhead for collecting data with <code>collect_larger()</code>, approximately ~35% for the 20 million row dataset - hardly surprising. This overhead is less (~25%) on the smaller dataset of 1 million rows.</p>
+<p>I believe this overhead is worth it in order to be able to retrieve the entire dataset in one call - something that isn’t simple for larger datasets. It’s an easy solution that will let you focus on other things.</p>
+<p>You can find the notebook to reproduce my results <a href="https://github.com/zacdav-db/examples/tree/main/sparklyr-collect-large-data">here</a>.</p>
+<p>Happy <code>collect()</code>-ing.</p>
+</section>
+<section id="noteworthy-points" class="level2">
+<h2 class="anchored" data-anchor-id="noteworthy-points">Noteworthy points</h2>
+<ul>
+<li>If you modify the callback to print out the size of each batch returned you’ll find almost always they are 10,000 rows. This is due to <a href="https://spark.apache.org/docs/3.0.0/sql-pyspark-pandas-with-arrow.html#setting-arrow-batch-size"><code>spark.sql.execution.arrow.maxRecordsPerBatch</code></a>, which defaults to 10,000.</li>
+<li>There is certainly overhead for pulling back many small batches of 10,000 and combining those into a singular <code>data.frame</code> / <code>data.table</code>. You can test setting <a href="https://spark.apache.org/docs/3.0.0/sql-pyspark-pandas-with-arrow.html#setting-arrow-batch-size"><code>spark.sql.execution.arrow.maxRecordsPerBatch</code></a> to higher values to eke out extra performance if you’re inclined.</li>
+<li>Consider if you could use a Spark UDF to run your analysis (or even convert code to <code>{sparklyr}</code>) as an alternative to collecting large data back to the driver node’s R session.</li>
+<li>In <code>collect_larger()</code> I used <code>{data.table}</code>’s <code>rbindlist()</code> since I’ve found it to be faster in the past - unsure if that’s changed since I last benchmarked!</li>
+<li>You’ll need to have sufficient memory available for the R session to <code>collect()</code> large data. My Databricks cluster had 128 GB of memory on the driver node, which is well above what is required to collect this amount of data.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>Spark</category>
+  <category>sparklyr</category>
+  <category>Arrow</category>
+  <category>Databricks</category>
+  <guid>https://zacdav-db.github.io/blog/posts/collecting-large-results-with-sparklyr/</guid>
+  <pubDate>Sat, 24 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

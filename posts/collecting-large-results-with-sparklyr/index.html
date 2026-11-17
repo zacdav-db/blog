@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-06-24">
+<meta name="description" content="Using Arrow callbacks to collect large Spark results into R with sparklyr.">
+
+<title>Collecting large results with {sparklyr} – zacdav</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-447e42e69aaa9833c0ba1b986f430b20.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-8d3ad9c781c51ccd60b292c95058b2c2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-32280d01ff3a7ff5cbe701a37ed6ca11.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<style>
+#quarto-document-content :not(pre) > code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+</style>
+
+
+<link rel="stylesheet" href="../../styles.css?v=8b60b3269c1e">
+</head>
+
+<body class="nav-fixed quarto-dark"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          toggle.setAttribute("aria-checked", alternate ? "true" : "false");
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455).
+    // Not run on load: stylesheets are set before first paint there, and
+    // scrolling would undo the scroll to a URL fragment (#14973).
+    // The one pixel nudge keeps the reader where they were.
+    const refreshSafariScrollbar = () => {
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        const scrollY = window.scrollY;
+        window.scrollTo(0, scrollY > 0 ? scrollY - 1 : 1);
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      refreshSafariScrollbar();
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">zacdav</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/zacdav-db/presentations"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/zacdav-db"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/zacdav/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <button type="button" role="switch" aria-checked="false" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi"></i></button>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Collecting large results with {sparklyr}</h1>
+                  <div>
+        <div class="description">
+          Using Arrow callbacks to collect large Spark results into R with sparklyr.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Spark</div>
+                <div class="quarto-category">sparklyr</div>
+                <div class="quarto-category">Arrow</div>
+                <div class="quarto-category">Databricks</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 24, 2023</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">November 17, 2026</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-to-re-create-the-error-reliably" id="toc-how-to-re-create-the-error-reliably" class="nav-link active" data-scroll-target="#how-to-re-create-the-error-reliably">How to re-create the error reliably</a></li>
+  <li><a href="#understand-how-to-circumvent-the-error" id="toc-understand-how-to-circumvent-the-error" class="nav-link" data-scroll-target="#understand-how-to-circumvent-the-error">Understand how to circumvent the error</a></li>
+  <li><a href="#write-a-function-to-collect-the-whole-dataset" id="toc-write-a-function-to-collect-the-whole-dataset" class="nav-link" data-scroll-target="#write-a-function-to-collect-the-whole-dataset">Write a function to collect the whole dataset</a></li>
+  <li><a href="#benchmarking-the-solution" id="toc-benchmarking-the-solution" class="nav-link" data-scroll-target="#benchmarking-the-solution">Benchmarking the solution</a></li>
+  <li><a href="#noteworthy-points" id="toc-noteworthy-points" class="nav-link" data-scroll-target="#noteworthy-points">Noteworthy points</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content" tabindex="-1">
+
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Notice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Originally published on <a href="https://medium.com/@NotZacDavies/collecting-large-results-with-sparklyr-8256a0370ec6">Medium</a> on June 24, 2023. The examples and benchmarks below are from the original post.</p>
+</div>
+</div>
+<p>If you’ve ever wanted to take a large set of data from Spark back into the R session (or even Python) you’ll likely have experienced issues with performance, or been blocked completely by errors.</p>
+<p>Example error:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="#cb1-1" aria-label="1"></a>Error : java.lang.OutOfMemoryError</span>
+<span id="cb1-2"><a href="#cb1-2" aria-label="2"></a>... // and then the remainder of a large error</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This error is the one I typically see people struggle with, sometimes trying inventive solutions that are tedious and/or error-prone.</p>
+<p>The error happens when you’re hitting the 2GB limit that Spark sets. Without getting into the specifics of what can’t be changed on Spark side, I’ll show you how to <code>collect()</code> as much data as your R session will allow.</p>
+<section id="how-to-re-create-the-error-reliably" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-re-create-the-error-reliably">How to re-create the error reliably</h2>
+<p>I’ve got easy access to a Databricks environment, so I’ll be using that to create the dataset and run code.</p>
+<p>We need a large enough dataset to play around with. The Spark SQL snippet below was run on Databricks and persisted to my schema within the metastore.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-label="1"></a><span class="co">-- this looks a bit weird but it avoids exploding just once which is slower for a large array</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-label="2"></a><span class="kw">create</span> <span class="kw">or</span> <span class="kw">replace</span> <span class="kw">table</span> zacdav.collect_sample_data <span class="kw">as</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-label="3"></a><span class="kw">with</span> tenmillion <span class="kw">as</span> (</span>
+<span id="cb2-4"><a href="#cb2-4" aria-label="4"></a>  <span class="kw">select</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-label="5"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> a,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-label="6"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> b,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-label="7"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> c,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-label="8"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> d,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-label="9"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> e,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-label="10"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> f,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-label="11"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> g,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-label="12"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> h,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-label="13"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> i,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-label="14"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> j,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-label="15"></a>    <span class="fu">round</span>(rand() <span class="op">*</span> <span class="dv">10000</span>) <span class="kw">as</span> k</span>
+<span id="cb2-16"><a href="#cb2-16" aria-label="16"></a>  <span class="kw">from</span> (explode(<span class="kw">sequence</span>(<span class="dv">1</span>, <span class="dv">10000000</span>, <span class="dv">1</span>)))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-label="17"></a>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-label="18"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> tenmillion</span>
+<span id="cb2-19"><a href="#cb2-19" aria-label="19"></a><span class="kw">union</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-label="20"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> tenmillion</span>
+<span id="cb2-21"><a href="#cb2-21" aria-label="21"></a><span class="kw">union</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-label="22"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> tenmillion</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A table of 30M rows x 11 columns of random numeric values should be enough.</p>
+<p>Let’s try to collect this into the R session with <a href="https://spark.rstudio.com/"><code>{sparklyr}</code></a>. We’re going to make sure that <a href="https://arrow.apache.org/docs/r/"><code>{arrow}</code></a> is installed as it dramatically <a href="https://arrow.apache.org/blog/2019/01/25/r-spark-improvements/">improves performance</a>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-label="2"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-label="3"></a><span class="fu">library</span>(sparklyr)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-label="4"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-label="5"></a>sc <span class="ot">&lt;-</span> <span class="fu">spark_connect</span>(<span class="at">method =</span> <span class="st">"databricks"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-label="6"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-label="7"></a><span class="co"># oh what a surprise, this errors - we've got a reproducible example</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-label="8"></a>results <span class="ot">&lt;-</span> <span class="fu">tbl</span>(sc, <span class="st">"zacdav.collect_sample_data"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-label="9"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Success, the sample dataset reproduces the error.</p>
+<p>Turns out if you were to spend time, like I did, collecting slightly less until the <code>collect()</code> executes successfully you’ll find that approximately 24 million rows is the maximum allowed (for this particular dataset, mileage will vary).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-label="1"></a><span class="co"># turns out we hit the limit of `collect` at roughly 24 million rows</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-label="2"></a><span class="co"># this is a function of dataset number of columns, types of columns, etc</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-label="3"></a>results <span class="ot">&lt;-</span> <span class="fu">tbl</span>(sc, <span class="st">"zacdav.collect_sample_data"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-label="4"></a>  <span class="fu">head</span>(<span class="dv">24000000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-label="5"></a>  <span class="fu">collect</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>I don’t really want to have to slice my dataset into fractions manually and collect each part separately. So what now?</p>
+</section>
+<section id="understand-how-to-circumvent-the-error" class="level2">
+<h2 class="anchored" data-anchor-id="understand-how-to-circumvent-the-error">Understand how to circumvent the error</h2>
+<p>If we start looking under the covers of <code>{sparklyr}</code> we learn a few things:</p>
+<ul>
+<li>When <code>{arrow}</code> is enabled, <a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/sdf_wrapper.R#L168-L180"><code>sdf_collect()</code></a> calls <a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L116-L159"><code>arrow_collect()</code></a>, a non-exported function.</li>
+<li><a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L116-L159"><code>arrow_collect()</code></a> will accept a callback, and if specified will pull each batch incrementally (<a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L136-L153">code</a>).</li>
+<li>If a callback isn’t specified then batch conversion happens all in one go (<a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L155-L157">code</a>).</li>
+</ul>
+<p>The callback is particularly interesting, it’s exactly what we’re going to use to collect our large dataset. For those unfamiliar with callbacks, it’s essentially code that is invoked by other code - typically code that’s supplied as an argument to a function.</p>
+<blockquote class="blockquote">
+<p>A callback is just an R function that will be called over each Spark partition</p>
+<ul>
+<li><a href="https://therinspark.com/data.html#copy">Chapter 8.4, <em>Mastering Spark with R</em></a></li>
+</ul>
+</blockquote>
+<p>The <a href="https://github.com/sparklyr/sparklyr/blob/b14ee7b61dfd1d113b33148f55f4b7bc559fde9e/R/arrow_data.R#L136-L153">conditional block that is evaluated</a> when specifying a callback invokes code that allows the Arrow batches to be pulled back iteratively rather than all at once (which is where we hit the error).</p>
+<p>This solution isn’t completely new. <a href="https://therinspark.com/data.html#copy"><em>Mastering Spark with R</em></a> also describes using a callback to write each partition to disk or send it over the network, rather than collecting everything into memory.</p>
+</section>
+<section id="write-a-function-to-collect-the-whole-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="write-a-function-to-collect-the-whole-dataset">Write a function to collect the whole dataset</h2>
+<p>Okay let’s write a function <code>collect_larger()</code> that directly calls <code>arrow_collect()</code> and specifies a callback that appends each batch to a list and combines it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-label="1"></a>collect_larger <span class="ot">&lt;-</span> <span class="cf">function</span>(tbl, ...) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-label="2"></a>  collected <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-label="3"></a>  sparklyr<span class="sc">:::</span><span class="fu">arrow_collect</span>(tbl, ..., <span class="at">callback =</span> <span class="cf">function</span>(batch_df) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-label="4"></a>    collected <span class="ot">&lt;&lt;-</span> <span class="fu">c</span>(collected, <span class="fu">list</span>(batch_df))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-label="5"></a>  })</span>
+<span id="cb5-6"><a href="#cb5-6" aria-label="6"></a>  data.table<span class="sc">::</span><span class="fu">rbindlist</span>(collected)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-label="7"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It’s not the most elegant solution - ideally we wouldn’t need this at all. Nor is this the only solution: the callback’s behaviour could change depending on what you’re doing (e.g.&nbsp;you may want to persist each batch as a file to disk immediately).</p>
+<p>If we try <code>collect_larger()</code> we can now collect the whole dataset!</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-label="1"></a><span class="co"># with new function we can collect whole dataset without issue</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-label="2"></a>results <span class="ot">&lt;-</span> <span class="fu">tbl</span>(sc, <span class="st">"zacdav.collect_sample_data"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-label="3"></a>  <span class="fu">collect_larger</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="benchmarking-the-solution" class="level2">
+<h2 class="anchored" data-anchor-id="benchmarking-the-solution">Benchmarking the solution</h2>
+<p>Problem solved! However, is performance comparable to using <code>collect()</code>?</p>
+<p>I ran <code>collect_larger()</code> on the whole dataset prior to ensure caching. This ensures that I’m not measuring time spent scanning data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-label="1"></a><span class="co"># microbenchmark is great for this</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-label="2"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-label="3"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-label="4"></a>dataset <span class="ot">&lt;-</span> <span class="fu">tbl</span>(sc, <span class="st">"zacdav.collect_sample_data"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-label="5"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-label="6"></a>benchmark_results <span class="ot">&lt;-</span> <span class="fu">microbenchmark</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-label="7"></a>  <span class="at">collect_1m =</span> <span class="fu">head</span>(dataset, <span class="dv">1000000</span>) <span class="sc">%&gt;%</span> <span class="fu">collect</span>(),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-label="8"></a>  <span class="at">collect_larger_1m =</span> <span class="fu">head</span>(dataset, <span class="dv">1000000</span>) <span class="sc">%&gt;%</span> <span class="fu">collect_larger</span>(),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-label="9"></a>  <span class="at">collect_5m =</span> <span class="fu">head</span>(dataset, <span class="dv">5000000</span>) <span class="sc">%&gt;%</span> <span class="fu">collect</span>(),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-label="10"></a>  <span class="at">collect_larger_5m =</span> <span class="fu">head</span>(dataset, <span class="dv">5000000</span>) <span class="sc">%&gt;%</span> <span class="fu">collect_larger</span>(),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-label="11"></a>  <span class="at">collect_20m =</span> <span class="fu">head</span>(dataset, <span class="dv">20000000</span>) <span class="sc">%&gt;%</span> <span class="fu">collect</span>(),</span>
+<span id="cb7-12"><a href="#cb7-12" aria-label="12"></a>  <span class="at">collect_larger_20m =</span> <span class="fu">head</span>(dataset, <span class="dv">20000000</span>) <span class="sc">%&gt;%</span> <span class="fu">collect_larger</span>(),</span>
+<span id="cb7-13"><a href="#cb7-13" aria-label="13"></a>  <span class="at">times =</span> <span class="dv">5</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-label="14"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell hidden">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="164" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 163;"><span id="cb8-164"><a href="#cb8-164" aria-label="164"></a>sparklyrBenchmark <span class="op">=</span> <span class="cf">await</span> <span class="fu">FileAttachment</span>(<span class="st">"benchmark-summary.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="benchmark-plot">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="170" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 169;"><span id="cb9-170"><a href="#cb9-170" aria-label="170"></a>viewof sparklyrScale <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="kw">new</span> <span class="bu">Map</span>([</span>
+<span id="cb9-171"><a href="#cb9-171" aria-label="171"></a>  [<span class="st">"Logarithmic"</span><span class="op">,</span> <span class="st">"log"</span>]<span class="op">,</span></span>
+<span id="cb9-172"><a href="#cb9-172" aria-label="172"></a>  [<span class="st">"Linear"</span><span class="op">,</span> <span class="st">"linear"</span>]</span>
+<span id="cb9-173"><a href="#cb9-173" aria-label="173"></a>])<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Scale"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"log"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="180" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 179;"><span id="cb10-180"><a href="#cb10-180" aria-label="180"></a>{</span>
+<span id="cb10-181"><a href="#cb10-181" aria-label="181"></a>  <span class="kw">const</span> data <span class="op">=</span> sparklyrBenchmark<span class="op">.</span><span class="at">results</span><span class="op">;</span></span>
+<span id="cb10-182"><a href="#cb10-182" aria-label="182"></a>  <span class="kw">const</span> chartWidth <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(width<span class="op">,</span> <span class="dv">760</span>)<span class="op">;</span></span>
+<span id="cb10-183"><a href="#cb10-183" aria-label="183"></a>  <span class="kw">const</span> format <span class="op">=</span> value <span class="kw">=&gt;</span> value<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">6</span>)<span class="op">;</span></span>
+<span id="cb10-184"><a href="#cb10-184" aria-label="184"></a>  <span class="kw">const</span> position <span class="op">=</span> {<span class="dt">y</span><span class="op">:</span> <span class="st">"case"</span>}<span class="op">;</span></span>
+<span id="cb10-185"><a href="#cb10-185" aria-label="185"></a>  <span class="kw">const</span> chart <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb10-186"><a href="#cb10-186" aria-label="186"></a>    <span class="dt">width</span><span class="op">:</span> chartWidth<span class="op">,</span></span>
+<span id="cb10-187"><a href="#cb10-187" aria-label="187"></a>    <span class="dt">height</span><span class="op">:</span> <span class="dv">360</span><span class="op">,</span></span>
+<span id="cb10-188"><a href="#cb10-188" aria-label="188"></a>    <span class="dt">marginLeft</span><span class="op">:</span> chartWidth <span class="op">&lt;</span> <span class="dv">480</span> <span class="op">?</span> <span class="dv">134</span> <span class="op">:</span> <span class="dv">152</span><span class="op">,</span></span>
+<span id="cb10-189"><a href="#cb10-189" aria-label="189"></a>    <span class="dt">marginRight</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb10-190"><a href="#cb10-190" aria-label="190"></a>    <span class="dt">marginTop</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb10-191"><a href="#cb10-191" aria-label="191"></a>    <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">44</span><span class="op">,</span></span>
+<span id="cb10-192"><a href="#cb10-192" aria-label="192"></a>    <span class="dt">ariaLabel</span><span class="op">:</span> <span class="st">"Original benchmark runtime summaries: minimum, quartiles, median, maximum, and mean, in seconds."</span><span class="op">,</span></span>
+<span id="cb10-193"><a href="#cb10-193" aria-label="193"></a>    <span class="dt">style</span><span class="op">:</span> {<span class="dt">background</span><span class="op">:</span> <span class="st">"transparent"</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="st">"inherit"</span><span class="op">,</span> <span class="dt">fontFamily</span><span class="op">:</span> <span class="st">"inherit"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="st">"12px"</span><span class="op">,</span> <span class="dt">overflow</span><span class="op">:</span> <span class="st">"visible"</span>}<span class="op">,</span></span>
+<span id="cb10-194"><a href="#cb10-194" aria-label="194"></a>    <span class="dt">x</span><span class="op">:</span> {</span>
+<span id="cb10-195"><a href="#cb10-195" aria-label="195"></a>      <span class="dt">type</span><span class="op">:</span> sparklyrScale<span class="op">,</span></span>
+<span id="cb10-196"><a href="#cb10-196" aria-label="196"></a>      <span class="dt">domain</span><span class="op">:</span> [sparklyrScale <span class="op">===</span> <span class="st">"log"</span> <span class="op">?</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="op">...</span>data<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">min</span>)) <span class="op">*</span> <span class="fl">0.9</span> <span class="op">:</span> <span class="dv">0</span><span class="op">,</span></span>
+<span id="cb10-197"><a href="#cb10-197" aria-label="197"></a>        <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="op">...</span>data<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">max</span>)) <span class="op">*</span> <span class="fl">1.1</span>]<span class="op">,</span></span>
+<span id="cb10-198"><a href="#cb10-198" aria-label="198"></a>      <span class="dt">ticks</span><span class="op">:</span> sparklyrScale <span class="op">===</span> <span class="st">"log"</span> <span class="op">?</span> [<span class="dv">3</span><span class="op">,</span> <span class="dv">10</span><span class="op">,</span> <span class="dv">30</span>] <span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">60</span>]<span class="op">,</span></span>
+<span id="cb10-199"><a href="#cb10-199" aria-label="199"></a>      <span class="dt">label</span><span class="op">:</span> <span class="st">"Time [seconds]"</span><span class="op">,</span></span>
+<span id="cb10-200"><a href="#cb10-200" aria-label="200"></a>      <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb10-201"><a href="#cb10-201" aria-label="201"></a>    }<span class="op">,</span></span>
+<span id="cb10-202"><a href="#cb10-202" aria-label="202"></a>    <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> data<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">case</span>)<span class="op">.</span><span class="fu">reverse</span>()<span class="op">,</span> <span class="dt">tickSize</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">padding</span><span class="op">:</span> <span class="fl">0.3</span>}<span class="op">,</span></span>
+<span id="cb10-203"><a href="#cb10-203" aria-label="203"></a>    <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> [<span class="st">"collect()"</span><span class="op">,</span> <span class="st">"collect_larger()"</span>]<span class="op">,</span></span>
+<span id="cb10-204"><a href="#cb10-204" aria-label="204"></a>      <span class="dt">range</span><span class="op">:</span> [<span class="st">"var(--benchmark-new)"</span><span class="op">,</span> <span class="st">"var(--benchmark-old)"</span>]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span>}<span class="op">,</span></span>
+<span id="cb10-205"><a href="#cb10-205" aria-label="205"></a>    <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb10-206"><a href="#cb10-206" aria-label="206"></a>      Plot<span class="op">.</span><span class="fu">ruleY</span>(data<span class="op">,</span> {<span class="op">...</span>position<span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> <span class="st">"min"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"max"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span>})<span class="op">,</span></span>
+<span id="cb10-207"><a href="#cb10-207" aria-label="207"></a>      Plot<span class="op">.</span><span class="fu">barX</span>(data<span class="op">,</span> {<span class="op">...</span>position<span class="op">,</span> <span class="dt">x1</span><span class="op">:</span> <span class="st">"q1"</span><span class="op">,</span> <span class="dt">x2</span><span class="op">:</span> <span class="st">"q3"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.22</span><span class="op">,</span></span>
+<span id="cb10-208"><a href="#cb10-208" aria-label="208"></a>        <span class="dt">insetTop</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">insetBottom</span><span class="op">:</span> <span class="dv">10</span>})<span class="op">,</span></span>
+<span id="cb10-209"><a href="#cb10-209" aria-label="209"></a>      Plot<span class="op">.</span><span class="fu">tickX</span>(data<span class="op">,</span> {<span class="op">...</span>position<span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="st">"median"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.8</span><span class="op">,</span></span>
+<span id="cb10-210"><a href="#cb10-210" aria-label="210"></a>        <span class="dt">insetTop</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span> <span class="dt">insetBottom</span><span class="op">:</span> <span class="dv">10</span>})<span class="op">,</span></span>
+<span id="cb10-211"><a href="#cb10-211" aria-label="211"></a>      Plot<span class="op">.</span><span class="fu">dot</span>(data<span class="op">,</span> {<span class="op">...</span>position<span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="st">"mean"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="fl">3.5</span>})<span class="op">,</span></span>
+<span id="cb10-212"><a href="#cb10-212" aria-label="212"></a>      Plot<span class="op">.</span><span class="fu">tip</span>(data<span class="op">,</span> Plot<span class="op">.</span><span class="fu">pointerY</span>({</span>
+<span id="cb10-213"><a href="#cb10-213" aria-label="213"></a>        <span class="op">...</span>position<span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="st">"mean"</span><span class="op">,</span></span>
+<span id="cb10-214"><a href="#cb10-214" aria-label="214"></a>        <span class="dt">title</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>d<span class="op">.</span><span class="at">case</span><span class="sc">}\n</span><span class="vs">Rows: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">rows</span><span class="op">.</span><span class="fu">toLocaleString</span>(<span class="st">"en-US"</span>)<span class="sc">}\n</span><span class="vs">Repetitions: </span><span class="sc">${</span>sparklyrBenchmark<span class="op">.</span><span class="at">repetitions</span><span class="sc">}\n</span><span class="vs">Mean: </span><span class="sc">${</span><span class="fu">format</span>(d<span class="op">.</span><span class="at">mean</span>)<span class="sc">}</span><span class="vs"> s</span><span class="sc">\n</span><span class="vs">Median: </span><span class="sc">${</span><span class="fu">format</span>(d<span class="op">.</span><span class="at">median</span>)<span class="sc">}</span><span class="vs"> s</span><span class="sc">\n</span><span class="vs">Min: </span><span class="sc">${</span><span class="fu">format</span>(d<span class="op">.</span><span class="at">min</span>)<span class="sc">}</span><span class="vs"> s</span><span class="sc">\n</span><span class="vs">Q1: </span><span class="sc">${</span><span class="fu">format</span>(d<span class="op">.</span><span class="at">q1</span>)<span class="sc">}</span><span class="vs"> s</span><span class="sc">\n</span><span class="vs">Q3: </span><span class="sc">${</span><span class="fu">format</span>(d<span class="op">.</span><span class="at">q3</span>)<span class="sc">}</span><span class="vs"> s</span><span class="sc">\n</span><span class="vs">Max: </span><span class="sc">${</span><span class="fu">format</span>(d<span class="op">.</span><span class="at">max</span>)<span class="sc">}</span><span class="vs"> s`</span><span class="op">,</span></span>
+<span id="cb10-215"><a href="#cb10-215" aria-label="215"></a>        <span class="dt">fill</span><span class="op">:</span> <span class="st">"var(--reading-surface-raised)"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"var(--reading-border)"</span><span class="op">,</span></span>
+<span id="cb10-216"><a href="#cb10-216" aria-label="216"></a>        <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">11</span><span class="op">,</span> <span class="dt">lineWidth</span><span class="op">:</span> <span class="dv">24</span></span>
+<span id="cb10-217"><a href="#cb10-217" aria-label="217"></a>      }))</span>
+<span id="cb10-218"><a href="#cb10-218" aria-label="218"></a>    ]</span>
+<span id="cb10-219"><a href="#cb10-219" aria-label="219"></a>  })<span class="op">;</span></span>
+<span id="cb10-220"><a href="#cb10-220" aria-label="220"></a></span>
+<span id="cb10-221"><a href="#cb10-221" aria-label="221"></a>  <span class="kw">const</span> labels <span class="op">=</span> chart<span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">'[aria-label="y-axis tick label"] text'</span>)<span class="op">;</span></span>
+<span id="cb10-222"><a href="#cb10-222" aria-label="222"></a>  labels<span class="op">.</span><span class="fu">forEach</span>(label <span class="kw">=&gt;</span> label<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">add</span>(<span class="st">"benchmark-code-label"</span>))<span class="op">;</span></span>
+<span id="cb10-223"><a href="#cb10-223" aria-label="223"></a>  <span class="fu">requestAnimationFrame</span>(() <span class="kw">=&gt;</span> {</span>
+<span id="cb10-224"><a href="#cb10-224" aria-label="224"></a>    <span class="cf">if</span> (<span class="op">!</span>chart<span class="op">.</span><span class="at">isConnected</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb10-225"><a href="#cb10-225" aria-label="225"></a>    labels<span class="op">.</span><span class="fu">forEach</span>(label <span class="kw">=&gt;</span> {</span>
+<span id="cb10-226"><a href="#cb10-226" aria-label="226"></a>      <span class="kw">const</span> bounds <span class="op">=</span> label<span class="op">.</span><span class="fu">getBBox</span>()<span class="op">;</span></span>
+<span id="cb10-227"><a href="#cb10-227" aria-label="227"></a>      <span class="kw">const</span> background <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElementNS</span>(<span class="st">"http://www.w3.org/2000/svg"</span><span class="op">,</span> <span class="st">"rect"</span>)<span class="op">;</span></span>
+<span id="cb10-228"><a href="#cb10-228" aria-label="228"></a>      background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"class"</span><span class="op">,</span> <span class="st">"benchmark-code-background"</span>)<span class="op">;</span></span>
+<span id="cb10-229"><a href="#cb10-229" aria-label="229"></a>      background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"transform"</span><span class="op">,</span> label<span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">"transform"</span>))<span class="op">;</span></span>
+<span id="cb10-230"><a href="#cb10-230" aria-label="230"></a>      background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"x"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">x</span> <span class="op">-</span> <span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb10-231"><a href="#cb10-231" aria-label="231"></a>      background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"y"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">y</span> <span class="op">-</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb10-232"><a href="#cb10-232" aria-label="232"></a>      background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"width"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">width</span> <span class="op">+</span> <span class="dv">6</span>)<span class="op">;</span></span>
+<span id="cb10-233"><a href="#cb10-233" aria-label="233"></a>      background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"height"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">height</span> <span class="op">+</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb10-234"><a href="#cb10-234" aria-label="234"></a>      background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"rx"</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb10-235"><a href="#cb10-235" aria-label="235"></a>      label<span class="op">.</span><span class="fu">before</span>(background)<span class="op">;</span></span>
+<span id="cb10-236"><a href="#cb10-236" aria-label="236"></a>    })<span class="op">;</span></span>
+<span id="cb10-237"><a href="#cb10-237" aria-label="237"></a>  })<span class="op">;</span></span>
+<span id="cb10-238"><a href="#cb10-238" aria-label="238"></a>  <span class="cf">return</span> chart<span class="op">;</span></span>
+<span id="cb10-239"><a href="#cb10-239" aria-label="239"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-original-benchmark" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-original-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="ojs-cell-3" data-nodetype="expression">
+
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-original-benchmark-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Benchmark results comparing collect() and collect_larger() for 1M, 5M, and 20M rows, with five repetitions per method.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>There is significant overhead for collecting data with <code>collect_larger()</code>, approximately ~35% for the 20 million row dataset - hardly surprising. This overhead is less (~25%) on the smaller dataset of 1 million rows.</p>
+<p>I believe this overhead is worth it in order to be able to retrieve the entire dataset in one call - something that isn’t simple for larger datasets. It’s an easy solution that will let you focus on other things.</p>
+<p>You can find the notebook to reproduce my results <a href="https://github.com/zacdav-db/examples/tree/main/sparklyr-collect-large-data">here</a>.</p>
+<p>Happy <code>collect()</code>-ing.</p>
+</section>
+<section id="noteworthy-points" class="level2">
+<h2 class="anchored" data-anchor-id="noteworthy-points">Noteworthy points</h2>
+<ul>
+<li>If you modify the callback to print out the size of each batch returned you’ll find almost always they are 10,000 rows. This is due to <a href="https://spark.apache.org/docs/3.0.0/sql-pyspark-pandas-with-arrow.html#setting-arrow-batch-size"><code>spark.sql.execution.arrow.maxRecordsPerBatch</code></a>, which defaults to 10,000.</li>
+<li>There is certainly overhead for pulling back many small batches of 10,000 and combining those into a singular <code>data.frame</code> / <code>data.table</code>. You can test setting <a href="https://spark.apache.org/docs/3.0.0/sql-pyspark-pandas-with-arrow.html#setting-arrow-batch-size"><code>spark.sql.execution.arrow.maxRecordsPerBatch</code></a> to higher values to eke out extra performance if you’re inclined.</li>
+<li>Consider if you could use a Spark UDF to run your analysis (or even convert code to <code>{sparklyr}</code>) as an alternative to collecting large data back to the driver node’s R session.</li>
+<li>In <code>collect_larger()</code> I used <code>{data.table}</code>’s <code>rbindlist()</code> since I’ve found it to be faster in the past - unsure if that’s changed since I last benchmarked!</li>
+<li>You’ll need to have sufficient memory available for the R session to <code>collect()</code> large data. My Databricks cluster had 128 GB of memory on the driver node, which is well above what is required to collect this amount of data.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+(() => {
+  const banners = document.querySelectorAll(".quarto-title-banner");
+  if (!banners.length) return;
+
+  const seed = 42;
+  const glyphScale = 0.9;
+  // Python's seed-42 phase and original-layout vortices from generate.py.
+  const phase = 4.017637065087458;
+  const vortices = [
+    [0.38753764327933427, 0.3200234546952954, -1.716093423477299, 0.47094136424920374],
+    [2.6684482059801895, 0.8137436541638764, -2.56097923769762, 0.37657654590558115],
+    [0.4042902680332462, 0.2749103798428827, 0.03320278624084683, 0.2579607909051591],
+    [0.9959317774032697, 0.6199075502236185, 0.2786371797399436, 0.316132186612209],
+    [2.3624298935656802, 0.7475443653422613, -3.0597076899960216, 0.4917457755498424],
+    [2.743487882458794, 0.37220041321439357, -2.1360271011669543, 0.5371639216620344],
+  ];
+
+  function noise(x, y, salt) {
+    const ix = Math.floor(x), iy = Math.floor(y);
+    let fx = x - ix, fy = y - iy;
+    fx = fx * fx * (3 - 2 * fx);
+    fy = fy * fy * (3 - 2 * fy);
+    function corner(a, b) {
+      let n = (Math.imul(a, 374761393) + Math.imul(b, 668265263) + Math.imul(salt, 1442695041)) >>> 0;
+      n = Math.imul(n ^ (n >>> 13), 1274126177) >>> 0;
+      return ((n ^ (n >>> 16)) >>> 0) / 4294967295 * 2 - 1;
+    }
+    const low = corner(ix, iy) * (1 - fx) + corner(ix + 1, iy) * fx;
+    const high = corner(ix, iy + 1) * (1 - fx) + corner(ix + 1, iy + 1) * fx;
+    return low * (1 - fy) + high * fy;
+  }
+
+  function fbm(x, y, salt) {
+    let value = 0;
+    for (let i = 0; i < 4; i++) {
+      value += noise(x * 2 ** i, y * 2 ** i, salt + i * 31) * 0.5 ** i;
+    }
+    return value / 1.875;
+  }
+
+  function seededRandom(initialState) {
+    let state = initialState;
+    return () => {
+      state = (state + 0x6d2b79f5) | 0;
+      let value = Math.imul(state ^ (state >>> 15), state | 1);
+      value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+      return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function createCell(row, column, random) {
+    const x = column * 9 + 4, y0 = row * 13 + 6;
+    const u = x / 396, v = y0 / 396;
+    const coarse = fbm(u * 1.4 + 3, v * 1.4, seed);
+    const fine = fbm(u * 3, v * 3 + 7, seed + 29);
+    const y = y0 + 28 * Math.sin(u * 2.9 + phase + v * 0.5)
+      + 21 * coarse + 11 * Math.sin(u * 5.5 + v * 1.4);
+    let wx = u, wy = v;
+    for (const [cx, cy, spin, radius] of vortices) {
+      const dx = wx - cx, dy = wy - cy;
+      const angle = spin * Math.exp(-(dx * dx + dy * dy) / (radius * radius));
+      wx = cx + dx * Math.cos(angle) - dy * Math.sin(angle);
+      wy = cy + dx * Math.sin(angle) + dy * Math.cos(angle);
+    }
+    const warp = fbm(wx * 2 + 1.8 * coarse, wy * 2 + fine, seed + 103);
+    const field = wy * 4.7 + 0.35 * Math.sin(wx * 3 + phase) + 0.42 * warp;
+    const band = 0.5 + 0.5 * Math.sin(field * Math.PI * 2);
+    const striation = 0.5 + 0.5 * Math.sin(field * Math.PI * 2 * 2.7 + coarse * 3);
+    const gap = fbm(u * 9 + 40, v * 10 + 20, seed + 52);
+    let opacity = (0.18 + 0.72 * band ** 1.1 + 0.08 * striation) * (gap < -0.32 ? 0.65 : 1);
+    const alphabet = band < 0.13 ? ". : . - : " : band < 0.37 ? "~-=+::/\\"
+      : band < 0.70 ? "{}()[]<>xv" : "abcxyz023578#%";
+    const index = Math.trunc(field * 9 + column * 0.22 + fine * 7);
+    let glyph = alphabet[((index % alphabet.length) + alphabet.length) % alphabet.length];
+    if (random() < 0.23) glyph = alphabet[Math.floor(random() * alphabet.length)];
+    if (random() < 0.025 + Math.max(0, -gap) * 0.16) glyph = " ";
+    opacity = Math.max(0, Math.min(1, opacity + (random() - 0.5) * 0.12));
+    return glyph === " " ? null : { x, y, glyph, opacity };
+  }
+
+  const cells = new Map();
+  const originalRandom = seededRandom(seed);
+  // Retain the original artwork; extend it with stable, coordinate-seeded cells.
+  for (let row = -8; row < 42; row++) {
+    for (let column = 0; column < 178; column++) {
+      cells.set(`${row}:${column}`, createCell(row, column, originalRandom));
+    }
+  }
+
+  function cellAt(row, column) {
+    const key = `${row}:${column}`;
+    if (!cells.has(key)) {
+      const random = seededRandom(seed ^ Math.imul(row, 19349663) ^ Math.imul(column, 73856093));
+      cells.set(key, createCell(row, column, random));
+    }
+    return cells.get(key);
+  }
+
+  banners.forEach((banner) => {
+    if (banner.querySelector(".title-banner-ascii")) return;
+    const art = document.createElement("canvas");
+    const context = art.getContext("2d");
+    if (!context) return;
+    art.className = "title-banner-ascii";
+    art.style.position = "absolute";
+    art.setAttribute("aria-hidden", "true");
+    art.dataset.artwork = "E-iris-apricot";
+    art.dataset.seed = String(seed);
+    banner.prepend(art);
+    let previousSize = "";
+
+    function draw() {
+      const width = banner.clientWidth, height = banner.clientHeight;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const ink = getComputedStyle(art).color;
+      const size = `${width}:${height}:${ratio}:${ink}`;
+      if (size === previousSize || !width || !height) return;
+      previousSize = size;
+      art.width = Math.round(width * ratio);
+      art.height = Math.round(height * ratio);
+      const offsetX = (width - 1584 * glyphScale) / 2;
+      const offsetY = (height - 396 * glyphScale) / 2;
+      context.setTransform(glyphScale * ratio, 0, 0, glyphScale * ratio,
+        offsetX * ratio, offsetY * ratio);
+      context.font = '12px "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace';
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.fillStyle = ink;
+      const left = -offsetX / glyphScale, right = (width - offsetX) / glyphScale;
+      const top = -offsetY / glyphScale, bottom = (height - offsetY) / glyphScale;
+      let glyphs = 0;
+      for (let row = Math.floor((top - 72) / 13); row <= Math.ceil((bottom + 72) / 13); row++) {
+        for (let column = Math.floor(left / 9) - 1; column <= Math.ceil(right / 9) + 1; column++) {
+          const cell = cellAt(row, column);
+          if (!cell || cell.y < top - 12 || cell.y > bottom + 12) continue;
+          context.globalAlpha = 0.5 + cell.opacity * 0.5;
+          context.fillText(cell.glyph, cell.x, cell.y);
+          glyphs++;
+        }
+      }
+      art.dataset.glyphs = String(glyphs);
+      context.globalAlpha = 1;
+    }
+
+    draw();
+    if (typeof ResizeObserver !== "undefined") new ResizeObserver(draw).observe(banner);
+    new MutationObserver(draw).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    window.addEventListener("resize", draw, { passive: true });
+  });
+})();
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InNwYXJrbHlyQmVuY2htYXJrID0gYXdhaXQgRmlsZUF0dGFjaG1lbnQoXCJiZW5jaG1hcmstc3VtbWFyeS5qc29uXCIpLmpzb24oKVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoidmlld29mIHNwYXJrbHlyU2NhbGUgPSBJbnB1dHMuc2VsZWN0KG5ldyBNYXAoW1xuICBbXCJMb2dhcml0aG1pY1wiLCBcImxvZ1wiXSxcbiAgW1wiTGluZWFyXCIsIFwibGluZWFyXCJdXG5dKSwge2xhYmVsOiBcIlNjYWxlXCIsIHZhbHVlOiBcImxvZ1wifSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IntcbiAgY29uc3QgZGF0YSA9IHNwYXJrbHlyQmVuY2htYXJrLnJlc3VsdHM7XG4gIGNvbnN0IGNoYXJ0V2lkdGggPSBNYXRoLm1pbih3aWR0aCwgNzYwKTtcbiAgY29uc3QgZm9ybWF0ID0gdmFsdWUgPT4gdmFsdWUudG9GaXhlZCg2KTtcbiAgY29uc3QgcG9zaXRpb24gPSB7eTogXCJjYXNlXCJ9O1xuICBjb25zdCBjaGFydCA9IFBsb3QucGxvdCh7XG4gICAgd2lkdGg6IGNoYXJ0V2lkdGgsXG4gICAgaGVpZ2h0OiAzNjAsXG4gICAgbWFyZ2luTGVmdDogY2hhcnRXaWR0aCA8IDQ4MCA/IDEzNCA6IDE1MixcbiAgICBtYXJnaW5SaWdodDogMjAsXG4gICAgbWFyZ2luVG9wOiAyMCxcbiAgICBtYXJnaW5Cb3R0b206IDQ0LFxuICAgIGFyaWFMYWJlbDogXCJPcmlnaW5hbCBiZW5jaG1hcmsgcnVudGltZSBzdW1tYXJpZXM6IG1pbmltdW0sIHF1YXJ0aWxlcywgbWVkaWFuLCBtYXhpbXVtLCBhbmQgbWVhbiwgaW4gc2Vjb25kcy5cIixcbiAgICBzdHlsZToge2JhY2tncm91bmQ6IFwidHJhbnNwYXJlbnRcIiwgY29sb3I6IFwiaW5oZXJpdFwiLCBmb250RmFtaWx5OiBcImluaGVyaXRcIiwgZm9udFNpemU6IFwiMTJweFwiLCBvdmVyZmxvdzogXCJ2aXNpYmxlXCJ9LFxuICAgIHg6IHtcbiAgICAgIHR5cGU6IHNwYXJrbHlyU2NhbGUsXG4gICAgICBkb21haW46IFtzcGFya2x5clNjYWxlID09PSBcImxvZ1wiID8gTWF0aC5taW4oLi4uZGF0YS5tYXAoZCA9PiBkLm1pbikpICogMC45IDogMCxcbiAgICAgICAgTWF0aC5tYXgoLi4uZGF0YS5tYXAoZCA9PiBkLm1heCkpICogMS4xXSxcbiAgICAgIHRpY2tzOiBzcGFya2x5clNjYWxlID09PSBcImxvZ1wiID8gWzMsIDEwLCAzMF0gOiBbMCwgMjAsIDQwLCA2MF0sXG4gICAgICBsYWJlbDogXCJUaW1lIFtzZWNvbmRzXVwiLFxuICAgICAgZ3JpZDogdHJ1ZVxuICAgIH0sXG4gICAgeToge2xhYmVsOiBudWxsLCBkb21haW46IGRhdGEubWFwKGQgPT4gZC5jYXNlKS5yZXZlcnNlKCksIHRpY2tTaXplOiAwLCBwYWRkaW5nOiAwLjN9LFxuICAgIGNvbG9yOiB7ZG9tYWluOiBbXCJjb2xsZWN0KClcIiwgXCJjb2xsZWN0X2xhcmdlcigpXCJdLFxuICAgICAgcmFuZ2U6IFtcInZhcigtLWJlbmNobWFyay1uZXcpXCIsIFwidmFyKC0tYmVuY2htYXJrLW9sZClcIl0sIGxlZ2VuZDogdHJ1ZX0sXG4gICAgbWFya3M6IFtcbiAgICAgIFBsb3QucnVsZVkoZGF0YSwgey4uLnBvc2l0aW9uLCB4MTogXCJtaW5cIiwgeDI6IFwibWF4XCIsIHN0cm9rZTogXCJtZXRob2RcIiwgc3Ryb2tlV2lkdGg6IDEuNX0pLFxuICAgICAgUGxvdC5iYXJYKGRhdGEsIHsuLi5wb3NpdGlvbiwgeDE6IFwicTFcIiwgeDI6IFwicTNcIiwgZmlsbDogXCJtZXRob2RcIiwgZmlsbE9wYWNpdHk6IDAuMjIsXG4gICAgICAgIGluc2V0VG9wOiAxMCwgaW5zZXRCb3R0b206IDEwfSksXG4gICAgICBQbG90LnRpY2tYKGRhdGEsIHsuLi5wb3NpdGlvbiwgeDogXCJtZWRpYW5cIiwgc3Ryb2tlOiBcIm1ldGhvZFwiLCBzdHJva2VXaWR0aDogMS44LFxuICAgICAgICBpbnNldFRvcDogMTAsIGluc2V0Qm90dG9tOiAxMH0pLFxuICAgICAgUGxvdC5kb3QoZGF0YSwgey4uLnBvc2l0aW9uLCB4OiBcIm1lYW5cIiwgZmlsbDogXCJtZXRob2RcIiwgcjogMy41fSksXG4gICAgICBQbG90LnRpcChkYXRhLCBQbG90LnBvaW50ZXJZKHtcbiAgICAgICAgLi4ucG9zaXRpb24sIHg6IFwibWVhblwiLFxuICAgICAgICB0aXRsZTogZCA9PiBgJHtkLmNhc2V9XFxuUm93czogJHtkLnJvd3MudG9Mb2NhbGVTdHJpbmcoXCJlbi1VU1wiKX1cXG5SZXBldGl0aW9uczogJHtzcGFya2x5ckJlbmNobWFyay5yZXBldGl0aW9uc31cXG5NZWFuOiAke2Zvcm1hdChkLm1lYW4pfSBzXFxuTWVkaWFuOiAke2Zvcm1hdChkLm1lZGlhbil9IHNcXG5NaW46ICR7Zm9ybWF0KGQubWluKX0gc1xcblExOiAke2Zvcm1hdChkLnExKX0gc1xcblEzOiAke2Zvcm1hdChkLnEzKX0gc1xcbk1heDogJHtmb3JtYXQoZC5tYXgpfSBzYCxcbiAgICAgICAgZmlsbDogXCJ2YXIoLS1yZWFkaW5nLXN1cmZhY2UtcmFpc2VkKVwiLCBzdHJva2U6IFwidmFyKC0tcmVhZGluZy1ib3JkZXIpXCIsXG4gICAgICAgIGZvbnRTaXplOiAxMSwgbGluZVdpZHRoOiAyNFxuICAgICAgfSkpXG4gICAgXVxuICB9KTtcblxuICBjb25zdCBsYWJlbHMgPSBjaGFydC5xdWVyeVNlbGVjdG9yQWxsKCdbYXJpYS1sYWJlbD1cInktYXhpcyB0aWNrIGxhYmVsXCJdIHRleHQnKTtcbiAgbGFiZWxzLmZvckVhY2gobGFiZWwgPT4gbGFiZWwuY2xhc3NMaXN0LmFkZChcImJlbmNobWFyay1jb2RlLWxhYmVsXCIpKTtcbiAgcmVxdWVzdEFuaW1hdGlvbkZyYW1lKCgpID0+IHtcbiAgICBpZiAoIWNoYXJ0LmlzQ29ubmVjdGVkKSByZXR1cm47XG4gICAgbGFiZWxzLmZvckVhY2gobGFiZWwgPT4ge1xuICAgICAgY29uc3QgYm91bmRzID0gbGFiZWwuZ2V0QkJveCgpO1xuICAgICAgY29uc3QgYmFja2dyb3VuZCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnROUyhcImh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnXCIsIFwicmVjdFwiKTtcbiAgICAgIGJhY2tncm91bmQuc2V0QXR0cmlidXRlKFwiY2xhc3NcIiwgXCJiZW5jaG1hcmstY29kZS1iYWNrZ3JvdW5kXCIpO1xuICAgICAgYmFja2dyb3VuZC5zZXRBdHRyaWJ1dGUoXCJ0cmFuc2Zvcm1cIiwgbGFiZWwuZ2V0QXR0cmlidXRlKFwidHJhbnNmb3JtXCIpKTtcbiAgICAgIGJhY2tncm91bmQuc2V0QXR0cmlidXRlKFwieFwiLCBib3VuZHMueCAtIDMpO1xuICAgICAgYmFja2dyb3VuZC5zZXRBdHRyaWJ1dGUoXCJ5XCIsIGJvdW5kcy55IC0gMik7XG4gICAgICBiYWNrZ3JvdW5kLnNldEF0dHJpYnV0ZShcIndpZHRoXCIsIGJvdW5kcy53aWR0aCArIDYpO1xuICAgICAgYmFja2dyb3VuZC5zZXRBdHRyaWJ1dGUoXCJoZWlnaHRcIiwgYm91bmRzLmhlaWdodCArIDQpO1xuICAgICAgYmFja2dyb3VuZC5zZXRBdHRyaWJ1dGUoXCJyeFwiLCAzKTtcbiAgICAgIGxhYmVsLmJlZm9yZShiYWNrZ3JvdW5kKTtcbiAgICB9KTtcbiAgfSk7XG4gIHJldHVybiBjaGFydDtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnc3BhcmtseXJTY2FsZScpIn1dfQ==
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../posts/collecting-large-results-with-sparklyr";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const toggle = window.document.createElement('button');
+      toggle.type = "button";
+      toggle.setAttribute("role", "switch");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.classList.add('top-right');
+      toggle.classList.add('quarto-color-scheme-toggle');
+      toggle.setAttribute("aria-label", "Toggle dark mode");
+      toggle.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      toggle.appendChild(i);
+      // Put the toggle in a landmark of its own, so that landmark navigation
+      // can reach it.
+      //
+      // The container is always a fresh direct child of body, and the toggle is
+      // never moved into page furniture that the theme or the author controls.
+      // The toggle is positioned against the page, so any ancestor that
+      // establishes a containing block captures it: a positioned element or a
+      // grid for position: absolute, and transform, filter, will-change or
+      // contain for position: fixed. A direct child of body has none of these
+      // to inherit, and the shift when one appears is silent and visual.
+      //
+      // ARIA says a document should have at most one banner, and axe reports a
+      // duplicate whether or not the banners carry distinct labels. So use a
+      // header when the page has no banner yet, and a named region otherwise.
+      //
+      // A header is a banner wherever it sits, unless it is inside sectioning
+      // content, so this cannot just look at the children of body: a custom
+      // page layout wraps the title block header in a plain div. An explicit
+      // role="banner" always counts.
+      const sectioning = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
+      const hasBanner = Array.from(
+        window.document.querySelectorAll('header:not([role]), [role="banner"]')
+      ).some(function(el) {
+        return el.hasAttribute("role") || el.closest(sectioning) === null;
+      });
+      const container = window.document.createElement(hasBanner ? "div" : "header");
+      if (hasBanner) {
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Toggle dark mode");
+      }
+      container.classList.add('quarto-color-scheme-toggle-container');
+      container.appendChild(toggle);
+      window.document.body.appendChild(container);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/zacdav-db\.github\.io\/blog\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

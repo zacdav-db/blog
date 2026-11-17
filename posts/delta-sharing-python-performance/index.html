@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<link rel="stylesheet" href="../../styles.css?v=aaac83a28f21">
+<link rel="stylesheet" href="../../styles.css?v=8b60b3269c1e">
 </head>
 
 <body class="nav-fixed quarto-dark"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
@@ -403,15 +403,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>read_with_pandas.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-1" data-filename="read_with_pandas.py"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> delta_sharing</span>
-<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>profile_file <span class="op">=</span> <span class="st">"/path/to/recipient.share"</span></span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> delta_sharing.SharingClient(profile_file)</span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>client.list_all_tables()</span>
-<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>table_url <span class="op">=</span> profile_file <span class="op">+</span> <span class="st">"#share.schema.table"</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-9" class="code-annotation-target"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> delta_sharing.load_as_pandas(table_url)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-1" data-filename="read_with_pandas.py"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-label="1"></a><span class="im">import</span> delta_sharing</span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-label="2"></a></span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-label="3"></a>profile_file <span class="op">=</span> <span class="st">"/path/to/recipient.share"</span></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-label="4"></a>client <span class="op">=</span> delta_sharing.SharingClient(profile_file)</span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5" aria-label="5"></a></span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-label="6"></a>client.list_all_tables()</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-label="7"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8" aria-label="8"></a>table_url <span class="op">=</span> profile_file <span class="op">+</span> <span class="st">"#share.schema.table"</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-9" class="code-annotation-target"><a href="#annotated-cell-1-9" aria-label="9"></a>df <span class="op">=</span> delta_sharing.load_as_pandas(table_url)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
@@ -445,50 +445,50 @@ Expand the internal workaround example
 <div class="code-with-filename-file">
 <pre><strong>internal_arrow_workaround.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2" data-filename="internal_arrow_workaround.py"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> json <span class="im">import</span> dump, loads</span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow <span class="im">as</span> pa</span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> delta_kernel_rust_sharing_wrapper <span class="im">as</span> dks</span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> delta_sharing.protocol <span class="im">import</span> DeltaSharingProfile, Table</span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> delta_sharing.rest_client <span class="im">import</span> DataSharingRestClient</span>
-<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _write_snapshot(temp_dir, lines):</span>
-<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>    log_dir <span class="op">=</span> os.path.join(temp_dir, <span class="st">"_delta_log"</span>)</span>
-<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>    os.makedirs(log_dir, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(os.path.join(log_dir, <span class="st">"00000000000000000000.json"</span>), <span class="st">"w"</span>) <span class="im">as</span> f:</span>
-<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a>        dump({<span class="st">"protocol"</span>: loads(lines[<span class="dv">0</span>])[<span class="st">"protocol"</span>][<span class="st">"deltaProtocol"</span>]}, f)</span>
-<span id="annotated-cell-2-18"><a href="#annotated-cell-2-18" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19" aria-hidden="true" tabindex="-1"></a>        dump({<span class="st">"metaData"</span>: loads(lines[<span class="dv">1</span>])[<span class="st">"metaData"</span>][<span class="st">"deltaMetadata"</span>]}, f)</span>
-<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="annotated-cell-2-21"><a href="#annotated-cell-2-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> lines[<span class="dv">2</span>:]:</span>
-<span id="annotated-cell-2-22"><a href="#annotated-cell-2-22" aria-hidden="true" tabindex="-1"></a>            dump(loads(line)[<span class="st">"file"</span>][<span class="st">"deltaSingleAction"</span>], f)</span>
-<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23" aria-hidden="true" tabindex="-1"></a>            f.write(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="annotated-cell-2-24"><a href="#annotated-cell-2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-25"><a href="#annotated-cell-2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"file:///</span><span class="sc">{</span>temp_dir<span class="sc">}</span><span class="ss">"</span></span>
-<span id="annotated-cell-2-26"><a href="#annotated-cell-2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28" aria-hidden="true" tabindex="-1"></a>profile <span class="op">=</span> DeltaSharingProfile.read_from_file(<span class="st">"/path/to/recipient.share"</span>)</span>
-<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29" aria-hidden="true" tabindex="-1"></a>rest_client <span class="op">=</span> DataSharingRestClient(profile)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-30" class="code-annotation-target"><a href="#annotated-cell-2-30" aria-hidden="true" tabindex="-1"></a>rest_client.set_delta_format_header()</span>
-<span id="annotated-cell-2-31"><a href="#annotated-cell-2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> rest_client.list_files_in_table(</span>
-<span id="annotated-cell-2-34"><a href="#annotated-cell-2-34" aria-hidden="true" tabindex="-1"></a>        Table(name<span class="op">=</span><span class="st">"table"</span>, share<span class="op">=</span><span class="st">"share"</span>, schema<span class="op">=</span><span class="st">"schema"</span>),</span>
-<span id="annotated-cell-2-35"><a href="#annotated-cell-2-35" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="annotated-cell-2-36"><a href="#annotated-cell-2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-37"><a href="#annotated-cell-2-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tempfile.TemporaryDirectory() <span class="im">as</span> temp_dir:</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-38" class="code-annotation-target"><a href="#annotated-cell-2-38" aria-hidden="true" tabindex="-1"></a>        table_uri <span class="op">=</span> _write_snapshot(temp_dir, response.lines)</span>
-<span id="annotated-cell-2-39"><a href="#annotated-cell-2-39" aria-hidden="true" tabindex="-1"></a>        interface <span class="op">=</span> dks.PythonInterface(table_uri)</span>
-<span id="annotated-cell-2-40"><a href="#annotated-cell-2-40" aria-hidden="true" tabindex="-1"></a>        snapshot <span class="op">=</span> dks.Table(table_uri).snapshot(interface)</span>
-<span id="annotated-cell-2-41"><a href="#annotated-cell-2-41" aria-hidden="true" tabindex="-1"></a>        scan <span class="op">=</span> dks.ScanBuilder(snapshot).build()</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-42" class="code-annotation-target"><a href="#annotated-cell-2-42" aria-hidden="true" tabindex="-1"></a>        arrow_table <span class="op">=</span> pa.Table.from_batches(scan.execute(interface))</span>
-<span id="annotated-cell-2-43"><a href="#annotated-cell-2-43" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
-<span id="annotated-cell-2-44"><a href="#annotated-cell-2-44" aria-hidden="true" tabindex="-1"></a>    rest_client.remove_delta_format_header()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2" data-filename="internal_arrow_workaround.py"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-label="1"></a><span class="im">import</span> os</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-label="2"></a><span class="im">import</span> tempfile</span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-label="3"></a><span class="im">from</span> json <span class="im">import</span> dump, loads</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-label="4"></a></span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-label="5"></a><span class="im">import</span> pyarrow <span class="im">as</span> pa</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-label="6"></a></span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-label="7"></a><span class="im">import</span> delta_kernel_rust_sharing_wrapper <span class="im">as</span> dks</span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-label="8"></a><span class="im">from</span> delta_sharing.protocol <span class="im">import</span> DeltaSharingProfile, Table</span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-label="9"></a><span class="im">from</span> delta_sharing.rest_client <span class="im">import</span> DataSharingRestClient</span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-label="10"></a></span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-label="11"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12" aria-label="12"></a><span class="kw">def</span> _write_snapshot(temp_dir, lines):</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-label="13"></a>    log_dir <span class="op">=</span> os.path.join(temp_dir, <span class="st">"_delta_log"</span>)</span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-label="14"></a>    os.makedirs(log_dir, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-label="15"></a></span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-label="16"></a>    <span class="cf">with</span> <span class="bu">open</span>(os.path.join(log_dir, <span class="st">"00000000000000000000.json"</span>), <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-label="17"></a>        dump({<span class="st">"protocol"</span>: loads(lines[<span class="dv">0</span>])[<span class="st">"protocol"</span>][<span class="st">"deltaProtocol"</span>]}, f)</span>
+<span id="annotated-cell-2-18"><a href="#annotated-cell-2-18" aria-label="18"></a>        f.write(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19" aria-label="19"></a>        dump({<span class="st">"metaData"</span>: loads(lines[<span class="dv">1</span>])[<span class="st">"metaData"</span>][<span class="st">"deltaMetadata"</span>]}, f)</span>
+<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20" aria-label="20"></a>        f.write(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="annotated-cell-2-21"><a href="#annotated-cell-2-21" aria-label="21"></a>        <span class="cf">for</span> line <span class="kw">in</span> lines[<span class="dv">2</span>:]:</span>
+<span id="annotated-cell-2-22"><a href="#annotated-cell-2-22" aria-label="22"></a>            dump(loads(line)[<span class="st">"file"</span>][<span class="st">"deltaSingleAction"</span>], f)</span>
+<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23" aria-label="23"></a>            f.write(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="annotated-cell-2-24"><a href="#annotated-cell-2-24" aria-label="24"></a></span>
+<span id="annotated-cell-2-25"><a href="#annotated-cell-2-25" aria-label="25"></a>    <span class="cf">return</span> <span class="ss">f"file:///</span><span class="sc">{</span>temp_dir<span class="sc">}</span><span class="ss">"</span></span>
+<span id="annotated-cell-2-26"><a href="#annotated-cell-2-26" aria-label="26"></a></span>
+<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27" aria-label="27"></a></span>
+<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28" aria-label="28"></a>profile <span class="op">=</span> DeltaSharingProfile.read_from_file(<span class="st">"/path/to/recipient.share"</span>)</span>
+<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29" aria-label="29"></a>rest_client <span class="op">=</span> DataSharingRestClient(profile)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-30" class="code-annotation-target"><a href="#annotated-cell-2-30" aria-label="30"></a>rest_client.set_delta_format_header()</span>
+<span id="annotated-cell-2-31"><a href="#annotated-cell-2-31" aria-label="31"></a></span>
+<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32" aria-label="32"></a><span class="cf">try</span>:</span>
+<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33" aria-label="33"></a>    response <span class="op">=</span> rest_client.list_files_in_table(</span>
+<span id="annotated-cell-2-34"><a href="#annotated-cell-2-34" aria-label="34"></a>        Table(name<span class="op">=</span><span class="st">"table"</span>, share<span class="op">=</span><span class="st">"share"</span>, schema<span class="op">=</span><span class="st">"schema"</span>),</span>
+<span id="annotated-cell-2-35"><a href="#annotated-cell-2-35" aria-label="35"></a>    )</span>
+<span id="annotated-cell-2-36"><a href="#annotated-cell-2-36" aria-label="36"></a></span>
+<span id="annotated-cell-2-37"><a href="#annotated-cell-2-37" aria-label="37"></a>    <span class="cf">with</span> tempfile.TemporaryDirectory() <span class="im">as</span> temp_dir:</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-38" class="code-annotation-target"><a href="#annotated-cell-2-38" aria-label="38"></a>        table_uri <span class="op">=</span> _write_snapshot(temp_dir, response.lines)</span>
+<span id="annotated-cell-2-39"><a href="#annotated-cell-2-39" aria-label="39"></a>        interface <span class="op">=</span> dks.PythonInterface(table_uri)</span>
+<span id="annotated-cell-2-40"><a href="#annotated-cell-2-40" aria-label="40"></a>        snapshot <span class="op">=</span> dks.Table(table_uri).snapshot(interface)</span>
+<span id="annotated-cell-2-41"><a href="#annotated-cell-2-41" aria-label="41"></a>        scan <span class="op">=</span> dks.ScanBuilder(snapshot).build()</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-42" class="code-annotation-target"><a href="#annotated-cell-2-42" aria-label="42"></a>        arrow_table <span class="op">=</span> pa.Table.from_batches(scan.execute(interface))</span>
+<span id="annotated-cell-2-43"><a href="#annotated-cell-2-43" aria-label="43"></a><span class="cf">finally</span>:</span>
+<span id="annotated-cell-2-44"><a href="#annotated-cell-2-44" aria-label="44"></a>    rest_client.remove_delta_format_header()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
@@ -523,16 +523,16 @@ Expand the internal workaround example
 <div class="code-with-filename-file">
 <pre><strong>table_handle_and_outputs.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-3" data-filename="table_handle_and_outputs.py"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> delta_sharing</span>
-<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> delta_sharing.SharingClient(<span class="st">"/path/to/recipient.share"</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> client.table(<span class="st">"share.schema.table"</span>)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-5" class="code-annotation-target"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>snapshot <span class="op">=</span> table.snapshot(limit<span class="op">=</span><span class="dv">10000</span>)</span>
-<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Materialize the same snapshot in different formats.</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-8" class="code-annotation-target"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>pdf <span class="op">=</span> snapshot.to_pandas()</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-9" class="code-annotation-target"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>arrow_table <span class="op">=</span> snapshot.to_arrow()</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="5">5</button><span id="annotated-cell-3-10" class="code-annotation-target"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-3" data-filename="table_handle_and_outputs.py"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-label="1"></a><span class="im">import</span> delta_sharing</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-label="2"></a></span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-label="3"></a>client <span class="op">=</span> delta_sharing.SharingClient(<span class="st">"/path/to/recipient.share"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4" aria-label="4"></a>table <span class="op">=</span> client.table(<span class="st">"share.schema.table"</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-5" class="code-annotation-target"><a href="#annotated-cell-3-5" aria-label="5"></a>snapshot <span class="op">=</span> table.snapshot(limit<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6" aria-label="6"></a></span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-label="7"></a><span class="co"># Materialize the same snapshot in different formats.</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-8" class="code-annotation-target"><a href="#annotated-cell-3-8" aria-label="8"></a>pdf <span class="op">=</span> snapshot.to_pandas()</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-9" class="code-annotation-target"><a href="#annotated-cell-3-9" aria-label="9"></a>arrow_table <span class="op">=</span> snapshot.to_arrow()</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="5">5</button><span id="annotated-cell-3-10" class="code-annotation-target"><a href="#annotated-cell-3-10" aria-label="10"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
@@ -608,33 +608,33 @@ Figure&nbsp;1: The red path shows the earlier public interface. The blue path sh
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">DuckDB</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Polars</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">DataFusion</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">PyArrow</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> duckdb</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> duckdb.<span class="ex">connect</span>().from_arrow(reader).limit(<span class="dv">10</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-label="1"></a><span class="im">import</span> duckdb</span>
+<span id="cb1-2"><a href="#cb1-2" aria-label="2"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-label="3"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-label="4"></a>result <span class="op">=</span> duckdb.<span class="ex">connect</span>().from_arrow(reader).limit(<span class="dv">10</span>).df()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>See DuckDB’s <a href="https://duckdb.org/docs/stable/guides/python/sql_on_arrow">SQL on Arrow</a> docs.</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>polars_df <span class="op">=</span> pl.from_arrow(reader)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-label="1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb2-2"><a href="#cb2-2" aria-label="2"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-label="3"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-label="4"></a>polars_df <span class="op">=</span> pl.from_arrow(reader)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>See Polars <a href="https://docs.pola.rs/py-polars/html/reference/api/polars.from_arrow.html"><code>from_arrow</code></a>.</p>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datafusion <span class="im">import</span> SessionContext</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ctx <span class="op">=</span> SessionContext()</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> ctx.from_arrow(reader)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> df.to_pydict()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-label="1"></a><span class="im">from</span> datafusion <span class="im">import</span> SessionContext</span>
+<span id="cb3-2"><a href="#cb3-2" aria-label="2"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-label="3"></a>ctx <span class="op">=</span> SessionContext()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-label="4"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-label="5"></a>df <span class="op">=</span> ctx.from_arrow(reader)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-label="6"></a>result <span class="op">=</span> df.to_pydict()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>See DataFusion’s <a href="https://datafusion.apache.org/python/user-guide/io/arrow.html">Python Arrow IO</a> docs.</p>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch <span class="kw">in</span> reader:</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(batch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-label="1"></a>reader <span class="op">=</span> snapshot.to_record_batch_reader()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-label="2"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-label="3"></a><span class="cf">for</span> batch <span class="kw">in</span> reader:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-label="4"></a>    <span class="bu">print</span>(batch)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>See PyArrow <a href="https://arrow.apache.org/docs/python/generated/pyarrow.RecordBatchReader.html"><code>RecordBatchReader</code></a>.</p>
 </div>
 </div>
@@ -645,30 +645,30 @@ Figure&nbsp;1: The red path shows the earlier public interface. The blue path sh
 <div class="code-with-filename-file">
 <pre><strong>snapshot_batches.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4" data-filename="snapshot_batches.py"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow <span class="im">as</span> pa</span>
-<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow.parquet <span class="im">as</span> pq</span>
-<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>batches_per_file <span class="op">=</span> <span class="dv">10</span></span>
-<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>batch_buffer <span class="op">=</span> []</span>
-<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>file_index <span class="op">=</span> <span class="dv">0</span></span>
-<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> table.snapshot().to_record_batch_reader() <span class="im">as</span> reader:</span>
-<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> batch <span class="kw">in</span> reader:</span>
-<span id="annotated-cell-4-10"><a href="#annotated-cell-4-10" aria-hidden="true" tabindex="-1"></a>        batch_buffer.append(batch)</span>
-<span id="annotated-cell-4-11"><a href="#annotated-cell-4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-4-12"><a href="#annotated-cell-4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(batch_buffer) <span class="op">==</span> batches_per_file:</span>
-<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13" aria-hidden="true" tabindex="-1"></a>            pq.write_table(</span>
-<span id="annotated-cell-4-14"><a href="#annotated-cell-4-14" aria-hidden="true" tabindex="-1"></a>                pa.Table.from_batches(batch_buffer),</span>
-<span id="annotated-cell-4-15"><a href="#annotated-cell-4-15" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"snapshot-</span><span class="sc">{</span>file_index<span class="sc">}</span><span class="ss">.parquet"</span>,</span>
-<span id="annotated-cell-4-16"><a href="#annotated-cell-4-16" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="annotated-cell-4-17"><a href="#annotated-cell-4-17" aria-hidden="true" tabindex="-1"></a>            batch_buffer.clear()</span>
-<span id="annotated-cell-4-18"><a href="#annotated-cell-4-18" aria-hidden="true" tabindex="-1"></a>            file_index <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="annotated-cell-4-19"><a href="#annotated-cell-4-19" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-20" class="code-annotation-target"><a href="#annotated-cell-4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> batch_buffer:</span>
-<span id="annotated-cell-4-21"><a href="#annotated-cell-4-21" aria-hidden="true" tabindex="-1"></a>        pq.write_table(</span>
-<span id="annotated-cell-4-22"><a href="#annotated-cell-4-22" aria-hidden="true" tabindex="-1"></a>            pa.Table.from_batches(batch_buffer),</span>
-<span id="annotated-cell-4-23"><a href="#annotated-cell-4-23" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"snapshot-</span><span class="sc">{</span>file_index<span class="sc">}</span><span class="ss">.parquet"</span>,</span>
-<span id="annotated-cell-4-24"><a href="#annotated-cell-4-24" aria-hidden="true" tabindex="-1"></a>        )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4" data-filename="snapshot_batches.py"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-label="1"></a><span class="im">import</span> pyarrow <span class="im">as</span> pa</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-label="2"></a><span class="im">import</span> pyarrow.parquet <span class="im">as</span> pq</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-label="3"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-label="4"></a>batches_per_file <span class="op">=</span> <span class="dv">10</span></span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-label="5"></a>batch_buffer <span class="op">=</span> []</span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-label="6"></a>file_index <span class="op">=</span> <span class="dv">0</span></span>
+<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7" aria-label="7"></a></span>
+<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-label="8"></a><span class="cf">with</span> table.snapshot().to_record_batch_reader() <span class="im">as</span> reader:</span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-label="9"></a>    <span class="cf">for</span> batch <span class="kw">in</span> reader:</span>
+<span id="annotated-cell-4-10"><a href="#annotated-cell-4-10" aria-label="10"></a>        batch_buffer.append(batch)</span>
+<span id="annotated-cell-4-11"><a href="#annotated-cell-4-11" aria-label="11"></a></span>
+<span id="annotated-cell-4-12"><a href="#annotated-cell-4-12" aria-label="12"></a>        <span class="cf">if</span> <span class="bu">len</span>(batch_buffer) <span class="op">==</span> batches_per_file:</span>
+<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13" aria-label="13"></a>            pq.write_table(</span>
+<span id="annotated-cell-4-14"><a href="#annotated-cell-4-14" aria-label="14"></a>                pa.Table.from_batches(batch_buffer),</span>
+<span id="annotated-cell-4-15"><a href="#annotated-cell-4-15" aria-label="15"></a>                <span class="ss">f"snapshot-</span><span class="sc">{</span>file_index<span class="sc">}</span><span class="ss">.parquet"</span>,</span>
+<span id="annotated-cell-4-16"><a href="#annotated-cell-4-16" aria-label="16"></a>            )</span>
+<span id="annotated-cell-4-17"><a href="#annotated-cell-4-17" aria-label="17"></a>            batch_buffer.clear()</span>
+<span id="annotated-cell-4-18"><a href="#annotated-cell-4-18" aria-label="18"></a>            file_index <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="annotated-cell-4-19"><a href="#annotated-cell-4-19" aria-label="19"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-20" class="code-annotation-target"><a href="#annotated-cell-4-20" aria-label="20"></a>    <span class="cf">if</span> batch_buffer:</span>
+<span id="annotated-cell-4-21"><a href="#annotated-cell-4-21" aria-label="21"></a>        pq.write_table(</span>
+<span id="annotated-cell-4-22"><a href="#annotated-cell-4-22" aria-label="22"></a>            pa.Table.from_batches(batch_buffer),</span>
+<span id="annotated-cell-4-23"><a href="#annotated-cell-4-23" aria-label="23"></a>            <span class="ss">f"snapshot-</span><span class="sc">{</span>file_index<span class="sc">}</span><span class="ss">.parquet"</span>,</span>
+<span id="annotated-cell-4-24"><a href="#annotated-cell-4-24" aria-label="24"></a>        )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
@@ -715,39 +715,39 @@ Expand the runtime benchmark script
 <div class="code-with-filename-file">
 <pre><strong>runtime_benchmark.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="runtime_benchmark.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Compare full materialization of shared data as Pandas and Arrow tables."""</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> delta_sharing</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> arguments, measure, run</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>METHODS <span class="op">=</span> (<span class="st">"legacy_pandas"</span>, <span class="st">"snapshot_pandas"</span>, <span class="st">"snapshot_arrow"</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read(args):</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> args.worker <span class="op">==</span> <span class="st">"legacy_pandas"</span>:</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> delta_sharing.load_as_pandas(</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"</span><span class="sc">{</span>args<span class="sc">.</span>profile<span class="sc">}</span><span class="ss">#</span><span class="sc">{</span>args<span class="sc">.</span>table<span class="sc">}</span><span class="ss">"</span>, limit<span class="op">=</span>args.rows, version<span class="op">=</span>args.version</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(result)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    snapshot <span class="op">=</span> delta_sharing.SharingClient(args.profile).table(args.table).snapshot(</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        limit<span class="op">=</span>args.rows, version<span class="op">=</span>args.version</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> args.worker <span class="op">==</span> <span class="st">"snapshot_pandas"</span>:</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> snapshot.to_pandas()</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(result)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> snapshot.to_arrow()</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.num_rows</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> arguments()</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> args.worker:</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        measure(args, read)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        run(args, Path(<span class="va">__file__</span>), METHODS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="runtime_benchmark.py"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-label="1"></a><span class="co">"""Compare full materialization of shared data as Pandas and Arrow tables."""</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-label="2"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-label="3"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb5-4"><a href="#cb5-4" aria-label="4"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-label="5"></a><span class="im">import</span> delta_sharing</span>
+<span id="cb5-6"><a href="#cb5-6" aria-label="6"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-label="7"></a><span class="im">from</span> common <span class="im">import</span> arguments, measure, run</span>
+<span id="cb5-8"><a href="#cb5-8" aria-label="8"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-label="9"></a>METHODS <span class="op">=</span> (<span class="st">"legacy_pandas"</span>, <span class="st">"snapshot_pandas"</span>, <span class="st">"snapshot_arrow"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-label="10"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-label="11"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-label="12"></a><span class="kw">def</span> read(args):</span>
+<span id="cb5-13"><a href="#cb5-13" aria-label="13"></a>    <span class="cf">if</span> args.worker <span class="op">==</span> <span class="st">"legacy_pandas"</span>:</span>
+<span id="cb5-14"><a href="#cb5-14" aria-label="14"></a>        result <span class="op">=</span> delta_sharing.load_as_pandas(</span>
+<span id="cb5-15"><a href="#cb5-15" aria-label="15"></a>            <span class="ss">f"</span><span class="sc">{</span>args<span class="sc">.</span>profile<span class="sc">}</span><span class="ss">#</span><span class="sc">{</span>args<span class="sc">.</span>table<span class="sc">}</span><span class="ss">"</span>, limit<span class="op">=</span>args.rows, version<span class="op">=</span>args.version</span>
+<span id="cb5-16"><a href="#cb5-16" aria-label="16"></a>        )</span>
+<span id="cb5-17"><a href="#cb5-17" aria-label="17"></a>        <span class="cf">return</span> <span class="bu">len</span>(result)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-label="18"></a>    snapshot <span class="op">=</span> delta_sharing.SharingClient(args.profile).table(args.table).snapshot(</span>
+<span id="cb5-19"><a href="#cb5-19" aria-label="19"></a>        limit<span class="op">=</span>args.rows, version<span class="op">=</span>args.version</span>
+<span id="cb5-20"><a href="#cb5-20" aria-label="20"></a>    )</span>
+<span id="cb5-21"><a href="#cb5-21" aria-label="21"></a>    <span class="cf">if</span> args.worker <span class="op">==</span> <span class="st">"snapshot_pandas"</span>:</span>
+<span id="cb5-22"><a href="#cb5-22" aria-label="22"></a>        result <span class="op">=</span> snapshot.to_pandas()</span>
+<span id="cb5-23"><a href="#cb5-23" aria-label="23"></a>        <span class="cf">return</span> <span class="bu">len</span>(result)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-label="24"></a>    result <span class="op">=</span> snapshot.to_arrow()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-label="25"></a>    <span class="cf">return</span> result.num_rows</span>
+<span id="cb5-26"><a href="#cb5-26" aria-label="26"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-label="27"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-label="28"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb5-29"><a href="#cb5-29" aria-label="29"></a>    args <span class="op">=</span> arguments()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-label="30"></a>    <span class="cf">if</span> args.worker:</span>
+<span id="cb5-31"><a href="#cb5-31" aria-label="31"></a>        measure(args, read)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-label="32"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-33"><a href="#cb5-33" aria-label="33"></a>        run(args, Path(<span class="va">__file__</span>), METHODS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 <table class="caption-top table">
@@ -788,91 +788,91 @@ Expand the runtime benchmark script
 </tbody>
 </table>
 <div class="cell hidden">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="346" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 345;"><span id="cb6-346"><a href="#cb6-346" aria-hidden="true" tabindex="-1"></a>runtimeMeasurements <span class="op">=</span> (<span class="cf">await</span> <span class="fu">FileAttachment</span>(<span class="st">"benchmarks/results/scale-100m-20261117/runtime.jsonl"</span>)<span class="op">.</span><span class="fu">text</span>())</span>
-<span id="cb6-347"><a href="#cb6-347" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">trim</span>()<span class="op">.</span><span class="fu">split</span>(<span class="ss">/</span><span class="sc">\r?\n</span><span class="ss">/</span>)<span class="op">.</span><span class="fu">map</span>(line <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(line))</span>
-<span id="cb6-348"><a href="#cb6-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-349"><a href="#cb6-349" aria-hidden="true" tabindex="-1"></a>writeMeasurements <span class="op">=</span> (<span class="cf">await</span> <span class="fu">FileAttachment</span>(<span class="st">"benchmarks/results/scale-100m-20261117/memory.jsonl"</span>)<span class="op">.</span><span class="fu">text</span>())</span>
-<span id="cb6-350"><a href="#cb6-350" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">trim</span>()<span class="op">.</span><span class="fu">split</span>(<span class="ss">/</span><span class="sc">\r?\n</span><span class="ss">/</span>)<span class="op">.</span><span class="fu">map</span>(line <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(line))</span>
-<span id="cb6-351"><a href="#cb6-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-352"><a href="#cb6-352" aria-hidden="true" tabindex="-1"></a>benchmarkLabels <span class="op">=</span> ({</span>
-<span id="cb6-353"><a href="#cb6-353" aria-hidden="true" tabindex="-1"></a>  <span class="dt">legacy_pandas</span><span class="op">:</span> <span class="st">"load_as_pandas(...)"</span><span class="op">,</span></span>
-<span id="cb6-354"><a href="#cb6-354" aria-hidden="true" tabindex="-1"></a>  <span class="dt">snapshot_pandas</span><span class="op">:</span> <span class="st">"snapshot.to_pandas()"</span><span class="op">,</span></span>
-<span id="cb6-355"><a href="#cb6-355" aria-hidden="true" tabindex="-1"></a>  <span class="dt">snapshot_arrow</span><span class="op">:</span> <span class="st">"snapshot.to_arrow()"</span><span class="op">,</span></span>
-<span id="cb6-356"><a href="#cb6-356" aria-hidden="true" tabindex="-1"></a>  <span class="dt">incremental_write</span><span class="op">:</span> <span class="st">"Incremental batches"</span><span class="op">,</span></span>
-<span id="cb6-357"><a href="#cb6-357" aria-hidden="true" tabindex="-1"></a>  <span class="dt">eager_write</span><span class="op">:</span> <span class="st">"Read all, then write"</span></span>
-<span id="cb6-358"><a href="#cb6-358" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb6-359"><a href="#cb6-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-360"><a href="#cb6-360" aria-hidden="true" tabindex="-1"></a>benchmarkBoxplot <span class="op">=</span> (samples<span class="op">,</span> methods<span class="op">,</span> metric<span class="op">,</span> plotWidth) <span class="kw">=&gt;</span> {</span>
-<span id="cb6-361"><a href="#cb6-361" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> chartWidth <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(plotWidth<span class="op">,</span> <span class="dv">760</span>)<span class="op">;</span></span>
-<span id="cb6-362"><a href="#cb6-362" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> color <span class="op">=</span> method <span class="kw">=&gt;</span> method <span class="op">===</span> <span class="st">"legacy_pandas"</span> <span class="op">?</span> <span class="st">"var(--benchmark-old)"</span></span>
-<span id="cb6-363"><a href="#cb6-363" aria-hidden="true" tabindex="-1"></a>    <span class="op">:</span> method <span class="op">===</span> <span class="st">"snapshot_arrow"</span> <span class="op">||</span> method <span class="op">===</span> <span class="st">"incremental_write"</span></span>
-<span id="cb6-364"><a href="#cb6-364" aria-hidden="true" tabindex="-1"></a>    <span class="op">?</span> <span class="st">"var(--benchmark-good)"</span> <span class="op">:</span> <span class="st">"var(--benchmark-new)"</span><span class="op">;</span></span>
-<span id="cb6-365"><a href="#cb6-365" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> positions <span class="op">=</span> {<span class="dt">x</span><span class="op">:</span> metric<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"method"</span>}<span class="op">;</span></span>
-<span id="cb6-366"><a href="#cb6-366" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> format <span class="op">=</span> value <span class="kw">=&gt;</span> value<span class="op">.</span><span class="fu">toLocaleString</span>(<span class="st">"en-US"</span><span class="op">,</span> {</span>
-<span id="cb6-367"><a href="#cb6-367" aria-hidden="true" tabindex="-1"></a>    <span class="dt">minimumFractionDigits</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">maximumFractionDigits</span><span class="op">:</span> <span class="dv">2</span></span>
-<span id="cb6-368"><a href="#cb6-368" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb6-369"><a href="#cb6-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-370"><a href="#cb6-370" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> chart <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb6-371"><a href="#cb6-371" aria-hidden="true" tabindex="-1"></a>    <span class="dt">width</span><span class="op">:</span> chartWidth<span class="op">,</span></span>
-<span id="cb6-372"><a href="#cb6-372" aria-hidden="true" tabindex="-1"></a>    <span class="dt">height</span><span class="op">:</span> methods<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">3</span> <span class="op">?</span> <span class="dv">260</span> <span class="op">:</span> <span class="dv">220</span><span class="op">,</span></span>
-<span id="cb6-373"><a href="#cb6-373" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marginLeft</span><span class="op">:</span> chartWidth <span class="op">&lt;</span> <span class="dv">480</span> <span class="op">?</span> <span class="dv">144</span> <span class="op">:</span> <span class="dv">164</span><span class="op">,</span></span>
-<span id="cb6-374"><a href="#cb6-374" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marginRight</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
-<span id="cb6-375"><a href="#cb6-375" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marginTop</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
-<span id="cb6-376"><a href="#cb6-376" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
-<span id="cb6-377"><a href="#cb6-377" aria-hidden="true" tabindex="-1"></a>    <span class="dt">ariaLabel</span><span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>metric <span class="op">===</span> <span class="st">"peak_mib"</span> <span class="op">?</span> <span class="st">"Peak memory"</span> <span class="op">:</span> <span class="st">"Runtime"</span><span class="sc">}</span><span class="vs"> distributions across ten benchmark repetitions`</span><span class="op">,</span></span>
-<span id="cb6-378"><a href="#cb6-378" aria-hidden="true" tabindex="-1"></a>    <span class="dt">style</span><span class="op">:</span> {<span class="dt">background</span><span class="op">:</span> <span class="st">"transparent"</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="st">"inherit"</span><span class="op">,</span> <span class="dt">fontFamily</span><span class="op">:</span> <span class="st">"inherit"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="st">"12px"</span><span class="op">,</span> <span class="dt">overflow</span><span class="op">:</span> <span class="st">"visible"</span>}<span class="op">,</span></span>
-<span id="cb6-379"><a href="#cb6-379" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> {</span>
-<span id="cb6-380"><a href="#cb6-380" aria-hidden="true" tabindex="-1"></a>      <span class="dt">label</span><span class="op">:</span> metric <span class="op">===</span> <span class="st">"peak_mib"</span> <span class="op">?</span> <span class="st">"Peak process memory (MiB)"</span> <span class="op">:</span> <span class="st">"Runtime (seconds)"</span><span class="op">,</span></span>
-<span id="cb6-381"><a href="#cb6-381" aria-hidden="true" tabindex="-1"></a>      <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb6-382"><a href="#cb6-382" aria-hidden="true" tabindex="-1"></a>      <span class="dt">nice</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb6-383"><a href="#cb6-383" aria-hidden="true" tabindex="-1"></a>      <span class="dt">zero</span><span class="op">:</span> metric <span class="op">===</span> <span class="st">"peak_mib"</span><span class="op">,</span></span>
-<span id="cb6-384"><a href="#cb6-384" aria-hidden="true" tabindex="-1"></a>      <span class="dt">ticks</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">3</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>((chartWidth <span class="op">-</span> <span class="dv">164</span>) <span class="op">/</span> <span class="dv">70</span>))</span>
-<span id="cb6-385"><a href="#cb6-385" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
-<span id="cb6-386"><a href="#cb6-386" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> methods<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> method <span class="kw">=&gt;</span> benchmarkLabels[method]<span class="op">,</span> <span class="dt">tickSize</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">padding</span><span class="op">:</span> <span class="fl">0.35</span>}<span class="op">,</span></span>
-<span id="cb6-387"><a href="#cb6-387" aria-hidden="true" tabindex="-1"></a>    <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> methods<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> methods<span class="op">.</span><span class="fu">map</span>(color)}<span class="op">,</span></span>
-<span id="cb6-388"><a href="#cb6-388" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb6-389"><a href="#cb6-389" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Draw all measured runs separately, without duplicating the box mark's outlier dots.</span></span>
-<span id="cb6-390"><a href="#cb6-390" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">boxX</span>(samples<span class="op">,</span> {<span class="op">...</span>positions<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.18</span><span class="op">,</span></span>
-<span id="cb6-391"><a href="#cb6-391" aria-hidden="true" tabindex="-1"></a>        <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.7</span><span class="op">,</span> <span class="dt">insetTop</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">insetBottom</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">0</span>})<span class="op">,</span></span>
-<span id="cb6-392"><a href="#cb6-392" aria-hidden="true" tabindex="-1"></a>      <span class="op">...</span><span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">10</span>}<span class="op">,</span> (_<span class="op">,</span> i) <span class="kw">=&gt;</span> Plot<span class="op">.</span><span class="fu">dot</span>(</span>
-<span id="cb6-393"><a href="#cb6-393" aria-hidden="true" tabindex="-1"></a>        samples<span class="op">.</span><span class="fu">filter</span>(sample <span class="kw">=&gt;</span> sample<span class="op">.</span><span class="at">repetition</span> <span class="op">===</span> i <span class="op">+</span> <span class="dv">1</span>)<span class="op">,</span></span>
-<span id="cb6-394"><a href="#cb6-394" aria-hidden="true" tabindex="-1"></a>        {<span class="op">...</span>positions<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"var(--bs-body-bg)"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">0.7</span><span class="op">,</span></span>
-<span id="cb6-395"><a href="#cb6-395" aria-hidden="true" tabindex="-1"></a>          <span class="dt">r</span><span class="op">:</span> <span class="fl">3.5</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> (i <span class="op">-</span> <span class="fl">4.5</span>) <span class="op">*</span> <span class="fl">2.6</span>}</span>
-<span id="cb6-396"><a href="#cb6-396" aria-hidden="true" tabindex="-1"></a>      ))<span class="op">,</span></span>
-<span id="cb6-397"><a href="#cb6-397" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">tip</span>(samples<span class="op">,</span> Plot<span class="op">.</span><span class="fu">pointer</span>({</span>
-<span id="cb6-398"><a href="#cb6-398" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span>positions<span class="op">,</span></span>
-<span id="cb6-399"><a href="#cb6-399" aria-hidden="true" tabindex="-1"></a>        <span class="dt">title</span><span class="op">:</span> sample <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>benchmarkLabels[sample<span class="op">.</span><span class="at">method</span>]<span class="sc">}\n</span><span class="vs">Run </span><span class="sc">${</span>sample<span class="op">.</span><span class="at">repetition</span><span class="sc">}</span><span class="vs"> of 10</span><span class="sc">\n</span><span class="vs">Runtime: </span><span class="sc">${</span><span class="fu">format</span>(sample<span class="op">.</span><span class="at">seconds</span>)<span class="sc">}</span><span class="vs"> s</span><span class="sc">\n</span><span class="vs">Peak memory: </span><span class="sc">${</span><span class="fu">format</span>(sample<span class="op">.</span><span class="at">peak_mib</span>)<span class="sc">}</span><span class="vs"> MiB`</span><span class="op">,</span></span>
-<span id="cb6-400"><a href="#cb6-400" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fill</span><span class="op">:</span> <span class="st">"var(--reading-surface-raised)"</span><span class="op">,</span></span>
-<span id="cb6-401"><a href="#cb6-401" aria-hidden="true" tabindex="-1"></a>        <span class="dt">stroke</span><span class="op">:</span> <span class="st">"var(--reading-border)"</span><span class="op">,</span></span>
-<span id="cb6-402"><a href="#cb6-402" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span></span>
-<span id="cb6-403"><a href="#cb6-403" aria-hidden="true" tabindex="-1"></a>        <span class="dt">lineWidth</span><span class="op">:</span> <span class="dv">28</span></span>
-<span id="cb6-404"><a href="#cb6-404" aria-hidden="true" tabindex="-1"></a>      }))</span>
-<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb6-406"><a href="#cb6-406" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb6-407"><a href="#cb6-407" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-408"><a href="#cb6-408" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> codeLabels <span class="op">=</span> methods<span class="op">.</span><span class="fu">every</span>(method <span class="kw">=&gt;</span> benchmarkLabels[method]<span class="op">.</span><span class="fu">includes</span>(<span class="st">"("</span>))<span class="op">;</span></span>
-<span id="cb6-409"><a href="#cb6-409" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (codeLabels) {</span>
-<span id="cb6-410"><a href="#cb6-410" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> labels <span class="op">=</span> chart<span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">'[aria-label="y-axis tick label"] text'</span>)<span class="op">;</span></span>
-<span id="cb6-411"><a href="#cb6-411" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">.</span><span class="fu">forEach</span>(label <span class="kw">=&gt;</span> label<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">add</span>(<span class="st">"benchmark-code-label"</span>))<span class="op">;</span></span>
-<span id="cb6-412"><a href="#cb6-412" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Measure attached SVG text so the code backgrounds also fit after resizing.</span></span>
-<span id="cb6-413"><a href="#cb6-413" aria-hidden="true" tabindex="-1"></a>    <span class="fu">requestAnimationFrame</span>(() <span class="kw">=&gt;</span> {</span>
-<span id="cb6-414"><a href="#cb6-414" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span>chart<span class="op">.</span><span class="at">isConnected</span>) <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb6-415"><a href="#cb6-415" aria-hidden="true" tabindex="-1"></a>      labels<span class="op">.</span><span class="fu">forEach</span>(label <span class="kw">=&gt;</span> {</span>
-<span id="cb6-416"><a href="#cb6-416" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> bounds <span class="op">=</span> label<span class="op">.</span><span class="fu">getBBox</span>()<span class="op">;</span></span>
-<span id="cb6-417"><a href="#cb6-417" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> background <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElementNS</span>(<span class="st">"http://www.w3.org/2000/svg"</span><span class="op">,</span> <span class="st">"rect"</span>)<span class="op">;</span></span>
-<span id="cb6-418"><a href="#cb6-418" aria-hidden="true" tabindex="-1"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"class"</span><span class="op">,</span> <span class="st">"benchmark-code-background"</span>)<span class="op">;</span></span>
-<span id="cb6-419"><a href="#cb6-419" aria-hidden="true" tabindex="-1"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"transform"</span><span class="op">,</span> label<span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">"transform"</span>))<span class="op">;</span></span>
-<span id="cb6-420"><a href="#cb6-420" aria-hidden="true" tabindex="-1"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"x"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">x</span> <span class="op">-</span> <span class="dv">3</span>)<span class="op">;</span></span>
-<span id="cb6-421"><a href="#cb6-421" aria-hidden="true" tabindex="-1"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"y"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">y</span> <span class="op">-</span> <span class="dv">2</span>)<span class="op">;</span></span>
-<span id="cb6-422"><a href="#cb6-422" aria-hidden="true" tabindex="-1"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"width"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">width</span> <span class="op">+</span> <span class="dv">6</span>)<span class="op">;</span></span>
-<span id="cb6-423"><a href="#cb6-423" aria-hidden="true" tabindex="-1"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"height"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">height</span> <span class="op">+</span> <span class="dv">4</span>)<span class="op">;</span></span>
-<span id="cb6-424"><a href="#cb6-424" aria-hidden="true" tabindex="-1"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"rx"</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></span>
-<span id="cb6-425"><a href="#cb6-425" aria-hidden="true" tabindex="-1"></a>        label<span class="op">.</span><span class="fu">before</span>(background)<span class="op">;</span></span>
-<span id="cb6-426"><a href="#cb6-426" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
-<span id="cb6-427"><a href="#cb6-427" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
-<span id="cb6-428"><a href="#cb6-428" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-429"><a href="#cb6-429" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> chart<span class="op">;</span></span>
-<span id="cb6-430"><a href="#cb6-430" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="346" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 345;"><span id="cb6-346"><a href="#cb6-346" aria-label="346"></a>runtimeMeasurements <span class="op">=</span> (<span class="cf">await</span> <span class="fu">FileAttachment</span>(<span class="st">"benchmarks/results/scale-100m-20261117/runtime.jsonl"</span>)<span class="op">.</span><span class="fu">text</span>())</span>
+<span id="cb6-347"><a href="#cb6-347" aria-label="347"></a>  <span class="op">.</span><span class="fu">trim</span>()<span class="op">.</span><span class="fu">split</span>(<span class="ss">/</span><span class="sc">\r?\n</span><span class="ss">/</span>)<span class="op">.</span><span class="fu">map</span>(line <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(line))</span>
+<span id="cb6-348"><a href="#cb6-348" aria-label="348"></a></span>
+<span id="cb6-349"><a href="#cb6-349" aria-label="349"></a>writeMeasurements <span class="op">=</span> (<span class="cf">await</span> <span class="fu">FileAttachment</span>(<span class="st">"benchmarks/results/scale-100m-20261117/memory.jsonl"</span>)<span class="op">.</span><span class="fu">text</span>())</span>
+<span id="cb6-350"><a href="#cb6-350" aria-label="350"></a>  <span class="op">.</span><span class="fu">trim</span>()<span class="op">.</span><span class="fu">split</span>(<span class="ss">/</span><span class="sc">\r?\n</span><span class="ss">/</span>)<span class="op">.</span><span class="fu">map</span>(line <span class="kw">=&gt;</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(line))</span>
+<span id="cb6-351"><a href="#cb6-351" aria-label="351"></a></span>
+<span id="cb6-352"><a href="#cb6-352" aria-label="352"></a>benchmarkLabels <span class="op">=</span> ({</span>
+<span id="cb6-353"><a href="#cb6-353" aria-label="353"></a>  <span class="dt">legacy_pandas</span><span class="op">:</span> <span class="st">"load_as_pandas(...)"</span><span class="op">,</span></span>
+<span id="cb6-354"><a href="#cb6-354" aria-label="354"></a>  <span class="dt">snapshot_pandas</span><span class="op">:</span> <span class="st">"snapshot.to_pandas()"</span><span class="op">,</span></span>
+<span id="cb6-355"><a href="#cb6-355" aria-label="355"></a>  <span class="dt">snapshot_arrow</span><span class="op">:</span> <span class="st">"snapshot.to_arrow()"</span><span class="op">,</span></span>
+<span id="cb6-356"><a href="#cb6-356" aria-label="356"></a>  <span class="dt">incremental_write</span><span class="op">:</span> <span class="st">"Incremental batches"</span><span class="op">,</span></span>
+<span id="cb6-357"><a href="#cb6-357" aria-label="357"></a>  <span class="dt">eager_write</span><span class="op">:</span> <span class="st">"Read all, then write"</span></span>
+<span id="cb6-358"><a href="#cb6-358" aria-label="358"></a>})</span>
+<span id="cb6-359"><a href="#cb6-359" aria-label="359"></a></span>
+<span id="cb6-360"><a href="#cb6-360" aria-label="360"></a>benchmarkBoxplot <span class="op">=</span> (samples<span class="op">,</span> methods<span class="op">,</span> metric<span class="op">,</span> plotWidth) <span class="kw">=&gt;</span> {</span>
+<span id="cb6-361"><a href="#cb6-361" aria-label="361"></a>  <span class="kw">const</span> chartWidth <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(plotWidth<span class="op">,</span> <span class="dv">760</span>)<span class="op">;</span></span>
+<span id="cb6-362"><a href="#cb6-362" aria-label="362"></a>  <span class="kw">const</span> color <span class="op">=</span> method <span class="kw">=&gt;</span> method <span class="op">===</span> <span class="st">"legacy_pandas"</span> <span class="op">?</span> <span class="st">"var(--benchmark-old)"</span></span>
+<span id="cb6-363"><a href="#cb6-363" aria-label="363"></a>    <span class="op">:</span> method <span class="op">===</span> <span class="st">"snapshot_arrow"</span> <span class="op">||</span> method <span class="op">===</span> <span class="st">"incremental_write"</span></span>
+<span id="cb6-364"><a href="#cb6-364" aria-label="364"></a>    <span class="op">?</span> <span class="st">"var(--benchmark-good)"</span> <span class="op">:</span> <span class="st">"var(--benchmark-new)"</span><span class="op">;</span></span>
+<span id="cb6-365"><a href="#cb6-365" aria-label="365"></a>  <span class="kw">const</span> positions <span class="op">=</span> {<span class="dt">x</span><span class="op">:</span> metric<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"method"</span>}<span class="op">;</span></span>
+<span id="cb6-366"><a href="#cb6-366" aria-label="366"></a>  <span class="kw">const</span> format <span class="op">=</span> value <span class="kw">=&gt;</span> value<span class="op">.</span><span class="fu">toLocaleString</span>(<span class="st">"en-US"</span><span class="op">,</span> {</span>
+<span id="cb6-367"><a href="#cb6-367" aria-label="367"></a>    <span class="dt">minimumFractionDigits</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">maximumFractionDigits</span><span class="op">:</span> <span class="dv">2</span></span>
+<span id="cb6-368"><a href="#cb6-368" aria-label="368"></a>  })<span class="op">;</span></span>
+<span id="cb6-369"><a href="#cb6-369" aria-label="369"></a></span>
+<span id="cb6-370"><a href="#cb6-370" aria-label="370"></a>  <span class="kw">const</span> chart <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb6-371"><a href="#cb6-371" aria-label="371"></a>    <span class="dt">width</span><span class="op">:</span> chartWidth<span class="op">,</span></span>
+<span id="cb6-372"><a href="#cb6-372" aria-label="372"></a>    <span class="dt">height</span><span class="op">:</span> methods<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">3</span> <span class="op">?</span> <span class="dv">260</span> <span class="op">:</span> <span class="dv">220</span><span class="op">,</span></span>
+<span id="cb6-373"><a href="#cb6-373" aria-label="373"></a>    <span class="dt">marginLeft</span><span class="op">:</span> chartWidth <span class="op">&lt;</span> <span class="dv">480</span> <span class="op">?</span> <span class="dv">144</span> <span class="op">:</span> <span class="dv">164</span><span class="op">,</span></span>
+<span id="cb6-374"><a href="#cb6-374" aria-label="374"></a>    <span class="dt">marginRight</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb6-375"><a href="#cb6-375" aria-label="375"></a>    <span class="dt">marginTop</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span></span>
+<span id="cb6-376"><a href="#cb6-376" aria-label="376"></a>    <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb6-377"><a href="#cb6-377" aria-label="377"></a>    <span class="dt">ariaLabel</span><span class="op">:</span> <span class="vs">`</span><span class="sc">${</span>metric <span class="op">===</span> <span class="st">"peak_mib"</span> <span class="op">?</span> <span class="st">"Peak memory"</span> <span class="op">:</span> <span class="st">"Runtime"</span><span class="sc">}</span><span class="vs"> distributions across ten benchmark repetitions`</span><span class="op">,</span></span>
+<span id="cb6-378"><a href="#cb6-378" aria-label="378"></a>    <span class="dt">style</span><span class="op">:</span> {<span class="dt">background</span><span class="op">:</span> <span class="st">"transparent"</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="st">"inherit"</span><span class="op">,</span> <span class="dt">fontFamily</span><span class="op">:</span> <span class="st">"inherit"</span><span class="op">,</span> <span class="dt">fontSize</span><span class="op">:</span> <span class="st">"12px"</span><span class="op">,</span> <span class="dt">overflow</span><span class="op">:</span> <span class="st">"visible"</span>}<span class="op">,</span></span>
+<span id="cb6-379"><a href="#cb6-379" aria-label="379"></a>    <span class="dt">x</span><span class="op">:</span> {</span>
+<span id="cb6-380"><a href="#cb6-380" aria-label="380"></a>      <span class="dt">label</span><span class="op">:</span> metric <span class="op">===</span> <span class="st">"peak_mib"</span> <span class="op">?</span> <span class="st">"Peak process memory (MiB)"</span> <span class="op">:</span> <span class="st">"Runtime (seconds)"</span><span class="op">,</span></span>
+<span id="cb6-381"><a href="#cb6-381" aria-label="381"></a>      <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb6-382"><a href="#cb6-382" aria-label="382"></a>      <span class="dt">nice</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb6-383"><a href="#cb6-383" aria-label="383"></a>      <span class="dt">zero</span><span class="op">:</span> metric <span class="op">===</span> <span class="st">"peak_mib"</span><span class="op">,</span></span>
+<span id="cb6-384"><a href="#cb6-384" aria-label="384"></a>      <span class="dt">ticks</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">3</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>((chartWidth <span class="op">-</span> <span class="dv">164</span>) <span class="op">/</span> <span class="dv">70</span>))</span>
+<span id="cb6-385"><a href="#cb6-385" aria-label="385"></a>    }<span class="op">,</span></span>
+<span id="cb6-386"><a href="#cb6-386" aria-label="386"></a>    <span class="dt">y</span><span class="op">:</span> {<span class="dt">label</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> methods<span class="op">,</span> <span class="dt">tickFormat</span><span class="op">:</span> method <span class="kw">=&gt;</span> benchmarkLabels[method]<span class="op">,</span> <span class="dt">tickSize</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">padding</span><span class="op">:</span> <span class="fl">0.35</span>}<span class="op">,</span></span>
+<span id="cb6-387"><a href="#cb6-387" aria-label="387"></a>    <span class="dt">color</span><span class="op">:</span> {<span class="dt">domain</span><span class="op">:</span> methods<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> methods<span class="op">.</span><span class="fu">map</span>(color)}<span class="op">,</span></span>
+<span id="cb6-388"><a href="#cb6-388" aria-label="388"></a>    <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb6-389"><a href="#cb6-389" aria-label="389"></a>      <span class="co">// Draw all measured runs separately, without duplicating the box mark's outlier dots.</span></span>
+<span id="cb6-390"><a href="#cb6-390" aria-label="390"></a>      Plot<span class="op">.</span><span class="fu">boxX</span>(samples<span class="op">,</span> {<span class="op">...</span>positions<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">fillOpacity</span><span class="op">:</span> <span class="fl">0.18</span><span class="op">,</span></span>
+<span id="cb6-391"><a href="#cb6-391" aria-label="391"></a>        <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.7</span><span class="op">,</span> <span class="dt">insetTop</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">insetBottom</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span> <span class="dt">r</span><span class="op">:</span> <span class="dv">0</span>})<span class="op">,</span></span>
+<span id="cb6-392"><a href="#cb6-392" aria-label="392"></a>      <span class="op">...</span><span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> <span class="dv">10</span>}<span class="op">,</span> (_<span class="op">,</span> i) <span class="kw">=&gt;</span> Plot<span class="op">.</span><span class="fu">dot</span>(</span>
+<span id="cb6-393"><a href="#cb6-393" aria-label="393"></a>        samples<span class="op">.</span><span class="fu">filter</span>(sample <span class="kw">=&gt;</span> sample<span class="op">.</span><span class="at">repetition</span> <span class="op">===</span> i <span class="op">+</span> <span class="dv">1</span>)<span class="op">,</span></span>
+<span id="cb6-394"><a href="#cb6-394" aria-label="394"></a>        {<span class="op">...</span>positions<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"method"</span><span class="op">,</span> <span class="dt">stroke</span><span class="op">:</span> <span class="st">"var(--bs-body-bg)"</span><span class="op">,</span> <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">0.7</span><span class="op">,</span></span>
+<span id="cb6-395"><a href="#cb6-395" aria-label="395"></a>          <span class="dt">r</span><span class="op">:</span> <span class="fl">3.5</span><span class="op">,</span> <span class="dt">dy</span><span class="op">:</span> (i <span class="op">-</span> <span class="fl">4.5</span>) <span class="op">*</span> <span class="fl">2.6</span>}</span>
+<span id="cb6-396"><a href="#cb6-396" aria-label="396"></a>      ))<span class="op">,</span></span>
+<span id="cb6-397"><a href="#cb6-397" aria-label="397"></a>      Plot<span class="op">.</span><span class="fu">tip</span>(samples<span class="op">,</span> Plot<span class="op">.</span><span class="fu">pointer</span>({</span>
+<span id="cb6-398"><a href="#cb6-398" aria-label="398"></a>        <span class="op">...</span>positions<span class="op">,</span></span>
+<span id="cb6-399"><a href="#cb6-399" aria-label="399"></a>        <span class="dt">title</span><span class="op">:</span> sample <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>benchmarkLabels[sample<span class="op">.</span><span class="at">method</span>]<span class="sc">}\n</span><span class="vs">Run </span><span class="sc">${</span>sample<span class="op">.</span><span class="at">repetition</span><span class="sc">}</span><span class="vs"> of 10</span><span class="sc">\n</span><span class="vs">Runtime: </span><span class="sc">${</span><span class="fu">format</span>(sample<span class="op">.</span><span class="at">seconds</span>)<span class="sc">}</span><span class="vs"> s</span><span class="sc">\n</span><span class="vs">Peak memory: </span><span class="sc">${</span><span class="fu">format</span>(sample<span class="op">.</span><span class="at">peak_mib</span>)<span class="sc">}</span><span class="vs"> MiB`</span><span class="op">,</span></span>
+<span id="cb6-400"><a href="#cb6-400" aria-label="400"></a>        <span class="dt">fill</span><span class="op">:</span> <span class="st">"var(--reading-surface-raised)"</span><span class="op">,</span></span>
+<span id="cb6-401"><a href="#cb6-401" aria-label="401"></a>        <span class="dt">stroke</span><span class="op">:</span> <span class="st">"var(--reading-border)"</span><span class="op">,</span></span>
+<span id="cb6-402"><a href="#cb6-402" aria-label="402"></a>        <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">12</span><span class="op">,</span></span>
+<span id="cb6-403"><a href="#cb6-403" aria-label="403"></a>        <span class="dt">lineWidth</span><span class="op">:</span> <span class="dv">28</span></span>
+<span id="cb6-404"><a href="#cb6-404" aria-label="404"></a>      }))</span>
+<span id="cb6-405"><a href="#cb6-405" aria-label="405"></a>    ]</span>
+<span id="cb6-406"><a href="#cb6-406" aria-label="406"></a>  })<span class="op">;</span></span>
+<span id="cb6-407"><a href="#cb6-407" aria-label="407"></a></span>
+<span id="cb6-408"><a href="#cb6-408" aria-label="408"></a>  <span class="kw">const</span> codeLabels <span class="op">=</span> methods<span class="op">.</span><span class="fu">every</span>(method <span class="kw">=&gt;</span> benchmarkLabels[method]<span class="op">.</span><span class="fu">includes</span>(<span class="st">"("</span>))<span class="op">;</span></span>
+<span id="cb6-409"><a href="#cb6-409" aria-label="409"></a>  <span class="cf">if</span> (codeLabels) {</span>
+<span id="cb6-410"><a href="#cb6-410" aria-label="410"></a>    <span class="kw">const</span> labels <span class="op">=</span> chart<span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">'[aria-label="y-axis tick label"] text'</span>)<span class="op">;</span></span>
+<span id="cb6-411"><a href="#cb6-411" aria-label="411"></a>    labels<span class="op">.</span><span class="fu">forEach</span>(label <span class="kw">=&gt;</span> label<span class="op">.</span><span class="at">classList</span><span class="op">.</span><span class="fu">add</span>(<span class="st">"benchmark-code-label"</span>))<span class="op">;</span></span>
+<span id="cb6-412"><a href="#cb6-412" aria-label="412"></a>    <span class="co">// Measure attached SVG text so the code backgrounds also fit after resizing.</span></span>
+<span id="cb6-413"><a href="#cb6-413" aria-label="413"></a>    <span class="fu">requestAnimationFrame</span>(() <span class="kw">=&gt;</span> {</span>
+<span id="cb6-414"><a href="#cb6-414" aria-label="414"></a>      <span class="cf">if</span> (<span class="op">!</span>chart<span class="op">.</span><span class="at">isConnected</span>) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb6-415"><a href="#cb6-415" aria-label="415"></a>      labels<span class="op">.</span><span class="fu">forEach</span>(label <span class="kw">=&gt;</span> {</span>
+<span id="cb6-416"><a href="#cb6-416" aria-label="416"></a>        <span class="kw">const</span> bounds <span class="op">=</span> label<span class="op">.</span><span class="fu">getBBox</span>()<span class="op">;</span></span>
+<span id="cb6-417"><a href="#cb6-417" aria-label="417"></a>        <span class="kw">const</span> background <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElementNS</span>(<span class="st">"http://www.w3.org/2000/svg"</span><span class="op">,</span> <span class="st">"rect"</span>)<span class="op">;</span></span>
+<span id="cb6-418"><a href="#cb6-418" aria-label="418"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"class"</span><span class="op">,</span> <span class="st">"benchmark-code-background"</span>)<span class="op">;</span></span>
+<span id="cb6-419"><a href="#cb6-419" aria-label="419"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"transform"</span><span class="op">,</span> label<span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">"transform"</span>))<span class="op">;</span></span>
+<span id="cb6-420"><a href="#cb6-420" aria-label="420"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"x"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">x</span> <span class="op">-</span> <span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb6-421"><a href="#cb6-421" aria-label="421"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"y"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">y</span> <span class="op">-</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb6-422"><a href="#cb6-422" aria-label="422"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"width"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">width</span> <span class="op">+</span> <span class="dv">6</span>)<span class="op">;</span></span>
+<span id="cb6-423"><a href="#cb6-423" aria-label="423"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"height"</span><span class="op">,</span> bounds<span class="op">.</span><span class="at">height</span> <span class="op">+</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb6-424"><a href="#cb6-424" aria-label="424"></a>        background<span class="op">.</span><span class="fu">setAttribute</span>(<span class="st">"rx"</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb6-425"><a href="#cb6-425" aria-label="425"></a>        label<span class="op">.</span><span class="fu">before</span>(background)<span class="op">;</span></span>
+<span id="cb6-426"><a href="#cb6-426" aria-label="426"></a>      })<span class="op">;</span></span>
+<span id="cb6-427"><a href="#cb6-427" aria-label="427"></a>    })<span class="op">;</span></span>
+<span id="cb6-428"><a href="#cb6-428" aria-label="428"></a>  }</span>
+<span id="cb6-429"><a href="#cb6-429" aria-label="429"></a>  <span class="cf">return</span> chart<span class="op">;</span></span>
+<span id="cb6-430"><a href="#cb6-430" aria-label="430"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display hidden">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -904,8 +904,8 @@ Expand the runtime benchmark script
 </div>
 <div class="benchmark-plot">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="437" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 436;"><span id="cb7-437"><a href="#cb7-437" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmarkBoxplot</span>(runtimeMeasurements<span class="op">,</span></span>
-<span id="cb7-438"><a href="#cb7-438" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"legacy_pandas"</span><span class="op">,</span> <span class="st">"snapshot_pandas"</span><span class="op">,</span> <span class="st">"snapshot_arrow"</span>]<span class="op">,</span> <span class="st">"seconds"</span><span class="op">,</span> width)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="437" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 436;"><span id="cb7-437"><a href="#cb7-437" aria-label="437"></a><span class="fu">benchmarkBoxplot</span>(runtimeMeasurements<span class="op">,</span></span>
+<span id="cb7-438"><a href="#cb7-438" aria-label="438"></a>  [<span class="st">"legacy_pandas"</span><span class="op">,</span> <span class="st">"snapshot_pandas"</span><span class="op">,</span> <span class="st">"snapshot_arrow"</span>]<span class="op">,</span> <span class="st">"seconds"</span><span class="op">,</span> width)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-runtime-boxplot" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-runtime-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -932,46 +932,46 @@ Expand the peak memory benchmark script
 <div class="code-with-filename-file">
 <pre><strong>memory_benchmark.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-filename="memory_benchmark.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Compare peak process memory and runtime for two Parquet write patterns."""</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> delta_sharing</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow.parquet <span class="im">as</span> pq</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> common <span class="im">import</span> arguments, measure, run</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>METHODS <span class="op">=</span> (<span class="st">"incremental_write"</span>, <span class="st">"eager_write"</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> write(args):</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    snapshot <span class="op">=</span> delta_sharing.SharingClient(args.profile).table(args.table).snapshot(</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        limit<span class="op">=</span>args.rows, version<span class="op">=</span>args.version</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tempfile.TemporaryDirectory() <span class="im">as</span> directory:</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> Path(directory) <span class="op">/</span> <span class="st">"result.parquet"</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> args.worker <span class="op">==</span> <span class="st">"incremental_write"</span>:</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            rows <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> snapshot.to_record_batch_reader() <span class="im">as</span> reader:</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>                <span class="cf">with</span> pq.ParquetWriter(path, reader.schema, compression<span class="op">=</span><span class="st">"snappy"</span>) <span class="im">as</span> writer:</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> batch <span class="kw">in</span> reader:</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>                        writer.write_batch(batch)</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>                        rows <span class="op">+=</span> batch.num_rows</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> snapshot.to_arrow()</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>            rows <span class="op">=</span> result.num_rows</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            pq.write_table(result, path, compression<span class="op">=</span><span class="st">"snappy"</span>)</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> pq.read_metadata(path).num_rows <span class="op">==</span> rows</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> rows</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    args <span class="op">=</span> arguments()</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> args.worker:</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        measure(args, write)</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        run(args, Path(<span class="va">__file__</span>), METHODS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-filename="memory_benchmark.py"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-label="1"></a><span class="co">"""Compare peak process memory and runtime for two Parquet write patterns."""</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-label="2"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-label="3"></a><span class="im">import</span> tempfile</span>
+<span id="cb8-4"><a href="#cb8-4" aria-label="4"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb8-5"><a href="#cb8-5" aria-label="5"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-label="6"></a><span class="im">import</span> delta_sharing</span>
+<span id="cb8-7"><a href="#cb8-7" aria-label="7"></a><span class="im">import</span> pyarrow.parquet <span class="im">as</span> pq</span>
+<span id="cb8-8"><a href="#cb8-8" aria-label="8"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-label="9"></a><span class="im">from</span> common <span class="im">import</span> arguments, measure, run</span>
+<span id="cb8-10"><a href="#cb8-10" aria-label="10"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-label="11"></a>METHODS <span class="op">=</span> (<span class="st">"incremental_write"</span>, <span class="st">"eager_write"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-label="12"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-label="13"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-label="14"></a><span class="kw">def</span> write(args):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-label="15"></a>    snapshot <span class="op">=</span> delta_sharing.SharingClient(args.profile).table(args.table).snapshot(</span>
+<span id="cb8-16"><a href="#cb8-16" aria-label="16"></a>        limit<span class="op">=</span>args.rows, version<span class="op">=</span>args.version</span>
+<span id="cb8-17"><a href="#cb8-17" aria-label="17"></a>    )</span>
+<span id="cb8-18"><a href="#cb8-18" aria-label="18"></a>    <span class="cf">with</span> tempfile.TemporaryDirectory() <span class="im">as</span> directory:</span>
+<span id="cb8-19"><a href="#cb8-19" aria-label="19"></a>        path <span class="op">=</span> Path(directory) <span class="op">/</span> <span class="st">"result.parquet"</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-label="20"></a>        <span class="cf">if</span> args.worker <span class="op">==</span> <span class="st">"incremental_write"</span>:</span>
+<span id="cb8-21"><a href="#cb8-21" aria-label="21"></a>            rows <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-label="22"></a>            <span class="cf">with</span> snapshot.to_record_batch_reader() <span class="im">as</span> reader:</span>
+<span id="cb8-23"><a href="#cb8-23" aria-label="23"></a>                <span class="cf">with</span> pq.ParquetWriter(path, reader.schema, compression<span class="op">=</span><span class="st">"snappy"</span>) <span class="im">as</span> writer:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-label="24"></a>                    <span class="cf">for</span> batch <span class="kw">in</span> reader:</span>
+<span id="cb8-25"><a href="#cb8-25" aria-label="25"></a>                        writer.write_batch(batch)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-label="26"></a>                        rows <span class="op">+=</span> batch.num_rows</span>
+<span id="cb8-27"><a href="#cb8-27" aria-label="27"></a>        <span class="cf">else</span>:</span>
+<span id="cb8-28"><a href="#cb8-28" aria-label="28"></a>            result <span class="op">=</span> snapshot.to_arrow()</span>
+<span id="cb8-29"><a href="#cb8-29" aria-label="29"></a>            rows <span class="op">=</span> result.num_rows</span>
+<span id="cb8-30"><a href="#cb8-30" aria-label="30"></a>            pq.write_table(result, path, compression<span class="op">=</span><span class="st">"snappy"</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-label="31"></a>        <span class="cf">assert</span> pq.read_metadata(path).num_rows <span class="op">==</span> rows</span>
+<span id="cb8-32"><a href="#cb8-32" aria-label="32"></a>        <span class="cf">return</span> rows</span>
+<span id="cb8-33"><a href="#cb8-33" aria-label="33"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-label="34"></a></span>
+<span id="cb8-35"><a href="#cb8-35" aria-label="35"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb8-36"><a href="#cb8-36" aria-label="36"></a>    args <span class="op">=</span> arguments()</span>
+<span id="cb8-37"><a href="#cb8-37" aria-label="37"></a>    <span class="cf">if</span> args.worker:</span>
+<span id="cb8-38"><a href="#cb8-38" aria-label="38"></a>        measure(args, write)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-label="39"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-40"><a href="#cb8-40" aria-label="40"></a>        run(args, Path(<span class="va">__file__</span>), METHODS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 <table class="caption-top table">
@@ -1007,10 +1007,10 @@ Expand the peak memory benchmark script
 </table>
 <div class="benchmark-plot">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="503" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb9-503"><a href="#cb9-503" aria-hidden="true" tabindex="-1"></a>viewof writeMetric <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="kw">new</span> <span class="bu">Map</span>([</span>
-<span id="cb9-504"><a href="#cb9-504" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"Peak memory (MiB)"</span><span class="op">,</span> <span class="st">"peak_mib"</span>]<span class="op">,</span></span>
-<span id="cb9-505"><a href="#cb9-505" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"Runtime (seconds)"</span><span class="op">,</span> <span class="st">"seconds"</span>]</span>
-<span id="cb9-506"><a href="#cb9-506" aria-hidden="true" tabindex="-1"></a>])<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Measure"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"peak_mib"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="503" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 502;"><span id="cb9-503"><a href="#cb9-503" aria-label="503"></a>viewof writeMetric <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="kw">new</span> <span class="bu">Map</span>([</span>
+<span id="cb9-504"><a href="#cb9-504" aria-label="504"></a>  [<span class="st">"Peak memory (MiB)"</span><span class="op">,</span> <span class="st">"peak_mib"</span>]<span class="op">,</span></span>
+<span id="cb9-505"><a href="#cb9-505" aria-label="505"></a>  [<span class="st">"Runtime (seconds)"</span><span class="op">,</span> <span class="st">"seconds"</span>]</span>
+<span id="cb9-506"><a href="#cb9-506" aria-label="506"></a>])<span class="op">,</span> {<span class="dt">label</span><span class="op">:</span> <span class="st">"Measure"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">"peak_mib"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-3" data-nodetype="declaration">
 
@@ -1018,8 +1018,8 @@ Expand the peak memory benchmark script
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="513" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 512;"><span id="cb10-513"><a href="#cb10-513" aria-hidden="true" tabindex="-1"></a><span class="fu">benchmarkBoxplot</span>(writeMeasurements<span class="op">,</span></span>
-<span id="cb10-514"><a href="#cb10-514" aria-hidden="true" tabindex="-1"></a>  [<span class="st">"incremental_write"</span><span class="op">,</span> <span class="st">"eager_write"</span>]<span class="op">,</span> writeMetric<span class="op">,</span> width)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="513" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 512;"><span id="cb10-513"><a href="#cb10-513" aria-label="513"></a><span class="fu">benchmarkBoxplot</span>(writeMeasurements<span class="op">,</span></span>
+<span id="cb10-514"><a href="#cb10-514" aria-label="514"></a>  [<span class="st">"incremental_write"</span><span class="op">,</span> <span class="st">"eager_write"</span>]<span class="op">,</span> writeMetric<span class="op">,</span> width)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-write-boxplot" class="cell-output cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-write-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1068,100 +1068,100 @@ Expand the shared measurement helper
 <div class="code-with-filename-file">
 <pre><strong>common.py</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="common.py"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""Run each measurement in a fresh process, including native allocations."""</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> argparse</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib.metadata</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> platform</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> resource</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shutil</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlparse</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> arguments():</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    parser <span class="op">=</span> argparse.ArgumentParser()</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--profile"</span>, required<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--table"</span>, default<span class="op">=</span><span class="st">"delta_sharing.default.nyctaxi_2019"</span>)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--rows"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10_000_000</span>)</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--repeat"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--version"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>)</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--worker"</span>)</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--output"</span>, <span class="bu">type</span><span class="op">=</span>Path, required<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    parser.add_argument(<span class="st">"--checkpoint-dir"</span>, <span class="bu">type</span><span class="op">=</span>Path)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> parser.parse_args()</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure(args, operation):</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    started <span class="op">=</span> time.perf_counter()</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> operation(args)</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> started</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> rows <span class="op">==</span> args.rows, (rows, args.rows)</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    peak <span class="op">=</span> resource.getrusage(resource.RUSAGE_SELF).ru_maxrss</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    peak_bytes <span class="op">=</span> peak <span class="cf">if</span> sys.platform <span class="op">==</span> <span class="st">"darwin"</span> <span class="cf">else</span> peak <span class="op">*</span> <span class="dv">1024</span></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(json.dumps({<span class="st">"method"</span>: args.worker, <span class="st">"rows"</span>: rows,</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"seconds"</span>: elapsed, <span class="st">"peak_mib"</span>: peak_bytes <span class="op">/</span> <span class="dv">1024</span><span class="op">**</span><span class="dv">2</span>}))</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run(args, script, methods):</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> delta_sharing</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    profile <span class="op">=</span> json.loads(Path(args.profile).read_text())</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    endpoint <span class="op">=</span> urlparse(profile[<span class="st">"endpoint"</span>])</span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    socket.getaddrinfo(endpoint.hostname, endpoint.port <span class="kw">or</span> <span class="dv">443</span>)</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> args.version <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>        args.version <span class="op">=</span> delta_sharing.SharingClient(args.profile).table(args.table).version()</span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    metadata <span class="op">=</span> {</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"table"</span>: args.table, <span class="st">"rows"</span>: args.rows, <span class="st">"repetitions"</span>: args.repeat,</span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"table_version"</span>: args.version, <span class="st">"python"</span>: platform.python_version(),</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"platform"</span>: platform.platform(),</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"packages"</span>: {name: importlib.metadata.version(name) <span class="cf">for</span> name <span class="kw">in</span></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>                     (<span class="st">"delta-sharing"</span>, <span class="st">"pyarrow"</span>, <span class="st">"pandas"</span>, <span class="st">"duckdb"</span>,</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"delta-kernel-rust-sharing-wrapper"</span>)},</span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    args.output.parent.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    args.output.with_suffix(<span class="st">".metadata.json"</span>).write_text(json.dumps(metadata, indent<span class="op">=</span><span class="dv">2</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    existing <span class="op">=</span> [json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> args.output.read_text().splitlines()] <span class="cf">if</span> args.output.exists() <span class="cf">else</span> []</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> random.Random(<span class="dv">42</span>)</span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> repetition <span class="kw">in</span> <span class="bu">range</span>(args.repeat):</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>        order <span class="op">=</span> <span class="bu">list</span>(methods)</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>        rng.shuffle(order)</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> method <span class="kw">in</span> order:</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">any</span>(r[<span class="st">"method"</span>] <span class="op">==</span> method <span class="kw">and</span> r[<span class="st">"repetition"</span>] <span class="op">==</span> repetition <span class="op">+</span> <span class="dv">1</span> <span class="cf">for</span> r <span class="kw">in</span> existing):</span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>            command <span class="op">=</span> [sys.executable, <span class="bu">str</span>(script), <span class="st">"--worker"</span>, method,</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"--profile"</span>, args.profile, <span class="st">"--table"</span>, args.table,</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"--rows"</span>, <span class="bu">str</span>(args.rows), <span class="st">"--version"</span>, <span class="bu">str</span>(args.version),</span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"--output"</span>, <span class="bu">str</span>(args.output)]</span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> subprocess.run(command, capture_output<span class="op">=</span><span class="va">True</span>, text<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="dv">900</span>)</span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> result.returncode:</span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"</span><span class="sc">{</span>method<span class="sc">}</span><span class="ss"> failed: </span><span class="sc">{</span>result<span class="sc">.</span>stderr[<span class="op">-</span><span class="dv">3000</span>:]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>            row <span class="op">=</span> json.loads(result.stdout.strip().splitlines()[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">"repetition"</span>] <span class="op">=</span> repetition <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> args.output.<span class="bu">open</span>(<span class="st">"a"</span>) <span class="im">as</span> output:</span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>                output.write(json.dumps(row) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>            existing.append(row)</span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> args.checkpoint_dir:</span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>                args.checkpoint_dir.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>                shutil.copyfile(args.output, args.checkpoint_dir <span class="op">/</span> args.output.name)</span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(json.dumps(row), flush<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>    summary <span class="op">=</span> []</span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> method <span class="kw">in</span> methods:</span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>        samples <span class="op">=</span> [r <span class="cf">for</span> r <span class="kw">in</span> existing <span class="cf">if</span> r[<span class="st">"method"</span>] <span class="op">==</span> method]</span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>        seconds <span class="op">=</span> [r[<span class="st">"seconds"</span>] <span class="cf">for</span> r <span class="kw">in</span> samples]</span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>        peaks <span class="op">=</span> [r[<span class="st">"peak_mib"</span>] <span class="cf">for</span> r <span class="kw">in</span> samples]</span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>        summary.append({<span class="st">"method"</span>: method, <span class="st">"repetitions"</span>: <span class="bu">len</span>(samples),</span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"mean_seconds"</span>: statistics.mean(seconds),</span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"min_seconds"</span>: <span class="bu">min</span>(seconds), <span class="st">"max_seconds"</span>: <span class="bu">max</span>(seconds),</span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"peak_mean_mib"</span>: statistics.mean(peaks), <span class="st">"peak_max_mib"</span>: <span class="bu">max</span>(peaks)})</span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>    args.output.with_suffix(<span class="st">".summary.json"</span>).write_text(json.dumps(summary, indent<span class="op">=</span><span class="dv">2</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="common.py"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-label="1"></a><span class="co">"""Run each measurement in a fresh process, including native allocations."""</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-label="2"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-label="3"></a><span class="im">import</span> argparse</span>
+<span id="cb11-4"><a href="#cb11-4" aria-label="4"></a><span class="im">import</span> importlib.metadata</span>
+<span id="cb11-5"><a href="#cb11-5" aria-label="5"></a><span class="im">import</span> json</span>
+<span id="cb11-6"><a href="#cb11-6" aria-label="6"></a><span class="im">import</span> platform</span>
+<span id="cb11-7"><a href="#cb11-7" aria-label="7"></a><span class="im">import</span> random</span>
+<span id="cb11-8"><a href="#cb11-8" aria-label="8"></a><span class="im">import</span> resource</span>
+<span id="cb11-9"><a href="#cb11-9" aria-label="9"></a><span class="im">import</span> shutil</span>
+<span id="cb11-10"><a href="#cb11-10" aria-label="10"></a><span class="im">import</span> socket</span>
+<span id="cb11-11"><a href="#cb11-11" aria-label="11"></a><span class="im">import</span> statistics</span>
+<span id="cb11-12"><a href="#cb11-12" aria-label="12"></a><span class="im">import</span> subprocess</span>
+<span id="cb11-13"><a href="#cb11-13" aria-label="13"></a><span class="im">import</span> sys</span>
+<span id="cb11-14"><a href="#cb11-14" aria-label="14"></a><span class="im">import</span> time</span>
+<span id="cb11-15"><a href="#cb11-15" aria-label="15"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb11-16"><a href="#cb11-16" aria-label="16"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlparse</span>
+<span id="cb11-17"><a href="#cb11-17" aria-label="17"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-label="18"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-label="19"></a><span class="kw">def</span> arguments():</span>
+<span id="cb11-20"><a href="#cb11-20" aria-label="20"></a>    parser <span class="op">=</span> argparse.ArgumentParser()</span>
+<span id="cb11-21"><a href="#cb11-21" aria-label="21"></a>    parser.add_argument(<span class="st">"--profile"</span>, required<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-label="22"></a>    parser.add_argument(<span class="st">"--table"</span>, default<span class="op">=</span><span class="st">"delta_sharing.default.nyctaxi_2019"</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-label="23"></a>    parser.add_argument(<span class="st">"--rows"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10_000_000</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-label="24"></a>    parser.add_argument(<span class="st">"--repeat"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>, default<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-label="25"></a>    parser.add_argument(<span class="st">"--version"</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">int</span>)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-label="26"></a>    parser.add_argument(<span class="st">"--worker"</span>)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-label="27"></a>    parser.add_argument(<span class="st">"--output"</span>, <span class="bu">type</span><span class="op">=</span>Path, required<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-label="28"></a>    parser.add_argument(<span class="st">"--checkpoint-dir"</span>, <span class="bu">type</span><span class="op">=</span>Path)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-label="29"></a>    <span class="cf">return</span> parser.parse_args()</span>
+<span id="cb11-30"><a href="#cb11-30" aria-label="30"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-label="31"></a></span>
+<span id="cb11-32"><a href="#cb11-32" aria-label="32"></a><span class="kw">def</span> measure(args, operation):</span>
+<span id="cb11-33"><a href="#cb11-33" aria-label="33"></a>    started <span class="op">=</span> time.perf_counter()</span>
+<span id="cb11-34"><a href="#cb11-34" aria-label="34"></a>    rows <span class="op">=</span> operation(args)</span>
+<span id="cb11-35"><a href="#cb11-35" aria-label="35"></a>    elapsed <span class="op">=</span> time.perf_counter() <span class="op">-</span> started</span>
+<span id="cb11-36"><a href="#cb11-36" aria-label="36"></a>    <span class="cf">assert</span> rows <span class="op">==</span> args.rows, (rows, args.rows)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-label="37"></a>    peak <span class="op">=</span> resource.getrusage(resource.RUSAGE_SELF).ru_maxrss</span>
+<span id="cb11-38"><a href="#cb11-38" aria-label="38"></a>    peak_bytes <span class="op">=</span> peak <span class="cf">if</span> sys.platform <span class="op">==</span> <span class="st">"darwin"</span> <span class="cf">else</span> peak <span class="op">*</span> <span class="dv">1024</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-label="39"></a>    <span class="bu">print</span>(json.dumps({<span class="st">"method"</span>: args.worker, <span class="st">"rows"</span>: rows,</span>
+<span id="cb11-40"><a href="#cb11-40" aria-label="40"></a>                      <span class="st">"seconds"</span>: elapsed, <span class="st">"peak_mib"</span>: peak_bytes <span class="op">/</span> <span class="dv">1024</span><span class="op">**</span><span class="dv">2</span>}))</span>
+<span id="cb11-41"><a href="#cb11-41" aria-label="41"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-label="42"></a></span>
+<span id="cb11-43"><a href="#cb11-43" aria-label="43"></a><span class="kw">def</span> run(args, script, methods):</span>
+<span id="cb11-44"><a href="#cb11-44" aria-label="44"></a>    <span class="im">import</span> delta_sharing</span>
+<span id="cb11-45"><a href="#cb11-45" aria-label="45"></a></span>
+<span id="cb11-46"><a href="#cb11-46" aria-label="46"></a>    profile <span class="op">=</span> json.loads(Path(args.profile).read_text())</span>
+<span id="cb11-47"><a href="#cb11-47" aria-label="47"></a>    endpoint <span class="op">=</span> urlparse(profile[<span class="st">"endpoint"</span>])</span>
+<span id="cb11-48"><a href="#cb11-48" aria-label="48"></a>    socket.getaddrinfo(endpoint.hostname, endpoint.port <span class="kw">or</span> <span class="dv">443</span>)</span>
+<span id="cb11-49"><a href="#cb11-49" aria-label="49"></a>    <span class="cf">if</span> args.version <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb11-50"><a href="#cb11-50" aria-label="50"></a>        args.version <span class="op">=</span> delta_sharing.SharingClient(args.profile).table(args.table).version()</span>
+<span id="cb11-51"><a href="#cb11-51" aria-label="51"></a>    metadata <span class="op">=</span> {</span>
+<span id="cb11-52"><a href="#cb11-52" aria-label="52"></a>        <span class="st">"table"</span>: args.table, <span class="st">"rows"</span>: args.rows, <span class="st">"repetitions"</span>: args.repeat,</span>
+<span id="cb11-53"><a href="#cb11-53" aria-label="53"></a>        <span class="st">"table_version"</span>: args.version, <span class="st">"python"</span>: platform.python_version(),</span>
+<span id="cb11-54"><a href="#cb11-54" aria-label="54"></a>        <span class="st">"platform"</span>: platform.platform(),</span>
+<span id="cb11-55"><a href="#cb11-55" aria-label="55"></a>        <span class="st">"packages"</span>: {name: importlib.metadata.version(name) <span class="cf">for</span> name <span class="kw">in</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-label="56"></a>                     (<span class="st">"delta-sharing"</span>, <span class="st">"pyarrow"</span>, <span class="st">"pandas"</span>, <span class="st">"duckdb"</span>,</span>
+<span id="cb11-57"><a href="#cb11-57" aria-label="57"></a>                      <span class="st">"delta-kernel-rust-sharing-wrapper"</span>)},</span>
+<span id="cb11-58"><a href="#cb11-58" aria-label="58"></a>    }</span>
+<span id="cb11-59"><a href="#cb11-59" aria-label="59"></a>    args.output.parent.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-60"><a href="#cb11-60" aria-label="60"></a>    args.output.with_suffix(<span class="st">".metadata.json"</span>).write_text(json.dumps(metadata, indent<span class="op">=</span><span class="dv">2</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb11-61"><a href="#cb11-61" aria-label="61"></a>    existing <span class="op">=</span> [json.loads(line) <span class="cf">for</span> line <span class="kw">in</span> args.output.read_text().splitlines()] <span class="cf">if</span> args.output.exists() <span class="cf">else</span> []</span>
+<span id="cb11-62"><a href="#cb11-62" aria-label="62"></a>    rng <span class="op">=</span> random.Random(<span class="dv">42</span>)</span>
+<span id="cb11-63"><a href="#cb11-63" aria-label="63"></a>    <span class="cf">for</span> repetition <span class="kw">in</span> <span class="bu">range</span>(args.repeat):</span>
+<span id="cb11-64"><a href="#cb11-64" aria-label="64"></a>        order <span class="op">=</span> <span class="bu">list</span>(methods)</span>
+<span id="cb11-65"><a href="#cb11-65" aria-label="65"></a>        rng.shuffle(order)</span>
+<span id="cb11-66"><a href="#cb11-66" aria-label="66"></a>        <span class="cf">for</span> method <span class="kw">in</span> order:</span>
+<span id="cb11-67"><a href="#cb11-67" aria-label="67"></a>            <span class="cf">if</span> <span class="bu">any</span>(r[<span class="st">"method"</span>] <span class="op">==</span> method <span class="kw">and</span> r[<span class="st">"repetition"</span>] <span class="op">==</span> repetition <span class="op">+</span> <span class="dv">1</span> <span class="cf">for</span> r <span class="kw">in</span> existing):</span>
+<span id="cb11-68"><a href="#cb11-68" aria-label="68"></a>                <span class="cf">continue</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-label="69"></a>            command <span class="op">=</span> [sys.executable, <span class="bu">str</span>(script), <span class="st">"--worker"</span>, method,</span>
+<span id="cb11-70"><a href="#cb11-70" aria-label="70"></a>                       <span class="st">"--profile"</span>, args.profile, <span class="st">"--table"</span>, args.table,</span>
+<span id="cb11-71"><a href="#cb11-71" aria-label="71"></a>                       <span class="st">"--rows"</span>, <span class="bu">str</span>(args.rows), <span class="st">"--version"</span>, <span class="bu">str</span>(args.version),</span>
+<span id="cb11-72"><a href="#cb11-72" aria-label="72"></a>                       <span class="st">"--output"</span>, <span class="bu">str</span>(args.output)]</span>
+<span id="cb11-73"><a href="#cb11-73" aria-label="73"></a>            result <span class="op">=</span> subprocess.run(command, capture_output<span class="op">=</span><span class="va">True</span>, text<span class="op">=</span><span class="va">True</span>, timeout<span class="op">=</span><span class="dv">900</span>)</span>
+<span id="cb11-74"><a href="#cb11-74" aria-label="74"></a>            <span class="cf">if</span> result.returncode:</span>
+<span id="cb11-75"><a href="#cb11-75" aria-label="75"></a>                <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="ss">f"</span><span class="sc">{</span>method<span class="sc">}</span><span class="ss"> failed: </span><span class="sc">{</span>result<span class="sc">.</span>stderr[<span class="op">-</span><span class="dv">3000</span>:]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-76"><a href="#cb11-76" aria-label="76"></a>            row <span class="op">=</span> json.loads(result.stdout.strip().splitlines()[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb11-77"><a href="#cb11-77" aria-label="77"></a>            row[<span class="st">"repetition"</span>] <span class="op">=</span> repetition <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb11-78"><a href="#cb11-78" aria-label="78"></a>            <span class="cf">with</span> args.output.<span class="bu">open</span>(<span class="st">"a"</span>) <span class="im">as</span> output:</span>
+<span id="cb11-79"><a href="#cb11-79" aria-label="79"></a>                output.write(json.dumps(row) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb11-80"><a href="#cb11-80" aria-label="80"></a>            existing.append(row)</span>
+<span id="cb11-81"><a href="#cb11-81" aria-label="81"></a>            <span class="cf">if</span> args.checkpoint_dir:</span>
+<span id="cb11-82"><a href="#cb11-82" aria-label="82"></a>                args.checkpoint_dir.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-83"><a href="#cb11-83" aria-label="83"></a>                shutil.copyfile(args.output, args.checkpoint_dir <span class="op">/</span> args.output.name)</span>
+<span id="cb11-84"><a href="#cb11-84" aria-label="84"></a>            <span class="bu">print</span>(json.dumps(row), flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-85"><a href="#cb11-85" aria-label="85"></a>    summary <span class="op">=</span> []</span>
+<span id="cb11-86"><a href="#cb11-86" aria-label="86"></a>    <span class="cf">for</span> method <span class="kw">in</span> methods:</span>
+<span id="cb11-87"><a href="#cb11-87" aria-label="87"></a>        samples <span class="op">=</span> [r <span class="cf">for</span> r <span class="kw">in</span> existing <span class="cf">if</span> r[<span class="st">"method"</span>] <span class="op">==</span> method]</span>
+<span id="cb11-88"><a href="#cb11-88" aria-label="88"></a>        seconds <span class="op">=</span> [r[<span class="st">"seconds"</span>] <span class="cf">for</span> r <span class="kw">in</span> samples]</span>
+<span id="cb11-89"><a href="#cb11-89" aria-label="89"></a>        peaks <span class="op">=</span> [r[<span class="st">"peak_mib"</span>] <span class="cf">for</span> r <span class="kw">in</span> samples]</span>
+<span id="cb11-90"><a href="#cb11-90" aria-label="90"></a>        summary.append({<span class="st">"method"</span>: method, <span class="st">"repetitions"</span>: <span class="bu">len</span>(samples),</span>
+<span id="cb11-91"><a href="#cb11-91" aria-label="91"></a>                        <span class="st">"mean_seconds"</span>: statistics.mean(seconds),</span>
+<span id="cb11-92"><a href="#cb11-92" aria-label="92"></a>                        <span class="st">"min_seconds"</span>: <span class="bu">min</span>(seconds), <span class="st">"max_seconds"</span>: <span class="bu">max</span>(seconds),</span>
+<span id="cb11-93"><a href="#cb11-93" aria-label="93"></a>                        <span class="st">"peak_mean_mib"</span>: statistics.mean(peaks), <span class="st">"peak_max_mib"</span>: <span class="bu">max</span>(peaks)})</span>
+<span id="cb11-94"><a href="#cb11-94" aria-label="94"></a>    args.output.with_suffix(<span class="st">".summary.json"</span>).write_text(json.dumps(summary, indent<span class="op">=</span><span class="dv">2</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </details>
 <p>The benchmark scripts use the shared helper above.</p>
@@ -1169,17 +1169,17 @@ Expand the shared measurement helper
 <li>Download <a href="benchmarks/runtime_benchmark.py">runtime_benchmark.py</a>, <a href="benchmarks/memory_benchmark.py">memory_benchmark.py</a>, and <a href="benchmarks/common.py">common.py</a> into the same directory.</li>
 <li>Run each benchmark with your recipient profile and table name, using a separate output file:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> runtime_benchmark.py <span class="dt">\</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--profile</span> /path/to/recipient.share <span class="dt">\</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--table</span> share.schema.table <span class="dt">\</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--rows</span> 100000000 <span class="dt">\</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> runtime-results.jsonl</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> memory_benchmark.py <span class="dt">\</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--profile</span> /path/to/recipient.share <span class="dt">\</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--table</span> share.schema.table <span class="dt">\</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--rows</span> 100000000 <span class="dt">\</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> memory-results.jsonl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-label="1"></a><span class="ex">python</span> runtime_benchmark.py <span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-label="2"></a>  <span class="at">--profile</span> /path/to/recipient.share <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-label="3"></a>  <span class="at">--table</span> share.schema.table <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-label="4"></a>  <span class="at">--rows</span> 100000000 <span class="dt">\</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-label="5"></a>  <span class="at">--output</span> runtime-results.jsonl</span>
+<span id="cb12-6"><a href="#cb12-6" aria-label="6"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-label="7"></a><span class="ex">python</span> memory_benchmark.py <span class="dt">\</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-label="8"></a>  <span class="at">--profile</span> /path/to/recipient.share <span class="dt">\</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-label="9"></a>  <span class="at">--table</span> share.schema.table <span class="dt">\</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-label="10"></a>  <span class="at">--rows</span> 100000000 <span class="dt">\</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-label="11"></a>  <span class="at">--output</span> memory-results.jsonl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Each measurement runs in a fresh process and checks the row count. Method order is shuffled; the results also record the table version and package versions.</p>
 <hr>
 <p><small>This post was written with assistance from AI tooling.</small></p>

@@ -10,6 +10,13 @@ body {
   font-family: var(--bs-font-sans-serif);
 }
 
+pre.numberSource code > span > a:first-child::before {
+  left: -1.6em;
+  color: var(--reading-muted);
+  opacity: 0.55;
+  text-decoration: none;
+}
+
 h1,
 h2,
 h3,
